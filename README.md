@@ -20,11 +20,11 @@ Per semplificare il lavoro, è stato predisposto un *container Docker* in cui tu
 
     Questo crea una directory <code>Paradigmi</code> al cui interno è presente la directory <code>notebooks</code>
 
-4. Scaricare l'immagine del container Docker del corso: 
+4. Scaricare l'immagine del container Docker del corso (**ATTENZIONE:** sono **637MB**): 
 
       <code>docker pull paradigmi/paradigmi</code> 
 
-    Potrebbe richiedere privilegi di root su linux e mac (lo stesso per i comandi seguenti)
+    Potrebbe richiedere privilegi di root su Linux e Mac (lo stesso per i passi seguenti)
 
 5. Creare il container Docker:
 
@@ -44,4 +44,26 @@ Per semplificare il lavoro, è stato predisposto un *container Docker* in cui tu
 
 3. Verificare che nel browser si apra la pagina di Juptyer con elencate le cartelle <code>ocaml</code> e <code>playground</code>
 
+4. Per terminare l'esecuzione del container, preme sul pulsante "Quit" nel browser, oppure digitare
+
+      <code>docker stop Paradigmi</code>
+      
+    oppure ancora premere il bottone "STOP" nell'interfaccia grafica di Docker Desktop
+
+## ATTENZIONE (PROBLEMI DI OCCUPAZIONE DI MEMORIA)
+
+Su Windows si verifica una notevole occupazione di memoria (oltre 2GB) per l'esecuzione di Docker Desktop. Questo è dovuto in realtà al sottosistema Linux (WSL) incluso nelle ultime versioni di Windows e usato da Docker. In realtà, la memoria necessaria per eseguire il container è molto inferiore. Qualora si verifichino rallentamenti nel computer (soprattutto se Docker Desktop è usato contemporaneamente a Microsoft Teams per seguire le lezioni) si suggerisce di limitare l'occupazione di memoria di WSL creando un file <code>.wslconfig</code> come segue:
+
+<code>notepad %UserProfile%\.wslconfig</code> (se si usa il terminale standard di Windows)
+
+oppure
+
+<code>notepad $env:USERPROFILE\.wslconfig</code> (se si usa PowerShell)
+
+e scrivere nel file appena creato:
+
+    [wsl2]
+    memory=1GB
+
+Riavviare il computer e lanciare nuovamente Docker Desktop.
 
