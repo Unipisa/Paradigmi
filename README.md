@@ -16,19 +16,19 @@ Per semplificare il lavoro, è stato predisposto un *container Docker* in cui tu
 
 3. Clonare il repository in una cartella locale:
 
-      <code>git clone https://github.com/Unipisa/Paradigmi</code>. 
+        git clone https://github.com/Unipisa/Paradigmi
 
     Questo crea una directory <code>Paradigmi</code> al cui interno è presente la directory <code>notebooks</code>
 
 4. Scaricare l'immagine del container Docker del corso (**ATTENZIONE:** sono **637MB**): 
 
-      <code>docker pull paradigmi/paradigmi</code> 
+        docker pull paradigmi/paradigmi
 
     Potrebbe richiedere privilegi di root su Linux e Mac (lo stesso per i passi seguenti)
 
 5. Creare il container Docker:
 
-      <code>docker create -it --privileged --name Paradigmi -p 8888:8888 -v xxxPATHxxx:/mnt/paradigmi/ paradigmi/paradigmi</code> 
+        docker create -it --privileged --name Paradigmi -p 8888:8888 -v xxxPATHxxx:/mnt/paradigmi/ paradigmi/paradigmi
 
     dove <code>xxxPATHxxx</code> va sostituito con il percorso completo della directory contenente i notebook all'interno della copia locale del repository. Ad esempio: <code>C:\Users\milaz\Paradigmi\notebooks</code>
 
@@ -36,7 +36,7 @@ Per semplificare il lavoro, è stato predisposto un *container Docker* in cui tu
 
 1. Far partire il container Docker:
 
-      <code>docker start Paradigmi</code>
+        docker start Paradigmi
       
     oppure premendo il bottone "START" nell'interfaccia grafica di Docker Desktop
       
@@ -46,7 +46,7 @@ Per semplificare il lavoro, è stato predisposto un *container Docker* in cui tu
 
 4. Per terminare l'esecuzione del container, preme sul pulsante "Quit" nel browser, oppure digitare
 
-      <code>docker stop Paradigmi</code>
+        docker stop Paradigmi
       
     oppure ancora premere il bottone "STOP" nell'interfaccia grafica di Docker Desktop
 
