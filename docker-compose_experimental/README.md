@@ -12,3 +12,7 @@ Su ubuntu via package manager:
 - nel file `docker-compose.yml` sostituire "xxxPATHxxx" con il percorso in cui si é scaricata la directory
 - per avviare il docker-compose ( se é già avviato si riavvia ) fare su ubuntu `sudo docker-compose up -d`
 - per stoppare il docker-compose `sudo docker-compose down`
+
+## NOTA
+
+Questa procedura, testata su ubuntu 20.04, è in fase sperimentale. Segnalate eventuali malfunzionamenti su altre piattaforme o sistemi operativi.
