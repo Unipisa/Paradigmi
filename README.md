@@ -77,4 +77,5 @@ Riavviare il computer e lanciare nuovamente Docker Desktop.
 ## VISUALIZZAZIONE DI NOTEBOOK VUOTO
 
 1. Attenzione alla presenza dei **`:`** tra il path locale (a cui si fa riferimento nella guida come `xxxPATHxxx`)e il path forito dalla guida (`/mnt/paradigmi/ paradigmi/paradigmi`)
-2. Mancato utilizzo della flag `-v` seguita dal path in alcuni sistemi operativi macOS come Catalina
+2. Su **macOS** sostituire `xxxPATHxxx` con `~/<path>` non con `User/<path>`
+3. Mancato utilizzo della flag `-v` seguita dal path in alcuni sistemi operativi macOS come Catalina
