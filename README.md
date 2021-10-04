@@ -10,6 +10,8 @@ Per semplificare il lavoro, è stato predisposto un *container Docker* in cui tu
 
 ## Installazione
 
+*In caso di problemi vedi: [Troubleshooting](#troubleshooting)*
+
 1. Installare <a href="https://git-scm.com/downloads">Git</a>
 
 2. Installare <a href="https://www.docker.com/products/docker-desktop">Docker Desktop</a> (o Docker Engine su linux)
@@ -30,7 +32,10 @@ Per semplificare il lavoro, è stato predisposto un *container Docker* in cui tu
 
         docker create -it --privileged --name Paradigmi -p 8888:8888 -v xxxPATHxxx:/mnt/paradigmi/ paradigmi/paradigmi
 
-    dove <code>xxxPATHxxx</code> va sostituito con il percorso completo della directory contenente i notebook all'interno della copia locale del repository. Ad esempio: <code>C:\Users\milaz\Paradigmi\notebooks</code>
+    dove <code>xxxPATHxxx</code> va sostituito con il percorso completo della directory contenente i notebook all'interno della copia locale del repository.  
+    Ad esempio:
+    - Windows: <code>C:\Users\milaz\Paradigmi\notebooks</code>
+    - macOS <code>~/Documents/Paradigmi/notebooks</code>
 
 ## Uso
 
@@ -67,3 +72,10 @@ e scrivere nel file appena creato:
 
 Riavviare il computer e lanciare nuovamente Docker Desktop.
 
+# Troubleshooting
+
+## VISUALIZZAZIONE DI NOTEBOOK VUOTO
+
+1. Attenzione alla presenza dei **`:`** tra il path locale (a cui si fa riferimento nella guida come `xxxPATHxxx`)e il path forito dalla guida (`/mnt/paradigmi/ paradigmi/paradigmi`)
+2. Su **macOS** sostituire `xxxPATHxxx` con `~/<path>` non con `User/<path>`
+3. Mancato utilizzo della flag `-v` seguita dal path in alcuni sistemi operativi macOS come Catalina
