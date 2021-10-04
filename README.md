@@ -55,7 +55,9 @@ Per semplificare il lavoro, è stato predisposto un *container Docker* in cui tu
       
     oppure ancora premere il bottone "STOP" nell'interfaccia grafica di Docker Desktop
 
-## ATTENZIONE (PROBLEMI DI OCCUPAZIONE DI MEMORIA)
+# Troubleshooting
+
+## PROBLEMI DI OCCUPAZIONE DI MEMORIA
 
 Su Windows si verifica una notevole occupazione di memoria (oltre 2GB) per l'esecuzione di Docker Desktop. Questo è dovuto in realtà al sottosistema Linux (WSL) incluso nelle ultime versioni di Windows e usato da Docker. In realtà, la memoria necessaria per eseguire il container è molto inferiore. Qualora si verifichino rallentamenti nel computer (soprattutto se Docker Desktop è usato contemporaneamente a Microsoft Teams per seguire le lezioni) si suggerisce di limitare l'occupazione di memoria di WSL creando un file <code>.wslconfig</code> come segue:
 
@@ -72,10 +74,8 @@ e scrivere nel file appena creato:
 
 Riavviare il computer e lanciare nuovamente Docker Desktop.
 
-# Troubleshooting
-
 ## VISUALIZZAZIONE DI NOTEBOOK VUOTO
 
-1. Attenzione alla presenza dei **`:`** tra il path locale (a cui si fa riferimento nella guida come `xxxPATHxxx`)e il path forito dalla guida (`/mnt/paradigmi/ paradigmi/paradigmi`)
+1. Attenzione alla presenza dei **`:`** tra il path locale (a cui si fa riferimento nella guida come `xxxPATHxxx`)e il path forNito dalla guida (`/mnt/paradigmi/ paradigmi/paradigmi`)
 2. Su **macOS** sostituire `xxxPATHxxx` con `~/<path>` non con `User/<path>`
 3. Mancato utilizzo della flag `-v` seguita dal path in alcuni sistemi operativi macOS come Catalina
