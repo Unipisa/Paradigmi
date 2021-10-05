@@ -5,6 +5,6 @@ services:
     ports:
       - 8888:8888
     volumes:
-      - xxxPATHxxx/notebooks:/mnt/paradigmi
+      - ./../notebooks:/mnt/paradigmi
     privileged: True
     mem_limit: 512m   # opzionale

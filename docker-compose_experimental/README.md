@@ -9,9 +9,16 @@ Su ubuntu via package manager:
 `sudo apt install docker docker-compose`
 
 ## Uso
-- nel file `docker-compose.yml` sostituire "xxxPATHxxx" con il percorso in cui si é scaricata la directory
-- per avviare il docker-compose ( se é già avviato si riavvia ) fare su ubuntu `sudo docker-compose up -d`
-- per stoppare il docker-compose `sudo docker-compose down`
+
+```
+git clone https://github.com/Unipisa/Paradigmi.git
+cd Paradigmi/docker-compose_experimental/
+sudo docker-compose up -d
+```
+[http://127.0.0.1:8888/](http://127.0.0.1:8888/)
+```
+sudo docker-compose down
+```
 
 ## NOTA
 
