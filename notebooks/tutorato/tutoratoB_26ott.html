@@ -13971,66 +13971,25 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="MiniCaML:-Costrutto-try-with">MiniCaML: Costrutto try-with<a class="anchor-link" href="#MiniCaML:-Costrutto-try-with">&#182;</a></h2><p>Estendere l'interprete visto a lezione per implementare una rudimentale gestione delle eccezioni:</p>
-<ul>
-<li>Definire un insieme di eccezioni, contenente almeno <code>VarUnbound</code> e <code>DivisionByZero</code></li>
-<li>Definire un costrutto try-with che permetta all'utente di restituire un valore alternativo quando viene solelvata un'eccezzione</li>
-</ul>
-<p>Esempio (in Ocaml):</p>
+<h4 id="Ex-1:">Ex 1:<a class="anchor-link" href="#Ex-1:">&#182;</a></h4><p>Si consideri l'interprete big step delle espressioni aritmetiche visto a lezione.</p>
+<p>Si estenda la definizione dell'AST (modificando il codice qui sotto) in modo che possa descrivere identificatori <code>Ide</code> e un costrutto <code>sumall (x;n1;n2) e</code> tale che la sintassi del linguaggio diventi:</p>
 
-<pre><code> let safe_inverse n = 
-     try 
-         1 / n
-     with
-         Division_by_zero -&gt; 0</code></pre>
+<pre><code>Exp ::= n | Ide | Exp op Exp | (Exp) | sumall ( Ide ; n ; n ) Exp
+Ide ::= x | y | z | ...
+op ::= + | - | * | /</code></pre>
+<p><strong>NOTA:</strong> Per gli identificatori, definire il tipo <code>ide</code> come alias del tipo <code>string</code></p>
 
 </div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Tipi-ed-Espressioni">Tipi ed Espressioni<a class="anchor-link" href="#Tipi-ed-Espressioni">&#182;</a></h3>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Identificatori *)</span>
-<span class="k">type</span> <span class="n">ide</span> <span class="o">=</span> <span class="kt">string</span><span class="o">;;</span>
-
-<span class="c">(* I tipi *)</span>
-<span class="k">type</span> <span class="n">tname</span> <span class="o">=</span>  <span class="nc">TInt</span> <span class="o">|</span> <span class="nc">TBool</span> <span class="o">|</span> <span class="nc">TString</span> <span class="o">|</span> <span class="nc">TClosure</span> <span class="o">|</span> <span class="nc">TRecClosure</span> <span class="o">|</span> <span class="nc">TUnBound</span>
-
-<span class="c">(* Abstract Expressions = espressioni nella sintassi astratta, </span>
-<span class="c">   compongono l&#39;Albero di Sintassi Astratta *)</span>
-<span class="k">type</span> <span class="n">exp</span> <span class="o">=</span> 
-    <span class="o">|</span> <span class="nc">EInt</span> <span class="k">of</span> <span class="kt">int</span>
-    <span class="o">|</span> <span class="nc">CstTrue</span> 
-    <span class="o">|</span> <span class="nc">CstFalse</span>
-    <span class="o">|</span> <span class="nc">EString</span> <span class="k">of</span> <span class="kt">string</span>
-    <span class="o">|</span> <span class="nc">Den</span> <span class="k">of</span> <span class="n">ide</span>
-    <span class="c">(* Operatori binari da interi a interi*)</span>
-    <span class="o">|</span> <span class="nc">Sum</span> <span class="k">of</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span>
-    <span class="o">|</span> <span class="nc">Diff</span> <span class="k">of</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span>
-    <span class="o">|</span> <span class="nc">Prod</span> <span class="k">of</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span>
-    <span class="o">|</span> <span class="nc">Div</span> <span class="k">of</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span>
-    <span class="c">(* Operatori da interi a booleani *)</span>
-    <span class="o">|</span> <span class="nc">IsZero</span> <span class="k">of</span> <span class="n">exp</span>
-    <span class="o">|</span> <span class="nc">Eq</span> <span class="k">of</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span>
-    <span class="o">|</span> <span class="nc">LessThan</span> <span class="k">of</span> <span class="n">exp</span><span class="o">*</span><span class="n">exp</span>
-    <span class="o">|</span> <span class="nc">GreaterThan</span> <span class="k">of</span> <span class="n">exp</span><span class="o">*</span><span class="n">exp</span>
-    <span class="c">(* Operatori su booleani *)</span>
-    <span class="o">|</span> <span class="nc">And</span> <span class="k">of</span> <span class="n">exp</span><span class="o">*</span><span class="n">exp</span>
-    <span class="o">|</span> <span class="nc">Or</span> <span class="k">of</span> <span class="n">exp</span><span class="o">*</span><span class="n">exp</span>
-    <span class="o">|</span> <span class="nc">Not</span> <span class="k">of</span> <span class="n">exp</span>
-    <span class="c">(* Controllo del flusso, funzioni *)</span>
-    <span class="o">|</span> <span class="nc">IfThenElse</span> <span class="k">of</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span>
-    <span class="o">|</span> <span class="nc">Let</span> <span class="k">of</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span>
-    <span class="o">|</span> <span class="nc">Letrec</span> <span class="k">of</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">ide</span>  <span class="o">*</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span>
-    <span class="o">|</span> <span class="nc">Fun</span> <span class="k">of</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">exp</span>
-    <span class="o">|</span> <span class="nc">Apply</span> <span class="k">of</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span>
-    <span class="c">(* TODO: Costrutto try-with*)</span>
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">type</span> <span class="n">op</span> <span class="o">=</span> <span class="nc">Add</span> <span class="o">|</span> <span class="nc">Sub</span> <span class="o">|</span> <span class="nc">Mul</span> <span class="o">|</span> <span class="nc">Div</span> <span class="o">;;</span>
+<span class="k">type</span> <span class="n">exp</span> <span class="o">=</span>
+    <span class="o">|</span> <span class="nc">Val</span> <span class="k">of</span> <span class="kt">int</span>
+    <span class="o">|</span> <span class="nc">Op</span> <span class="k">of</span> <span class="n">op</span><span class="o">*</span><span class="n">exp</span><span class="o">*</span><span class="n">exp</span><span class="o">;;</span>
 </pre></div>
 
      </div>
@@ -14038,166 +13997,78 @@ a.anchor-link {
 </div>
 </div>
 
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Ambiente">Ambiente<a class="anchor-link" href="#Ambiente">&#182;</a></h3>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Ambiente polimorfo *)</span>
-<span class="k">type</span> <span class="k">&#39;</span><span class="n">t</span> <span class="n">env</span> <span class="o">=</span> <span class="n">ide</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">t</span>
+<div class="jp-Cell-outputWrapper">
 
-<span class="c">(* Evaluation types = tipi  esprimibili *)</span>
-<span class="k">type</span> <span class="n">evT</span> <span class="o">=</span> 
-    <span class="o">|</span> <span class="nc">Int</span> <span class="k">of</span> <span class="kt">int</span> 
-    <span class="o">|</span> <span class="nc">Bool</span> <span class="k">of</span> <span class="kt">bool</span> 
-    <span class="o">|</span> <span class="nc">String</span> <span class="k">of</span> <span class="kt">string</span> 
-    <span class="o">|</span> <span class="nc">Closure</span> <span class="k">of</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">evT</span> <span class="n">env</span> 
-    <span class="o">|</span> <span class="nc">RecClosure</span> <span class="k">of</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">evT</span> <span class="n">env</span>
-    <span class="o">|</span> <span class="nc">UnBound</span>
 
-<span class="c">(* Ambiente vuoto *)</span>
-<span class="k">let</span> <span class="n">emptyenv</span> <span class="o">=</span> <span class="k">function</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="nc">UnBound</span>
+<div class="jp-OutputArea jp-Cell-outputArea">
 
-<span class="c">(* Binding fra una stringa x e un valore primitivo evT *)</span>
-<span class="k">let</span> <span class="n">bind</span> <span class="o">(</span><span class="n">s</span><span class="o">:</span> <span class="n">evT</span> <span class="n">env</span><span class="o">)</span> <span class="o">(</span><span class="n">x</span><span class="o">:</span> <span class="n">ide</span><span class="o">)</span> <span class="o">(</span><span class="n">v</span><span class="o">:</span> <span class="n">evT</span><span class="o">)</span> <span class="o">=</span> 
-    <span class="k">function</span> <span class="o">(</span><span class="n">i</span><span class="o">:</span> <span class="n">ide</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">x</span><span class="o">)</span> <span class="k">then</span> <span class="n">v</span> <span class="k">else</span> <span class="o">(</span><span class="n">s</span> <span class="n">i</span><span class="o">)</span>
-</pre></div>
+<div class="jp-OutputArea-child">
 
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Typechecking">Typechecking<a class="anchor-link" href="#Typechecking">&#182;</a></h3>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Type-checking *)</span>
-<span class="k">let</span> <span class="n">typecheck</span> <span class="o">((</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">:</span> <span class="o">(</span><span class="n">tname</span><span class="o">*</span><span class="n">evT</span><span class="o">))</span> <span class="o">=</span> 
-    <span class="k">match</span> <span class="n">x</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="nc">TInt</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="k">match</span> <span class="n">y</span> <span class="k">with</span> 
-               <span class="o">|</span> <span class="nc">Int</span><span class="o">(</span><span class="n">u</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="bp">true</span>
-               <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">false</span>
-               <span class="o">)</span>
-    <span class="o">|</span> <span class="nc">TBool</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="k">match</span> <span class="n">y</span> <span class="k">with</span> 
-                <span class="o">|</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">u</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="bp">true</span>
-                <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">false</span>
-                <span class="o">)</span>
-    <span class="o">|</span> <span class="nc">TString</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="k">match</span> <span class="n">y</span> <span class="k">with</span>
-                 <span class="o">|</span> <span class="nc">String</span><span class="o">(</span><span class="n">u</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="bp">true</span>
-                 <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">false</span>
-                 <span class="o">)</span>
-    <span class="o">|</span> <span class="nc">TClosure</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="k">match</span> <span class="n">y</span> <span class="k">with</span>
-                   <span class="o">|</span> <span class="nc">Closure</span><span class="o">(</span><span class="n">i</span><span class="o">,</span><span class="n">e</span><span class="o">,</span><span class="n">n</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="bp">true</span>
-                   <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">false</span>
-                   <span class="o">)</span>
-    <span class="o">|</span> <span class="nc">TRecClosure</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="k">match</span> <span class="n">y</span> <span class="k">with</span>
-                     <span class="o">|</span> <span class="nc">RecClosure</span><span class="o">(</span><span class="n">i</span><span class="o">,</span><span class="n">j</span><span class="o">,</span><span class="n">e</span><span class="o">,</span><span class="n">n</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="bp">true</span>
-                     <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">false</span>
-                     <span class="o">)</span>
-    <span class="o">|</span><span class="nc">TUnBound</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="k">match</span> <span class="n">y</span> <span class="k">with</span>
-                 <span class="o">|</span> <span class="nc">UnBound</span> <span class="o">-&gt;</span> <span class="bp">true</span>
-                 <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">false</span>
-                 <span class="o">)</span>
-
-<span class="c">(* Errori a runtime *)</span>
-<span class="k">exception</span> <span class="nc">RuntimeError</span> <span class="k">of</span> <span class="kt">string</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Primitive">Primitive<a class="anchor-link" href="#Primitive">&#182;</a></h3>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* PRIMITIVE del linguaggio *)</span>
-
-<span class="c">(* Controlla se un numero è zero *)</span>
-<span class="k">let</span> <span class="n">is_zero</span><span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">=</span> <span class="k">match</span> <span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">x</span><span class="o">),</span><span class="n">x</span><span class="o">)</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="nc">Int</span><span class="o">(</span><span class="n">v</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">v</span> <span class="o">=</span> <span class="mi">0</span><span class="o">)</span>
-    <span class="o">|</span> <span class="o">(_,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
-
-<span class="c">(* Uguaglianza fra interi *)</span>
-<span class="k">let</span> <span class="n">int_eq</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">)</span> <span class="o">=</span>   
-    <span class="k">match</span> <span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">x</span><span class="o">),</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">y</span><span class="o">),</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="bp">true</span><span class="o">,</span> <span class="nc">Int</span><span class="o">(</span><span class="n">v</span><span class="o">),</span> <span class="nc">Int</span><span class="o">(</span><span class="n">w</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">v</span> <span class="o">=</span> <span class="n">w</span><span class="o">)</span>
-    <span class="o">|</span> <span class="o">(_,_,_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
-
-<span class="c">(* Somma fra interi *)</span>	   
-<span class="k">let</span> <span class="n">int_plus</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">=</span> 
-    <span class="k">match</span><span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">x</span><span class="o">),</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">y</span><span class="o">),</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="bp">true</span><span class="o">,</span> <span class="nc">Int</span><span class="o">(</span><span class="n">v</span><span class="o">),</span> <span class="nc">Int</span><span class="o">(</span><span class="n">w</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="nc">Int</span><span class="o">(</span><span class="n">v</span> <span class="o">+</span> <span class="n">w</span><span class="o">)</span>
-    <span class="o">|</span> <span class="o">(_,_,_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
-
-<span class="c">(* Differenza fra interi *)</span>
-<span class="k">let</span> <span class="n">int_sub</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">=</span> 
-    <span class="k">match</span><span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">x</span><span class="o">),</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">y</span><span class="o">),</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="bp">true</span><span class="o">,</span> <span class="nc">Int</span><span class="o">(</span><span class="n">v</span><span class="o">),</span> <span class="nc">Int</span><span class="o">(</span><span class="n">w</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="nc">Int</span><span class="o">(</span><span class="n">v</span> <span class="o">-</span> <span class="n">w</span><span class="o">)</span>
-    <span class="o">|</span> <span class="o">(_,_,_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
-
-<span class="c">(* Prodotto fra interi *)</span>
-<span class="k">let</span> <span class="n">int_times</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">=</span>
-    <span class="k">match</span><span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">x</span><span class="o">),</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">y</span><span class="o">),</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="bp">true</span><span class="o">,</span> <span class="nc">Int</span><span class="o">(</span><span class="n">v</span><span class="o">),</span> <span class="nc">Int</span><span class="o">(</span><span class="n">w</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="nc">Int</span><span class="o">(</span><span class="n">v</span> <span class="o">*</span> <span class="n">w</span><span class="o">)</span>
-    <span class="o">|</span> <span class="o">(_,_,_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
     
-<span class="c">(* Divisione fra interi *)</span>
-<span class="k">let</span> <span class="n">int_div</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">=</span>
-    <span class="k">match</span><span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">x</span><span class="o">),</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">y</span><span class="o">),</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="bp">true</span><span class="o">,</span> <span class="nc">Int</span><span class="o">(</span><span class="n">v</span><span class="o">),</span> <span class="nc">Int</span><span class="o">(</span><span class="n">w</span><span class="o">))</span> <span class="o">-&gt;</span> 
-                    <span class="k">if</span> <span class="n">w</span><span class="o">&lt;&gt;</span><span class="mi">0</span> <span class="k">then</span> <span class="nc">Int</span><span class="o">(</span><span class="n">v</span> <span class="o">/</span> <span class="n">w</span><span class="o">)</span>
-                            <span class="k">else</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">RuntimeError</span> <span class="s2">&quot;Division by zero&quot;</span><span class="o">)</span>
-    <span class="o">|</span> <span class="o">(_,_,_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
 
-<span class="c">(* Operazioni di confronto *)</span>
-<span class="k">let</span> <span class="n">less_than</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">=</span> 
-    <span class="k">match</span> <span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">x</span><span class="o">),</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">y</span><span class="o">),</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="bp">true</span><span class="o">,</span> <span class="nc">Int</span><span class="o">(</span><span class="n">v</span><span class="o">),</span> <span class="nc">Int</span><span class="o">(</span><span class="n">w</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">v</span> <span class="o">&lt;</span> <span class="n">w</span><span class="o">)</span>
-    <span class="o">|</span> <span class="o">(_,_,_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
 
-<span class="k">let</span> <span class="n">greater_than</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">=</span> 
-    <span class="k">match</span> <span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">x</span><span class="o">),</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">y</span><span class="o">),</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="bp">true</span><span class="o">,</span> <span class="nc">Int</span><span class="o">(</span><span class="n">v</span><span class="o">),</span> <span class="nc">Int</span><span class="o">(</span><span class="n">w</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">v</span> <span class="o">&gt;</span> <span class="n">w</span><span class="o">)</span>
-    <span class="o">|</span> <span class="o">(_,_,_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
 
-<span class="c">(* Operazioni logiche *)</span>
-<span class="k">let</span> <span class="n">bool_and</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">)</span> <span class="o">=</span> 
-    <span class="k">match</span> <span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TBool</span><span class="o">,</span><span class="n">x</span><span class="o">),</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TBool</span><span class="o">,</span><span class="n">y</span><span class="o">),</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="bp">true</span><span class="o">,</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">v</span><span class="o">),</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">w</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">v</span> <span class="o">&amp;&amp;</span> <span class="n">w</span><span class="o">)</span>
-    <span class="o">|</span> <span class="o">(_,_,_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
 
-<span class="k">let</span> <span class="n">bool_or</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">)</span> <span class="o">=</span> 
-    <span class="k">match</span> <span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TBool</span><span class="o">,</span><span class="n">x</span><span class="o">),</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TBool</span><span class="o">,</span><span class="n">y</span><span class="o">),</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="bp">true</span><span class="o">,</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">v</span><span class="o">),</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">w</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">v</span> <span class="o">||</span> <span class="n">w</span><span class="o">)</span>
-    <span class="o">|</span> <span class="o">(_,_,_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type op = Add | Sub | Mul | Div
+</pre>
+</div>
 
-<span class="k">let</span> <span class="n">bool_not</span><span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">=</span> 
-    <span class="k">match</span> <span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TBool</span><span class="o">,</span><span class="n">x</span><span class="o">),</span> <span class="n">x</span><span class="o">)</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">v</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">not</span><span class="o">(</span><span class="n">v</span><span class="o">))</span>
-    <span class="o">|</span> <span class="o">(_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type ide = string
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type exp =
+    Val of int
+  | Ide of ide
+  | Op of op * exp * exp
+  | Sumall of ide * int * int * exp
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Ex-2:">Ex 2:<a class="anchor-link" href="#Ex-2:">&#182;</a></h4><p>Nel linguaggio esteso come da esercizio precedente, si implementi una funzione <code>subst (e:exp) (x:ide) (v:exp)</code> dove <code>e</code> è un'espressione, <code>x</code> è un identificatore e <code>v</code> è un'espressione che deve descrivere un valore (<code>Val n</code>). La funzione calcola l'espressione $e\{x:=v\}$ in cui tutte le occorrenze "libere" di <code>x</code> in <code>e</code> sono sostituite con <code>v</code>.</p>
+<p><strong>ATTENZIONE:</strong> Il costrutto <code>sumall (x;n1;n2) e</code> lega le occorrenza di <code>x</code> in <code>e</code>. La sostituzione deve operare solo sulle occorrenze libere della variabile.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-OCaml"><pre><span></span>
 </pre></div>
 
      </div>
@@ -14205,99 +14076,436 @@ a.anchor-link {
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val subst : exp -&gt; ide -&gt; exp -&gt; exp = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Interprete">Interprete<a class="anchor-link" href="#Interprete">&#182;</a></h3>
+<p><strong>TEST:</strong> applicare la funzione <code>subst</code> in modo da calcolare $((x+y)+(\mbox{sumall }x;1;10) \, x) \{x:=5\}$ che deve restituire $((5+y)+(\mbox{sumall }x;1;10)\, x)$.</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Interprete *)</span>
-<span class="k">let</span> <span class="k">rec</span> <span class="n">eval</span> <span class="o">(</span><span class="n">e</span><span class="o">:</span><span class="n">exp</span><span class="o">)</span> <span class="o">(</span><span class="n">s</span><span class="o">:</span><span class="n">evT</span> <span class="n">env</span><span class="o">)</span> <span class="o">:</span> <span class="n">evT</span> <span class="o">=</span> 
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">e1</span> <span class="o">=</span> <span class="nc">Op</span> <span class="o">(</span><span class="nc">Add</span><span class="o">,</span> <span class="o">(</span><span class="nc">Op</span> <span class="o">(</span><span class="nc">Add</span><span class="o">,</span> <span class="nc">Ide</span> <span class="s2">&quot;x&quot;</span><span class="o">,</span> <span class="nc">Ide</span> <span class="s2">&quot;y&quot;</span><span class="o">)),</span> <span class="o">(</span><span class="nc">Sumall</span> <span class="o">(</span><span class="s2">&quot;x&quot;</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">10</span><span class="o">,</span><span class="nc">Ide</span> <span class="s2">&quot;x&quot;</span><span class="o">)))</span> <span class="o">;;</span>
+<span class="n">subst</span> <span class="n">e1</span> <span class="s2">&quot;x&quot;</span> <span class="o">(</span><span class="nc">Val</span> <span class="mi">5</span><span class="o">);;</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val e1 : exp =
+  Op (Add, Op (Add, Ide &#34;x&#34;, Ide &#34;y&#34;), Sumall (&#34;x&#34;, 1, 10, Ide &#34;x&#34;))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : exp = Op (Add, Op (Add, Val 5, Ide &#34;y&#34;), Sumall (&#34;x&#34;, 1, 10, Ide &#34;x&#34;))
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Ex-3:">Ex 3:<a class="anchor-link" href="#Ex-3:">&#182;</a></h4><p>Si modifichi il codice (riportato qui sotto) dell'interprete big step delle espressioni in modo tenere conto della semantica estesa con il costrutto <code>sumall</code>, definita come segue. Per l'operazione di sostituzione $e \{x := v\}$ utilizzare la funzione <code>subst</code> definita nell'esercizio precedente.</p>
+$$
+n \rightarrow_{bs} n
+\qquad
+\frac{E_1 \rightarrow_{bs} n_1 \quad E_2 \rightarrow_{bs} n_2 \quad n_1 \mbox{op } n_2 = n}{E_1 \, op \, E_1 \rightarrow_{bs} n}
+$$$$
+\frac{e\{x:=n\} \rightarrow_{bs} n'}
+{\mbox{sumall } ( x ; n ; n ) \, e \rightarrow_{bs} n'}
+$$$$
+\frac{n_1&lt;n_2 \quad e\{x:=n_1\} \rightarrow_{bs} n' \quad \mbox{sumall } ( x ; n_1+1 ; n_2 ) \, e \rightarrow_{bs} n'' \quad n = n' + n''}
+{\mbox{sumall } ( x ; n_1 ; n_2 ) \, e \rightarrow_{bs} n}
+$$<p><strong>NOTA1:</strong> non sono previste regole per gli identificatori (sono gestiti dalla sostituzione).</p>
+<p><strong>NOTA2:</strong> la semantica non prevede transizioni in caso di identificatori liberi (non legati da <code>sumall</code>) o indici numerici usati nel costrutto <code>sumall</code> non sono ben definiti</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[26]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* interprete big-step *)</span>
+<span class="k">let</span> <span class="k">rec</span> <span class="n">eval</span> <span class="n">e</span> <span class="o">=</span>
     <span class="k">match</span> <span class="n">e</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="nc">EInt</span><span class="o">(</span><span class="n">n</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Int</span><span class="o">(</span><span class="n">n</span><span class="o">)</span>
-    <span class="o">|</span> <span class="nc">CstTrue</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="bp">true</span><span class="o">)</span>
-    <span class="o">|</span> <span class="nc">CstFalse</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="bp">false</span><span class="o">)</span>
-    <span class="o">|</span> <span class="nc">EString</span><span class="o">(</span><span class="n">s</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">String</span><span class="o">(</span><span class="n">s</span><span class="o">)</span>
-    <span class="o">|</span> <span class="nc">Den</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">s</span> <span class="n">i</span><span class="o">)</span>
-
-    <span class="o">|</span> <span class="nc">Prod</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span><span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">int_times</span><span class="o">((</span><span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span><span class="o">),</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span><span class="o">))</span>
-    <span class="o">|</span> <span class="nc">Sum</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">int_plus</span><span class="o">((</span><span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span><span class="o">),</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span><span class="o">))</span>
-    <span class="o">|</span> <span class="nc">Diff</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">int_sub</span><span class="o">((</span><span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span><span class="o">),</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span><span class="o">))</span>
-    <span class="o">|</span> <span class="nc">Div</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">int_div</span><span class="o">((</span><span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span><span class="o">),</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span><span class="o">))</span>
-
-    <span class="o">|</span> <span class="nc">IsZero</span><span class="o">(</span><span class="n">e1</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">is_zero</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span><span class="o">)</span>
-    <span class="o">|</span> <span class="nc">Eq</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">int_eq</span><span class="o">((</span><span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span><span class="o">),</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span><span class="o">))</span>
-    <span class="o">|</span> <span class="nc">LessThan</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">less_than</span><span class="o">((</span><span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span><span class="o">),(</span><span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span><span class="o">))</span>
-    <span class="o">|</span> <span class="nc">GreaterThan</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">greater_than</span><span class="o">((</span><span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span><span class="o">),(</span><span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span><span class="o">))</span>
-
-    <span class="o">|</span> <span class="nc">And</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">bool_and</span><span class="o">((</span><span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span><span class="o">),(</span><span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span><span class="o">))</span>
-    <span class="o">|</span> <span class="nc">Or</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">bool_or</span><span class="o">((</span><span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span><span class="o">),(</span><span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span><span class="o">))</span>
-    <span class="o">|</span> <span class="nc">Not</span><span class="o">(</span><span class="n">e1</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">bool_not</span><span class="o">(</span><span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span><span class="o">)</span>
-
-    <span class="o">|</span> <span class="nc">IfThenElse</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span><span class="n">e2</span><span class="o">,</span><span class="n">e3</span><span class="o">)</span> <span class="o">-&gt;</span> 
-        <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span> <span class="k">in</span> 
-            <span class="o">(</span><span class="k">match</span> <span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TBool</span><span class="o">,</span><span class="n">g</span><span class="o">),</span><span class="n">g</span><span class="o">)</span> <span class="k">with</span>
-            <span class="o">|(</span><span class="bp">true</span><span class="o">,</span> <span class="nc">Bool</span><span class="o">(</span><span class="bp">true</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span>
-            <span class="o">|(</span><span class="bp">true</span><span class="o">,</span> <span class="nc">Bool</span><span class="o">(</span><span class="bp">false</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="n">eval</span> <span class="n">e3</span> <span class="n">s</span>
-            <span class="o">|(_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
-            <span class="o">)</span>
-    <span class="o">|</span> <span class="nc">Let</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">e</span><span class="o">,</span> <span class="n">ebody</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">eval</span> <span class="n">ebody</span> <span class="o">(</span><span class="n">bind</span> <span class="n">s</span> <span class="n">i</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e</span> <span class="n">s</span><span class="o">))</span>
-    <span class="o">|</span> <span class="nc">Fun</span><span class="o">(</span><span class="n">arg</span><span class="o">,</span> <span class="n">ebody</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Closure</span><span class="o">(</span><span class="n">arg</span><span class="o">,</span><span class="n">ebody</span><span class="o">,</span><span class="n">s</span><span class="o">)</span>
-    <span class="o">|</span> <span class="nc">Letrec</span><span class="o">(</span><span class="n">f</span><span class="o">,</span> <span class="n">arg</span><span class="o">,</span> <span class="n">fBody</span><span class="o">,</span> <span class="n">leBody</span><span class="o">)</span> <span class="o">-&gt;</span>
-        <span class="k">let</span> <span class="n">benv</span> <span class="o">=</span> <span class="n">bind</span> <span class="o">(</span><span class="n">s</span><span class="o">)</span> <span class="o">(</span><span class="n">f</span><span class="o">)</span> <span class="o">(</span><span class="nc">RecClosure</span><span class="o">(</span><span class="n">f</span><span class="o">,</span> <span class="n">arg</span><span class="o">,</span> <span class="n">fBody</span><span class="o">,</span><span class="n">s</span><span class="o">))</span> <span class="k">in</span>
-            <span class="n">eval</span> <span class="n">leBody</span> <span class="n">benv</span>
-    <span class="o">|</span> <span class="nc">Apply</span><span class="o">(</span><span class="n">eF</span><span class="o">,</span> <span class="n">eArg</span><span class="o">)</span> <span class="o">-&gt;</span>
-        <span class="k">let</span> <span class="n">fclosure</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">eF</span> <span class="n">s</span> <span class="k">in</span> 
-            <span class="o">(</span><span class="k">match</span> <span class="n">fclosure</span> <span class="k">with</span> 
-            <span class="o">|</span> <span class="nc">Closure</span><span class="o">(</span><span class="n">arg</span><span class="o">,</span> <span class="n">fbody</span><span class="o">,</span> <span class="n">fDecEnv</span><span class="o">)</span> <span class="o">-&gt;</span> 
-                <span class="k">let</span> <span class="n">aVal</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">eArg</span> <span class="n">s</span> <span class="k">in</span> 
-                <span class="k">let</span> <span class="n">aenv</span> <span class="o">=</span> <span class="n">bind</span> <span class="n">fDecEnv</span> <span class="n">arg</span> <span class="n">aVal</span> <span class="k">in</span> 
-                <span class="n">eval</span> <span class="n">fbody</span> <span class="n">aenv</span> 
-            <span class="o">|</span> <span class="nc">RecClosure</span><span class="o">(</span><span class="n">f</span><span class="o">,</span> <span class="n">arg</span><span class="o">,</span> <span class="n">fbody</span><span class="o">,</span> <span class="n">fDecEnv</span><span class="o">)</span> <span class="o">-&gt;</span> 
-                <span class="k">let</span> <span class="n">aVal</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">eArg</span> <span class="n">s</span> <span class="k">in</span>
-                <span class="k">let</span> <span class="n">rEnv</span> <span class="o">=</span> <span class="n">bind</span> <span class="n">fDecEnv</span> <span class="n">f</span> <span class="n">fclosure</span> <span class="k">in</span>
-                <span class="k">let</span> <span class="n">aenv</span> <span class="o">=</span> <span class="n">bind</span> <span class="n">rEnv</span> <span class="n">arg</span> <span class="n">aVal</span> <span class="k">in</span> 
-                <span class="n">eval</span> <span class="n">fbody</span> <span class="n">aenv</span>
-            <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
-            <span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Val</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="nc">Val</span> <span class="n">n</span>
+    <span class="o">|</span> <span class="nc">Op</span> <span class="o">(</span><span class="n">op</span><span class="o">,</span><span class="n">e1</span><span class="o">,</span><span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="c">(* chiamate ricorsive che calcolano le derivazioni per e1 ed e2 *)</span>
+        <span class="k">match</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e1</span><span class="o">,</span> <span class="n">eval</span> <span class="n">e2</span><span class="o">)</span> <span class="k">with</span>
+        <span class="o">|</span> <span class="o">(</span><span class="nc">Val</span> <span class="n">n1</span><span class="o">,</span> <span class="nc">Val</span> <span class="n">n2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="k">match</span> <span class="n">op</span> <span class="k">with</span>   <span class="c">(* calcola n1 op n2 *)</span>
+                               <span class="o">|</span> <span class="nc">Add</span> <span class="o">-&gt;</span> <span class="nc">Val</span> <span class="o">(</span><span class="n">n1</span><span class="o">+</span><span class="n">n2</span><span class="o">)</span>
+                               <span class="o">|</span> <span class="nc">Sub</span> <span class="o">-&gt;</span> <span class="nc">Val</span> <span class="o">(</span><span class="n">n1</span><span class="o">-</span><span class="n">n2</span><span class="o">)</span>
+                               <span class="o">|</span> <span class="nc">Mul</span> <span class="o">-&gt;</span> <span class="nc">Val</span> <span class="o">(</span><span class="n">n1</span><span class="o">*</span><span class="n">n2</span><span class="o">)</span>
+                               <span class="o">|</span> <span class="nc">Div</span> <span class="o">-&gt;</span> <span class="nc">Val</span> <span class="o">(</span><span class="n">n1</span><span class="o">/</span><span class="n">n2</span><span class="o">)</span>
+                               <span class="o">)</span>
+        <span class="c">(* caso (inutile) aggiunto solo per rendere esaustivo il pattern matching *)</span>
+        <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="n">failwith</span> <span class="s2">&quot;Errore impossibile che si verifichi&quot;</span> <span class="o">;;</span>
 </pre></div>
 
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[26]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val eval : exp -&gt; exp = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Esempio-di-esecuzione:-fattoriale">Esempio di esecuzione: fattoriale<a class="anchor-link" href="#Esempio-di-esecuzione:-fattoriale">&#182;</a></h3>
+<p><strong>TEST:</strong> calcolare il risultato delle seguenti espressioni:</p>
+<ul>
+<li>sumall (x; 1; 10) x</li>
+<li>100 + sumall (x;1;10) (sumall (y;1;10) x*y)</li>
+</ul>
+<p>Risultati attesi: 55 e 3125</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[28]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">myRP</span> <span class="o">=</span> 
-   <span class="nc">Letrec</span><span class="o">(</span><span class="s2">&quot;fact&quot;</span><span class="o">,</span> <span class="s2">&quot;n&quot;</span><span class="o">,</span>   
-          <span class="nc">IfThenElse</span><span class="o">(</span><span class="nc">Eq</span><span class="o">(</span><span class="nc">Den</span><span class="o">(</span><span class="s2">&quot;n&quot;</span><span class="o">),</span><span class="nc">EInt</span><span class="o">(</span><span class="mi">0</span><span class="o">)),</span>
-                     <span class="nc">EInt</span><span class="o">(</span><span class="mi">1</span><span class="o">),</span>
-                     <span class="nc">Prod</span><span class="o">(</span><span class="nc">Den</span><span class="o">(</span><span class="s2">&quot;n&quot;</span><span class="o">),</span>
-                          <span class="nc">Apply</span><span class="o">(</span><span class="nc">Den</span><span class="o">(</span><span class="s2">&quot;fact&quot;</span><span class="o">),</span> 
-                                <span class="nc">Diff</span><span class="o">(</span><span class="nc">Den</span><span class="o">(</span><span class="s2">&quot;n&quot;</span><span class="o">),</span><span class="nc">EInt</span><span class="o">(</span><span class="mi">1</span><span class="o">))))),</span>                  
-          <span class="nc">Apply</span><span class="o">(</span><span class="nc">Den</span><span class="o">(</span><span class="s2">&quot;fact&quot;</span><span class="o">),</span><span class="nc">EInt</span><span class="o">(</span><span class="mi">3</span><span class="o">)));;</span>
-
-<span class="n">eval</span> <span class="n">myRP</span> <span class="n">emptyenv</span><span class="o">;;</span>
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">e2</span> <span class="o">=</span> <span class="nc">Sumall</span> <span class="o">(</span><span class="s2">&quot;x&quot;</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">10</span><span class="o">,</span><span class="nc">Ide</span> <span class="s2">&quot;x&quot;</span><span class="o">);;</span>
+<span class="k">let</span> <span class="n">e3</span> <span class="o">=</span> <span class="nc">Op</span> <span class="o">(</span><span class="nc">Add</span><span class="o">,</span> <span class="nc">Val</span> <span class="mi">100</span><span class="o">,</span> 
+                 <span class="o">(</span><span class="nc">Sumall</span> <span class="o">(</span><span class="s2">&quot;x&quot;</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">10</span><span class="o">,(</span><span class="nc">Sumall</span> <span class="o">(</span><span class="s2">&quot;y&quot;</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">10</span><span class="o">,</span> <span class="nc">Op</span> <span class="o">(</span> <span class="nc">Mul</span><span class="o">,</span> <span class="nc">Ide</span> <span class="s2">&quot;x&quot;</span><span class="o">,</span> <span class="nc">Ide</span> <span class="s2">&quot;y&quot;</span><span class="o">))))))</span> <span class="o">;;</span>
+                 
+<span class="n">eval</span> <span class="n">e2</span><span class="o">;;</span>
+<span class="n">eval</span> <span class="n">e3</span><span class="o">;;</span>
 </pre></div>
 
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val e2 : exp = Sumall (&#34;x&#34;, 1, 10, Ide &#34;x&#34;)
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val e3 : exp =
+  Op (Add, Val 100,
+   Sumall (&#34;x&#34;, 1, 10, Sumall (&#34;y&#34;, 1, 10, Op (Mul, Ide &#34;x&#34;, Ide &#34;y&#34;))))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : exp = Val 55
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : exp = Val 3125
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Esercizio-supplementare:">Esercizio supplementare:<a class="anchor-link" href="#Esercizio-supplementare:">&#182;</a></h4><p>Scrivere una funzione <code>check</code> che analizzi staticamente la correttezza di una espressione nel linguaggio esteso. La funzione prende l'espressione e restituisce <code>true</code> se essa non contiene variabili libere e tutti i <code>sumall</code> hanno indici che garantiscono la terminazione del calcolo, <code>false</code> altrimenti.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[30]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-OCaml"><pre><span></span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[30]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val check : exp -&gt; bool = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>TEST:</strong> applicare la funzione <code>check</code> alle seguenti espressioni:</p>
+<ul>
+<li>$((5+y)+(\mbox{sumall }x;1;10) \, x)$</li>
+<li>$(5+(\mbox{sumall }x;1;10) \, x)$</li>
+<li>$(5+(\mbox{sumall }x;10;1) \, x)$</li>
+</ul>
+<p>Risultati attesi: <code>false</code>,<code>true</code>,<code>false</code></p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[32]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">e4</span> <span class="o">=</span> <span class="nc">Op</span> <span class="o">(</span><span class="nc">Add</span><span class="o">,</span> <span class="o">(</span><span class="nc">Op</span> <span class="o">(</span><span class="nc">Add</span><span class="o">,</span> <span class="nc">Val</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">Ide</span> <span class="s2">&quot;y&quot;</span><span class="o">)),</span> <span class="o">(</span><span class="nc">Sumall</span> <span class="o">(</span><span class="s2">&quot;x&quot;</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">10</span><span class="o">,</span><span class="nc">Ide</span> <span class="s2">&quot;x&quot;</span><span class="o">)))</span> <span class="o">;;</span>
+<span class="k">let</span> <span class="n">e5</span> <span class="o">=</span> <span class="nc">Op</span> <span class="o">(</span><span class="nc">Add</span><span class="o">,</span> <span class="nc">Val</span> <span class="mi">5</span><span class="o">,</span> <span class="o">(</span><span class="nc">Sumall</span> <span class="o">(</span><span class="s2">&quot;x&quot;</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">10</span><span class="o">,</span><span class="nc">Ide</span> <span class="s2">&quot;x&quot;</span><span class="o">)))</span> <span class="o">;;</span>
+<span class="k">let</span> <span class="n">e6</span> <span class="o">=</span> <span class="nc">Op</span> <span class="o">(</span><span class="nc">Add</span><span class="o">,</span> <span class="nc">Val</span> <span class="mi">5</span><span class="o">,</span> <span class="o">(</span><span class="nc">Sumall</span> <span class="o">(</span><span class="s2">&quot;x&quot;</span><span class="o">,</span><span class="mi">10</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="nc">Ide</span> <span class="s2">&quot;x&quot;</span><span class="o">)))</span> <span class="o">;;</span>
+
+<span class="n">check</span> <span class="n">e4</span><span class="o">;;</span>
+<span class="n">check</span> <span class="n">e5</span><span class="o">;;</span>
+<span class="n">check</span> <span class="n">e6</span><span class="o">;;</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[32]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val e4 : exp =
+  Op (Add, Op (Add, Val 5, Ide &#34;y&#34;), Sumall (&#34;x&#34;, 1, 10, Ide &#34;x&#34;))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[32]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val e5 : exp = Op (Add, Val 5, Sumall (&#34;x&#34;, 1, 10, Ide &#34;x&#34;))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[32]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val e6 : exp = Op (Add, Val 5, Sumall (&#34;x&#34;, 10, 1, Ide &#34;x&#34;))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[32]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : bool = false
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[32]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : bool = true
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[32]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : bool = false
+</pre>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
