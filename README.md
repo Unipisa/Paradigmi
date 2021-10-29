@@ -8,7 +8,7 @@ L'esecuzione dei notebook in questo repository richiede di installare un certo n
 
 Per semplificare il lavoro, è stato predisposto un *container Docker* in cui tutti questi strumenti sono già installati e pronti per l'esecuzione dei notebook di questo repository.
 
-E' anche disponibile una versione online del container Docker con i notebook pre-installati, messa a disposizione dall'Università di Pisa per gli studenti del corso. Si tratta di una versione sperimentale, ma è possibile utilizzarla seguendo le indicazioni disponibili nella sezione [Uso di Jupyterhub di Ateneo](#Uso di Jupyterhub di Ateneo)
+E' anche disponibile una versione online del container Docker con i notebook pre-installati, messa a disposizione dall'Università di Pisa per gli studenti del corso. Si tratta di una versione sperimentale, ma è possibile utilizzarla seguendo le indicazioni disponibili nella sezione: [Uso di Jupyterhub di Ateneo](#uso-di-jupyterhub-di-ateneo)
 
 ## Installazione
 
