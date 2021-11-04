@@ -13974,7 +13974,7 @@ a.anchor-link {
 <h2 id="MiniCaML:-Costrutto-try-with">MiniCaML: Costrutto try-with<a class="anchor-link" href="#MiniCaML:-Costrutto-try-with">&#182;</a></h2><p>Estendere l'interprete visto a lezione per implementare una rudimentale gestione delle eccezioni:</p>
 <ul>
 <li>Definire un insieme di eccezioni, contenente almeno <code>VarUnbound</code> e <code>NonBooleanGuard</code></li>
-<li>Definire un costrutto try-with che permetta all'utente di restituire un valore alternativo quando viene solelvata un'eccezzione</li>
+<li>Definire un costrutto try-with che permetta all'utente di restituire un valore alternativo quando viene sollevata un'eccezione</li>
 </ul>
 <p>Esempio (in Ocaml):</p>
 
@@ -13988,12 +13988,35 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Soluzione:">Soluzione:<a class="anchor-link" href="#Soluzione:">&#182;</a></h2><p>Quando estendiamo un interprete per implementare un nuovo costrutto del linguaggio, nella maggior parte dei casi si procende in 2 step:</p>
+<ul>
+<li><strong>Estendere la sintassi</strong>: In questo caso creando un nuovo tipo di espressione nell'Albero della sintassi astratta</li>
+<li><strong>Estendere la semantica</strong>: In questo caso creando nuovi valori evT che rappresentino i vari errori</li>
+</ul>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Tipi-ed-Espressioni">Tipi ed Espressioni<a class="anchor-link" href="#Tipi-ed-Espressioni">&#182;</a></h3>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Estendiamo la sintassi aggiungendo un nuovo nodo all'AST, il nodo <code>TryWith</code>.
+<code>TryWith</code> è composto da</p>
+<ul>
+<li>un'espressione <code>e1</code>, che potrebbe sollevare una eccezione quando viene valutata</li>
+<li>una eccezione <code>excep</code></li>
+<li>una espressione <code>e2</code>, che va valutata quando viene sollevata una eccezione <code>exec</code> durante la valutazione di <code>e1</code></li>
+</ul>
+<p>Definiamo <code>TryWith</code> come altro costruttore in <code>exp</code> e definiamo un altro tipo variant <code>my_exception</code> per contenere 3 diversi tipi di eccezioni: Variabili non definite, Costrutti if con una guardia non booleana, e Divisioni per zero. Questi eccezioni sono solo <strong>elementi sintattici</strong>, rappresentano quello che l'utente scriverebbe dopo la keyword <code>with</code> in MiniCaml.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[25]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Identificatori *)</span>
@@ -14001,6 +14024,10 @@ a.anchor-link {
 
 <span class="c">(* I tipi *)</span>
 <span class="k">type</span> <span class="n">tname</span> <span class="o">=</span>  <span class="nc">TInt</span> <span class="o">|</span> <span class="nc">TBool</span> <span class="o">|</span> <span class="nc">TString</span> <span class="o">|</span> <span class="nc">TClosure</span> <span class="o">|</span> <span class="nc">TRecClosure</span> <span class="o">|</span> <span class="nc">TUnBound</span>
+
+
+<span class="c">(* Eccezioni, built-in nel linguaggio, non definibili dall&#39;utente di MiniCaml*)</span>
+<span class="k">type</span> <span class="n">my_exception</span> <span class="o">=</span> <span class="nc">ExVarUnbound</span> <span class="o">|</span> <span class="nc">ExNonBoolGuard</span> <span class="o">|</span> <span class="nc">ExDivByZero</span>
 
 <span class="c">(* Abstract Expressions = espressioni nella sintassi astratta, </span>
 <span class="c">   compongono l&#39;Albero di Sintassi Astratta *)</span>
@@ -14030,7 +14057,8 @@ a.anchor-link {
     <span class="o">|</span> <span class="nc">Letrec</span> <span class="k">of</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">ide</span>  <span class="o">*</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span>
     <span class="o">|</span> <span class="nc">Fun</span> <span class="k">of</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">exp</span>
     <span class="o">|</span> <span class="nc">Apply</span> <span class="k">of</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span>
-    <span class="c">(* TODO: Costrutto try-with*)</span>
+    <span class="c">(*Costrutto try-with*)</span>
+    <span class="o">|</span> <span class="nc">TryWith</span> <span class="k">of</span> <span class="n">exp</span><span class="o">*</span><span class="n">my_exception</span><span class="o">*</span><span class="n">exp</span>
 </pre></div>
 
      </div>
@@ -14038,15 +14066,113 @@ a.anchor-link {
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[25]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type ide = string
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[25]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type tname = TInt | TBool | TString | TClosure | TRecClosure | TUnBound
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[25]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type my_exception = ExVarUnbound | ExNonBoolGuard | ExDivByZero
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[25]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type exp =
+    EInt of int
+  | CstTrue
+  | CstFalse
+  | EString of string
+  | Den of ide
+  | Sum of exp * exp
+  | Diff of exp * exp
+  | Prod of exp * exp
+  | Div of exp * exp
+  | IsZero of exp
+  | Eq of exp * exp
+  | LessThan of exp * exp
+  | GreaterThan of exp * exp
+  | And of exp * exp
+  | Or of exp * exp
+  | Not of exp
+  | IfThenElse of exp * exp * exp
+  | Let of ide * exp * exp
+  | Letrec of ide * ide * exp * exp
+  | Fun of ide * exp
+  | Apply of exp * exp
+  | TryWith of exp * my_exception * exp
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Ambiente">Ambiente<a class="anchor-link" href="#Ambiente">&#182;</a></h3>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Passiamo ora al secondo step, la semantica. Come dovrebbe essere valutata una espressione <code>TryWith(e1, excep, e2)</code>? Per gestire le eccezioni secondo l'approccio funzionale, possiamo introdurre dei <strong>valori semantici</strong> di errore, oltre a <code>UnBound</code>, quali <code>NonBoolGuard</code> e <code>DivByZero</code>. Ci aspettiamo che l'espressione <code>Div(EInt(42), EInt(2))</code> venga valutata al valore <code>EInt(21)</code>, mentre l'espressione <code>Div(EInt(42), EInt(0))</code> venga valutata al valore <code>DivByZero</code>. (Questo è lo stesso approccio seguito nell'aritmetica a virgola mobile IEEE 754, dove dividento un numero per zero viene restituita una particolare sequenza binaria, interpretata come <code>NaN</code>, Not a Number).</p>
+<p>Quindi una espressione, quando è presente un errore, viene valutata a un valore di errore come quelli elencati. Diventa allora immediato definire la semantica di <code>TryWith(e1, excep, e2)</code>: Se il risultato di <code>e1</code> è un valore "normale", allora va restituito quel valore; se invece il risultato di <code>e2</code> è un valore di errore, allora bisogna valutare <code>e2</code> se e solo se l'eccezione (semantica) incontrata coincide con l'eccezione (sintattica) <code>excep</code>.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[26]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Ambiente polimorfo *)</span>
@@ -14060,6 +14186,8 @@ a.anchor-link {
     <span class="o">|</span> <span class="nc">Closure</span> <span class="k">of</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">evT</span> <span class="n">env</span> 
     <span class="o">|</span> <span class="nc">RecClosure</span> <span class="k">of</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">evT</span> <span class="n">env</span>
     <span class="o">|</span> <span class="nc">UnBound</span>
+    <span class="o">|</span> <span class="nc">NonBoolGuard</span>
+    <span class="o">|</span> <span class="nc">DivByZero</span>
 
 <span class="c">(* Ambiente vuoto *)</span>
 <span class="k">let</span> <span class="n">emptyenv</span> <span class="o">=</span> <span class="k">function</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="nc">UnBound</span>
@@ -14074,15 +14202,98 @@ a.anchor-link {
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[26]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type &#39;t env = ide -&gt; &#39;t
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[26]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type evT =
+    Int of int
+  | Bool of bool
+  | String of string
+  | Closure of ide * exp * evT env
+  | RecClosure of ide * ide * exp * evT env
+  | UnBound
+  | NonBoolGuard
+  | DivByZero
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[26]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val emptyenv : &#39;a -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[26]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val bind : evT env -&gt; ide -&gt; evT -&gt; ide -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Typechecking">Typechecking<a class="anchor-link" href="#Typechecking">&#182;</a></h3>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Non serve fare alcuna modifica alla funzione di typechecking.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[27]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Type-checking *)</span>
@@ -14122,15 +14333,55 @@ a.anchor-link {
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[27]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val typecheck : tname * evT -&gt; bool = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[27]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>exception RuntimeError of string
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Primitive">Primitive<a class="anchor-link" href="#Primitive">&#182;</a></h3>
+<h3 id="Primitive">Primitive<a class="anchor-link" href="#Primitive">&#182;</a></h3><p>L'unica primitiva da modificare è quella della divisione.</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[28]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* PRIMITIVE del linguaggio *)</span>
@@ -14169,7 +14420,9 @@ a.anchor-link {
     <span class="k">match</span><span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">x</span><span class="o">),</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TInt</span><span class="o">,</span><span class="n">y</span><span class="o">),</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="k">with</span>
     <span class="o">|</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="bp">true</span><span class="o">,</span> <span class="nc">Int</span><span class="o">(</span><span class="n">v</span><span class="o">),</span> <span class="nc">Int</span><span class="o">(</span><span class="n">w</span><span class="o">))</span> <span class="o">-&gt;</span> 
                     <span class="k">if</span> <span class="n">w</span><span class="o">&lt;&gt;</span><span class="mi">0</span> <span class="k">then</span> <span class="nc">Int</span><span class="o">(</span><span class="n">v</span> <span class="o">/</span> <span class="n">w</span><span class="o">)</span>
-                            <span class="k">else</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">RuntimeError</span> <span class="s2">&quot;Division by zero&quot;</span><span class="o">)</span>
+                            <span class="c">(*Anzichè chiamare la funzione raise, che fa terminare l&#39;interprete con un errore,</span>
+<span class="c">                              restituiamo come risultato un valore di errore*)</span>
+                            <span class="k">else</span> <span class="nc">DivByZero</span> 
     <span class="o">|</span> <span class="o">(_,_,_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
 
 <span class="c">(* Operazioni di confronto *)</span>
@@ -14205,15 +14458,189 @@ a.anchor-link {
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val is_zero : evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_eq : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_plus : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_sub : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_times : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_div : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val less_than : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val greater_than : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val bool_and : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val bool_or : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[28]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val bool_not : evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Interprete">Interprete<a class="anchor-link" href="#Interprete">&#182;</a></h3>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[29]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Interprete *)</span>
@@ -14223,6 +14650,9 @@ a.anchor-link {
     <span class="o">|</span> <span class="nc">CstTrue</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="bp">true</span><span class="o">)</span>
     <span class="o">|</span> <span class="nc">CstFalse</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="bp">false</span><span class="o">)</span>
     <span class="o">|</span> <span class="nc">EString</span><span class="o">(</span><span class="n">s</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">String</span><span class="o">(</span><span class="n">s</span><span class="o">)</span>
+    <span class="c">(*È importante sottolineare che, essendo l&#39;ambiente definito come una funzione, </span>
+<span class="c">      se s è un ambiente e x è una variabile definita, la valutazione di Den(i) </span>
+<span class="c">      restituisce il valore di errore Unbound*)</span>
     <span class="o">|</span> <span class="nc">Den</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">s</span> <span class="n">i</span><span class="o">)</span>
 
     <span class="o">|</span> <span class="nc">Prod</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span><span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">int_times</span><span class="o">((</span><span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span><span class="o">),</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span><span class="o">))</span>
@@ -14244,7 +14674,10 @@ a.anchor-link {
             <span class="o">(</span><span class="k">match</span> <span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TBool</span><span class="o">,</span><span class="n">g</span><span class="o">),</span><span class="n">g</span><span class="o">)</span> <span class="k">with</span>
             <span class="o">|(</span><span class="bp">true</span><span class="o">,</span> <span class="nc">Bool</span><span class="o">(</span><span class="bp">true</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span>
             <span class="o">|(</span><span class="bp">true</span><span class="o">,</span> <span class="nc">Bool</span><span class="o">(</span><span class="bp">false</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="n">eval</span> <span class="n">e3</span> <span class="n">s</span>
-            <span class="o">|(_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+            <span class="c">(*Se la guardia non è un valore booleano, ovvero se </span>
+<span class="c">              typecheck(TBool, g) restituisce false, allora il valore </span>
+<span class="c">              dell&#39;espressione ifthenelse deve essere il valore di errore NonBoolGuard*)</span>
+            <span class="o">|(_,_)</span> <span class="o">-&gt;</span> <span class="nc">NonBoolGuard</span>
             <span class="o">)</span>
     <span class="o">|</span> <span class="nc">Let</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">e</span><span class="o">,</span> <span class="n">ebody</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">eval</span> <span class="n">ebody</span> <span class="o">(</span><span class="n">bind</span> <span class="n">s</span> <span class="n">i</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e</span> <span class="n">s</span><span class="o">))</span>
     <span class="o">|</span> <span class="nc">Fun</span><span class="o">(</span><span class="n">arg</span><span class="o">,</span> <span class="n">ebody</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Closure</span><span class="o">(</span><span class="n">arg</span><span class="o">,</span><span class="n">ebody</span><span class="o">,</span><span class="n">s</span><span class="o">)</span>
@@ -14265,39 +14698,278 @@ a.anchor-link {
                 <span class="n">eval</span> <span class="n">fbody</span> <span class="n">aenv</span>
             <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
             <span class="o">)</span>
+    <span class="c">(*TryWith valuta la prima espressione, </span>
+<span class="c">      se non ottiene un errore, allora restituisce il valore della prima espressione</span>
+<span class="c">      se ottiene un errore, che corrisponde al with, allora restituisce il valore della la seconda espressione,</span>
+<span class="c">      se ottiene un errore che non corrisponde al with, allora restituisce quel valore di errore*)</span>
+    <span class="o">|</span> <span class="nc">TryWith</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">ex</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">let</span> <span class="n">v</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span> <span class="k">in</span>
+        <span class="k">match</span> <span class="o">(</span><span class="n">v</span><span class="o">,</span> <span class="n">ex</span><span class="o">)</span> <span class="k">with</span> 
+        <span class="o">|</span> <span class="nc">UnBound</span><span class="o">,</span>      <span class="nc">ExVarUnbound</span>   <span class="o">-&gt;</span> <span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span>
+        <span class="o">|</span> <span class="nc">NonBoolGuard</span><span class="o">,</span> <span class="nc">ExNonBoolGuard</span> <span class="o">-&gt;</span> <span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span>
+        <span class="o">|</span> <span class="nc">DivByZero</span><span class="o">,</span> <span class="nc">ExDivByZero</span>       <span class="o">-&gt;</span> <span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span>
+        <span class="o">|</span> <span class="o">_,</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="n">v</span><span class="o">;;</span>
 </pre></div>
 
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[29]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val eval : exp -&gt; evT env -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Esempio-di-esecuzione:-fattoriale">Esempio di esecuzione: fattoriale<a class="anchor-link" href="#Esempio-di-esecuzione:-fattoriale">&#182;</a></h3>
+<h3 id="Esempio-di-esecuzione">Esempio di esecuzione<a class="anchor-link" href="#Esempio-di-esecuzione">&#182;</a></h3>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[31]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">myRP</span> <span class="o">=</span> 
-   <span class="nc">Letrec</span><span class="o">(</span><span class="s2">&quot;fact&quot;</span><span class="o">,</span> <span class="s2">&quot;n&quot;</span><span class="o">,</span>   
-          <span class="nc">IfThenElse</span><span class="o">(</span><span class="nc">Eq</span><span class="o">(</span><span class="nc">Den</span><span class="o">(</span><span class="s2">&quot;n&quot;</span><span class="o">),</span><span class="nc">EInt</span><span class="o">(</span><span class="mi">0</span><span class="o">)),</span>
-                     <span class="nc">EInt</span><span class="o">(</span><span class="mi">1</span><span class="o">),</span>
-                     <span class="nc">Prod</span><span class="o">(</span><span class="nc">Den</span><span class="o">(</span><span class="s2">&quot;n&quot;</span><span class="o">),</span>
-                          <span class="nc">Apply</span><span class="o">(</span><span class="nc">Den</span><span class="o">(</span><span class="s2">&quot;fact&quot;</span><span class="o">),</span> 
-                                <span class="nc">Diff</span><span class="o">(</span><span class="nc">Den</span><span class="o">(</span><span class="s2">&quot;n&quot;</span><span class="o">),</span><span class="nc">EInt</span><span class="o">(</span><span class="mi">1</span><span class="o">))))),</span>                  
-          <span class="nc">Apply</span><span class="o">(</span><span class="nc">Den</span><span class="o">(</span><span class="s2">&quot;fact&quot;</span><span class="o">),</span><span class="nc">EInt</span><span class="o">(</span><span class="mi">3</span><span class="o">)));;</span>
+<div class=" highlight hl-OCaml"><pre><span></span><span class="c">(*try </span>
+<span class="c">    if true then 42 else 0</span>
+<span class="c">with ExNonBoolGuard -&gt; -1*)</span>
+<span class="k">let</span> <span class="n">eCorrect</span> <span class="o">=</span> <span class="nc">TryWith</span><span class="o">(</span>
+    <span class="nc">IfThenElse</span><span class="o">(</span><span class="nc">CstTrue</span><span class="o">,</span><span class="nc">EInt</span><span class="o">(</span><span class="mi">42</span><span class="o">),</span><span class="nc">EInt</span><span class="o">(</span><span class="mi">0</span><span class="o">)),</span> 
+    <span class="nc">ExNonBoolGuard</span><span class="o">,</span> 
+    <span class="nc">EInt</span><span class="o">(-</span><span class="mi">1</span><span class="o">)</span>
+    <span class="o">);;</span>
 
-<span class="n">eval</span> <span class="n">myRP</span> <span class="n">emptyenv</span><span class="o">;;</span>
+<span class="c">(*try </span>
+<span class="c">    if &quot;true&quot; then 42 else 0</span>
+<span class="c">with ExNonBoolGuard -&gt; -1*)</span>
+<span class="k">let</span> <span class="n">eWithException</span> <span class="o">=</span> <span class="nc">TryWith</span><span class="o">(</span>
+    <span class="nc">IfThenElse</span><span class="o">(</span><span class="nc">EString</span><span class="o">(</span><span class="s2">&quot;true&quot;</span><span class="o">),</span><span class="nc">EInt</span><span class="o">(</span><span class="mi">42</span><span class="o">),</span><span class="nc">EInt</span><span class="o">(</span><span class="mi">0</span><span class="o">)),</span> 
+    <span class="nc">ExNonBoolGuard</span><span class="o">,</span> 
+    <span class="nc">EInt</span><span class="o">(-</span><span class="mi">1</span><span class="o">)</span>
+    <span class="o">);;</span>
+
+<span class="c">(*try </span>
+<span class="c">    if true then 42/0 else 0</span>
+<span class="c">with ExDivByZero -&gt; -1*)</span>
+<span class="k">let</span> <span class="n">eWithUncoughtException</span> <span class="o">=</span> <span class="nc">TryWith</span><span class="o">(</span>
+    <span class="nc">IfThenElse</span><span class="o">(</span><span class="nc">CstTrue</span><span class="o">,</span>
+                <span class="nc">Div</span><span class="o">(</span><span class="nc">EInt</span><span class="o">(</span><span class="mi">42</span><span class="o">),</span> <span class="nc">EInt</span><span class="o">(</span><span class="mi">0</span><span class="o">)),</span>
+                <span class="nc">EInt</span><span class="o">(</span><span class="mi">0</span><span class="o">)),</span> 
+    <span class="nc">ExNonBoolGuard</span><span class="o">,</span> 
+    <span class="nc">EInt</span><span class="o">(-</span><span class="mi">1</span><span class="o">)</span>
+    <span class="o">);;</span>
+<span class="n">eval</span> <span class="n">eCorrect</span> <span class="n">emptyenv</span><span class="o">;;</span> <span class="c">(*Mi aspetto 42*)</span>
+<span class="n">eval</span> <span class="n">eWithException</span> <span class="n">emptyenv</span><span class="o">;;</span> <span class="c">(*Mi aspetto -1*)</span>
+<span class="n">eval</span> <span class="n">eWithUncoughtException</span> <span class="n">emptyenv</span><span class="o">;;</span> <span class="c">(*Mi aspetto il valore di errore non catturato da ExNonBoolGuard*)</span>
 </pre></div>
 
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[31]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val eCorrect : exp =
+  TryWith (IfThenElse (CstTrue, EInt 42, EInt 0), ExNonBoolGuard, EInt (-1))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[31]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val eWithException : exp =
+  TryWith (IfThenElse (EString &#34;true&#34;, EInt 42, EInt 0), ExNonBoolGuard,
+   EInt (-1))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[31]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val eWithUncoughtException : exp =
+  TryWith (IfThenElse (CstTrue, Div (EInt 42, EInt 0), EInt 0),
+   ExNonBoolGuard, EInt (-1))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[31]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : evT = Int 42
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[31]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : evT = Int (-1)
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[31]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : evT = DivByZero
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Questo implementazione delle eccezioni in MiniCamel è in realtà incompleta. Dall'espressione</p>
+
+<pre><code>try 
+    (42/0)*10
+with ExDivByZero -&gt; -1</code></pre>
+<p>Ci si aspetta di ricevere il valore <code>-1</code>, perchè viene sollevata una eccezione che dovrebbe essere catturata dal <code>with</code>. Il problema è che il valore <code>DivByZero</code>, che viene creato, non viene passato immediatamente al costrutto try, ma viene usato come risultato parziale di quale che sia la sua espressione padre. In questo caso, il valore <code>DivByZero</code> viene usato da <code>Prod</code> e moltiplicato col valore 10, ma <code>DivByZero</code> non supera il typechecking e l'interprete si ferma.</p>
+<p>La soluzione corretta (implementata ad esmepio da NaN nell'aritmetica a virgola mobile, o dalle monadi in Haskell), sarebbe quella di riscrivere tutte le primitive per far si che, se ricevono in input un valore di errore, restituiscano in output quel valore di errore senza eseguire nessuna altra operazione.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[32]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-OCaml"><pre><span></span><span class="c">(*try </span>
+<span class="c">    (42/0)*10</span>
+<span class="c">with ExDivByZero -&gt; -1*)</span>
+<span class="k">let</span> <span class="n">eWithInnerException</span> <span class="o">=</span> <span class="nc">TryWith</span><span class="o">(</span>
+    <span class="nc">Prod</span><span class="o">(</span>
+         <span class="nc">Div</span><span class="o">(</span><span class="nc">EInt</span><span class="o">(</span><span class="mi">42</span><span class="o">),</span> <span class="nc">EInt</span><span class="o">(</span><span class="mi">0</span><span class="o">)),</span>
+         <span class="nc">EInt</span><span class="o">(</span><span class="mi">10</span><span class="o">)</span>
+        <span class="o">),</span> 
+    <span class="nc">ExDivByZero</span><span class="o">,</span> 
+    <span class="nc">EInt</span><span class="o">(-</span><span class="mi">1</span><span class="o">)</span>
+    <span class="o">);;</span>
+
+<span class="n">eval</span> <span class="n">eWithInnerException</span> <span class="n">emptyenv</span><span class="o">;;</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[32]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val eWithInnerException : exp =
+  TryWith (Prod (Div (EInt 42, EInt 0), EInt 10), ExDivByZero, EInt (-1))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>
+<span class="ansi-red-fg">Exception: RuntimeError &#34;Wrong type&#34;.
+Raised at file &#34;[28]&#34;, line 30, characters 25-53
+Called from file &#34;[29]&#34;, line 61, characters 16-25
+Called from file &#34;toplevel/toploop.ml&#34;, line 208, characters 17-27
+</span></pre>
+</div>
+</div>
+
+</div>
+
 </div>
 
 </div>
