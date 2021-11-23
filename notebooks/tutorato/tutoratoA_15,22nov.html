@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>tutoratoA_22nov</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>tutoratoA_15,22nov</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14029,18 +14029,26 @@ let B = {string: "hi" "world"} in
 </ol>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Soluzione:">Soluzione:<a class="anchor-link" href="#Soluzione:">&#182;</a></h4><p>Nel definire un nuovo tipo per gli insiemi, non possiamo aggiungere  a <code>tname</code> un semplice costruttore <code>TSet</code>, poichè un insieme di interi non è un insieme di stringhe e viceversa. Dobbiamo quindi creare un tipo che sia <strong>parametrico rispetto a un altro tipo</strong>. <code>TSet</code> è infatti un <em>type constructor</em>, ovvero una sorta di "funzione" che, preso in input un tipo, restituisce un nuovo tipo. Lo stesso meccanismo è presente in Ocaml con <em>type constructors</em> come <code>list</code> e <code>option</code>.</p>
+<p>Dobbiamo quindi estendere <code>tname</code> con un costruttore che contenga un altro tname, ad esempio <code>TSet of tname</code>. Così facendo, però, potremmo rappresentare anche tipi che non vogliamo all'interno di MiniCaml, come <code>TSet(TClosure)</code>, ovvero il tipo "insieme di funzioni" (vogliamo solo insiemi di interi, booleani e stringhe). Una possibile soluzione è lasciare <code>TSet of tname</code>, e controllare più avanti, nella fase di typechecking e valutazione, che siano formati solo insiemi del giusto tipo. La soluzione che vedremo, invece, è estendere <code>tname</code> con <code>TSet of tsub</code>, dove <code>tsub</code> è un nuovo variant type (<em>in Ocaml</em>) che ha un sottoinsieme dei costruttori presenti in <code>tname</code>.</p>
+<p>Questa soluzione ha un vantaggio rispetto all'altra: fa uso del typechecking di Ocaml, per il quale sarà <em>sintatticamente</em> impossibile costruire un tipo <code>TSet(TClosure)</code>, senza dover riempire di if la parte semantica, e rischiare di dimenticarsene qualcuno. Uno svantaggio è che ora ci sono due diverse concezioni di <code>TInt</code>, quella dentro <code>tname</code> e quella dentro <code>tsub</code>, quando invece per il l'utente di MiniCaml esiste un solo tipo intero. Ci occuperemo di questa particolarità più avanti.</p>
+<p>Definito il nuovo tipo, è immediato definire i nuovi nodi dell'AST, ricordandosi che ogni insieme, anche vuoto, deve contenere sempre l'informazione sul tipo degli elementi contenuti.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Identificatori *)</span>
 <span class="k">type</span> <span class="n">ide</span> <span class="o">=</span> <span class="kt">string</span><span class="o">;;</span>
 
-<span class="k">type</span> <span class="n">tsub</span> <span class="o">=</span>  <span class="nc">TSInt</span> <span class="o">|</span> <span class="nc">TSBool</span> <span class="o">|</span> <span class="nc">TSString</span><span class="o">;;</span>
-
 <span class="c">(* I tipi *)</span>
+<span class="k">type</span> <span class="n">tsub</span> <span class="o">=</span>  <span class="nc">TInt</span> <span class="o">|</span> <span class="nc">TBool</span> <span class="o">|</span> <span class="nc">TString</span><span class="o">;;</span>
 <span class="k">type</span> <span class="n">tname</span> <span class="o">=</span>  <span class="nc">TInt</span> <span class="o">|</span> <span class="nc">TBool</span> <span class="o">|</span> <span class="nc">TString</span> <span class="o">|</span> <span class="nc">TClosure</span> <span class="o">|</span> <span class="nc">TRecClosure</span> <span class="o">|</span> <span class="nc">TUnBound</span> <span class="o">|</span> <span class="nc">TSet</span> <span class="k">of</span> <span class="n">tsub</span><span class="o">;;</span>
 
 <span class="c">(* Abstract Expressions = espressioni nella sintassi astratta, </span>
@@ -14072,9 +14080,10 @@ let B = {string: "hi" "world"} in
     <span class="o">|</span> <span class="nc">Fun</span> <span class="k">of</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">exp</span>
     <span class="o">|</span> <span class="nc">Apply</span> <span class="k">of</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span>
     <span class="c">(* costruttori di insiemi *)</span>
-    <span class="o">|</span> <span class="nc">Empty</span> <span class="k">of</span> <span class="n">tsub</span>
-    <span class="o">|</span> <span class="nc">Singleton</span> <span class="k">of</span> <span class="n">tsub</span><span class="o">*</span><span class="n">exp</span>
-    <span class="o">|</span> <span class="nc">Of</span> <span class="k">of</span> <span class="n">tsub</span><span class="o">*</span><span class="n">exp</span> <span class="kt">list</span>
+    <span class="c">(**)</span>
+    <span class="o">|</span> <span class="nc">Empty</span> <span class="k">of</span> <span class="n">tsub</span> <span class="c">(*formalizza il caso {int: }*)</span>
+    <span class="o">|</span> <span class="nc">Singleton</span> <span class="k">of</span> <span class="n">tsub</span><span class="o">*</span><span class="n">exp</span> <span class="c">(*formalizza il caso {int: 3}*)</span>
+    <span class="o">|</span> <span class="nc">Of</span> <span class="k">of</span> <span class="n">tsub</span><span class="o">*</span><span class="n">exp</span> <span class="kt">list</span> <span class="c">(*formalizza il caso {int: 3, 1, 4}*)</span>
     <span class="c">(*operatori*)</span>
     <span class="o">|</span><span class="nc">IsEmpty</span> <span class="k">of</span> <span class="n">exp</span>
     <span class="o">|</span><span class="nc">Insert</span> <span class="k">of</span> <span class="n">exp</span><span class="o">*</span><span class="n">exp</span>
@@ -14090,16 +14099,129 @@ let B = {string: "hi" "world"} in
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[1]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type ide = string
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[1]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type tsub = TInt | TBool | TString
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[1]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type tname =
+    TInt
+  | TBool
+  | TString
+  | TClosure
+  | TRecClosure
+  | TUnBound
+  | TSet of tsub
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[1]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type exp =
+    EInt of int
+  | CstTrue
+  | CstFalse
+  | EString of string
+  | Den of ide
+  | Sum of exp * exp
+  | Diff of exp * exp
+  | Prod of exp * exp
+  | Div of exp * exp
+  | IsZero of exp
+  | Eq of exp * exp
+  | LessThan of exp * exp
+  | GreaterThan of exp * exp
+  | And of exp * exp
+  | Or of exp * exp
+  | Not of exp
+  | IfThenElse of exp * exp * exp
+  | Let of ide * exp * exp
+  | Letrec of ide * ide * exp * exp
+  | Fun of ide * exp
+  | Apply of exp * exp
+  | Empty of tsub
+  | Singleton of tsub * exp
+  | Of of tsub * exp list
+  | IsEmpty of exp
+  | Insert of exp * exp
+  | Remove of exp * exp
+  | Member of exp * exp
+  | Union of exp * exp
+  | Intersection of exp * exp
+  | IsSubset of exp * exp
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Es-2:-Tipi-esprimibili">Es 2: Tipi esprimibili<a class="anchor-link" href="#Es-2:-Tipi-esprimibili">&#182;</a></h3><p>Estendere i tipi esprimibili e la funzione <code>getType</code> per comprendere anche i valori insieme.</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Soluzione:">Soluzione:<a class="anchor-link" href="#Soluzione:">&#182;</a></h4><p>Nell'estendere <code>evT</code>, va fatta una importante scelta implementativa: come rappresentare un valore semantico "insieme". Gli interi di Minicaml possono essere implementati come interi in Ocaml, e similmente le stringhe e così via. Non essendoci una struttura dati nativa degli insiemi in Ocaml, dobbiamo scegliere noi che struttura dati utilizzare. La scelta più semplice (ma non computazionalmente ottimale) è una lista non ordinata, ma si potrebbero usare anche liste ordinate, hashmap, BST e simili. Passare da una implementazione all'altra dovrebbe avere effetto solo su <code>evT</code> e sulle primitive che manipolano oggetti di tipo <code>evT</code>, il resto del codice sulla sintassi o sulla valutazione rimarrebbe identico.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Ambiente polimorfo *)</span>
@@ -14125,9 +14247,9 @@ let B = {string: "hi" "world"} in
 <span class="c">(* Funzione da evT a tname che associa a ogni valore il suo descrittore di tipo  *)</span>
 <span class="k">let</span> <span class="n">getType</span> <span class="o">(</span><span class="n">x</span><span class="o">:</span> <span class="n">evT</span><span class="o">)</span> <span class="o">:</span> <span class="n">tname</span> <span class="o">=</span>
     <span class="k">match</span> <span class="n">x</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="nc">Int</span><span class="o">(</span><span class="n">n</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">TInt</span>
-    <span class="o">|</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">b</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">TBool</span>
-    <span class="o">|</span> <span class="nc">String</span><span class="o">(</span><span class="n">s</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">TString</span>
+    <span class="o">|</span> <span class="nc">Int</span><span class="o">(_)</span> <span class="o">-&gt;</span> <span class="nc">TInt</span>
+    <span class="o">|</span> <span class="nc">Bool</span><span class="o">(_)</span> <span class="o">-&gt;</span> <span class="nc">TBool</span>
+    <span class="o">|</span> <span class="nc">String</span><span class="o">(_)</span> <span class="o">-&gt;</span> <span class="nc">TString</span>
     <span class="o">|</span> <span class="nc">Closure</span><span class="o">(</span><span class="n">i</span><span class="o">,</span><span class="n">e</span><span class="o">,</span><span class="n">en</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">TClosure</span>
     <span class="o">|</span> <span class="nc">RecClosure</span><span class="o">(</span><span class="n">i</span><span class="o">,</span><span class="n">j</span><span class="o">,</span><span class="n">e</span><span class="o">,</span><span class="n">en</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">TRecClosure</span>
     <span class="o">|</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="nc">TSet</span><span class="o">(</span><span class="n">t</span><span class="o">)</span>
@@ -14139,21 +14261,130 @@ let B = {string: "hi" "world"} in
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type &#39;t env = ide -&gt; &#39;t
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type evT =
+    Int of int
+  | Bool of bool
+  | String of string
+  | Closure of ide * exp * evT env
+  | RecClosure of ide * ide * exp * evT env
+  | Set of tsub * evT list
+  | UnBound
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val emptyenv : &#39;a -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val bind : evT env -&gt; ide -&gt; evT -&gt; ide -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val getType : evT -&gt; tname = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Es-3:-Typechecking">Es 3: Typechecking<a class="anchor-link" href="#Es-3:-Typechecking">&#182;</a></h3><p>Estendere la funzione di typechecking in maniera tale che <code>typecheck(TSet, v)</code> restituisca <code>true</code> se e solo se <code>v</code> è un valore di tipo <code>TSet</code>, cioè è un insieme di valori, e tutti gli elementi contenuti in <code>v</code> sono del tipo adeguato.</p>
-<p>NOTA: Può essere utilescrivere una funzione <code>upcast: tsub -&gt; tname</code>.</p>
+<p>NOTA: Può essere utile scrivere una funzione <code>upcast: tsub -&gt; tname</code>.</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Soluzione:">Soluzione:<a class="anchor-link" href="#Soluzione:">&#182;</a></h4><p>Se vogliamo assicurarci che un valore <code>Set(t', l) : evT</code> sia di tipo <code>TSet(t')</code>, dobbiamo assicurarci che</p>
+<ol>
+<li><code>t' = t</code>, perché un set di interi non può in nessun caso essere di tipo "set di stringhe"</li>
+<li><p>tutti gli elementi in <code>l</code> siano di tipo <code>t</code>. Qui compare però una peculiartià: a ogni elemento <code>v</code> dentro <code>l</code> posso associare il suo tipo con la funzione <code>gettype: evT -&gt; tname</code>, ma dentro il tipo <code>TSet(t)</code>, <code>t</code> non è un <code>tname</code>, ma un <code>tsub</code>! Cioè mi devo assicurare che, per ogni <code>v</code> in <code>l</code>, <code>gettype v = t</code>, ma <code>getype v</code> e <code>t</code> sono incomparabili, per Ocaml. Dobbiamo quindi definire una funzione <code>upcast: tsub -&gt; tname</code>, che effettui l'ovvia conversione, così da poter verificare che, per ogni <code>v</code> in <code>l</code>, <code>getype v = upcast t</code>.</p>
+<p>Upcast non è una funzione che ha alcuna valenza semantica, perchè in MiniCaml c'è una sola nozione di "tipo intero", è solo una peculiarità della nostra implementazione.</p>
+</li>
+</ol>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Errori a runtime *)</span>
 <span class="k">exception</span> <span class="nc">RuntimeError</span> <span class="k">of</span> <span class="kt">string</span>
+
+<span class="k">let</span> <span class="o">(</span><span class="n">upcast</span><span class="o">:</span> <span class="n">tsub</span> <span class="o">-&gt;</span> <span class="n">tname</span><span class="o">)</span> <span class="o">=</span> <span class="k">function</span>
+      <span class="nc">TInt</span> <span class="o">-&gt;</span> <span class="nc">TInt</span>
+    <span class="o">|</span> <span class="nc">TBool</span> <span class="o">-&gt;</span> <span class="nc">TBool</span>
+    <span class="o">|</span> <span class="nc">TString</span> <span class="o">-&gt;</span> <span class="nc">TString</span>
+    
 
 <span class="c">(* Type-checking *)</span>
 <span class="k">let</span> <span class="n">typecheck</span> <span class="o">((</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">:</span> <span class="o">(</span><span class="n">tname</span><span class="o">*</span><span class="n">evT</span><span class="o">))</span> <span class="o">=</span> 
@@ -14183,7 +14414,7 @@ let B = {string: "hi" "world"} in
                  <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">false</span>
                  <span class="o">)</span>
     <span class="o">|</span><span class="nc">TSet</span><span class="o">(</span><span class="n">t</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="k">match</span> <span class="n">y</span> <span class="k">with</span>
-                <span class="o">|</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t&#39;</span><span class="o">,</span> <span class="kt">list</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="c">(*controllare che t&#39; corretto e list uniforme*)</span>
+                <span class="o">|</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t&#39;</span><span class="o">,</span> <span class="kt">list</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="n">t&#39;</span> <span class="o">&amp;&amp;</span> <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">getType</span> <span class="n">x</span> <span class="o">=</span> <span class="n">upcast</span> <span class="n">t</span><span class="o">)</span> <span class="kt">list</span>
                 <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">false</span><span class="o">)</span>
 </pre></div>
 
@@ -14192,16 +14423,70 @@ let B = {string: "hi" "world"} in
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>exception RuntimeError of string
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val upcast : tsub -&gt; tname = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val typecheck : tname * evT -&gt; bool = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Utilities">Utilities<a class="anchor-link" href="#Utilities">&#182;</a></h3><p>Seguono alcune utilities sulle liste, già implementate.</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* UTILITIES per le primitive del linguaggio (NON sono primitive!) *)</span>
@@ -14233,6 +14518,75 @@ let B = {string: "hi" "world"} in
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val list_contains : &#39;a list -&gt; &#39;a -&gt; bool = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val checkNotEquals : &#39;a list -&gt; bool = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val is_contained : &#39;a list -&gt; &#39;a list -&gt; bool = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val list_remove : &#39;a list -&gt; &#39;a -&gt; &#39;a list = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
@@ -14245,10 +14599,17 @@ let B = {string: "hi" "world"} in
 </ul>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Soluzione:">Soluzione:<a class="anchor-link" href="#Soluzione:">&#182;</a></h4><p>Le primitive sono le operazioni che la macchina virtuale è capace di compiere, e il processo di valutazione (la fnzione <code>eval</code>) associa a ogni espressione sintattica un valore, componendo insieme più primitive. Lo stesso approccio avviene nel processore, che carica dalla memoria un'istruzione, la decodifica, e sceglie quali primtive (implimentate dalla ALU) eseguire per produrre un risultato.</p>
+<p>Dobbiamo sostanzialmente implementare una primitiva per ogni costrutto semantico definito dentro exp, avvalendoci delel funzioni di utilities. Tutte le primitive accettano un certo numero di parametri (i.e. operandi), ne fanno il typechecking, e poi resituiscono il risultato.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* PRIMITIVE del linguaggio *)</span>
@@ -14317,47 +14678,435 @@ let B = {string: "hi" "world"} in
     <span class="o">|</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">v</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">not</span><span class="o">(</span><span class="n">v</span><span class="o">))</span>
     <span class="o">|</span> <span class="o">(_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
     
-<span class="c">(*###############################*)</span>
 <span class="c">(* Crea un nuovo insieme vuoto *)</span>
-<span class="k">let</span> <span class="n">new_empty</span> <span class="o">(</span><span class="n">t</span> <span class="o">:</span> <span class="n">tsub</span><span class="o">)</span> <span class="o">=</span> 
+<span class="k">let</span> <span class="n">new_empty</span> <span class="o">(</span><span class="n">t</span> <span class="o">:</span> <span class="n">tsub</span><span class="o">)</span> <span class="o">=</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="bp">[]</span><span class="o">)</span>
 
 <span class="c">(* Crea un nuovo insieme con un solo elemento *)</span>
 <span class="k">let</span> <span class="n">new_singleton</span> <span class="o">((</span><span class="n">t</span><span class="o">,</span> <span class="n">e</span><span class="o">)</span> <span class="o">:</span> <span class="o">(</span><span class="n">tsub</span><span class="o">*</span><span class="n">evT</span><span class="o">))</span> <span class="o">=</span>
+    <span class="c">(*Nel typechecking, dobbiamo assicurarci che e sia di tipo t, </span>
+<span class="c">      ma e e t sono incomparabili, per questo motivo vanno confrontati e e upcast t*)</span>
+    <span class="k">if</span> <span class="n">typecheck</span><span class="o">(</span><span class="n">upcast</span> <span class="n">t</span><span class="o">,</span> <span class="n">e</span><span class="o">)</span> <span class="k">then</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="o">[</span><span class="n">e</span><span class="o">])</span>
+    <span class="k">else</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
 
 <span class="c">(* Crea un nuovo insieme partendo da una lista di elementi. *)</span>
 <span class="k">let</span> <span class="n">new_of</span> <span class="o">((</span><span class="n">t</span> <span class="o">,</span> <span class="n">l</span><span class="o">)</span> <span class="o">:</span> <span class="o">(</span><span class="n">tsub</span><span class="o">*(</span><span class="n">evT</span> <span class="kt">list</span><span class="o">)))</span> <span class="o">=</span> 
+    <span class="k">if</span> <span class="n">checkNotEquals</span> <span class="n">l</span> 
+        <span class="k">then</span> 
+            <span class="c">(*l&#39;operazione corretta sarebbe di fare il typecheck di ogni elemento di l,</span>
+<span class="c">              con una List.forall, e poi costruire il set Set(t, l). In questo caso facciamo </span>
+<span class="c">              l&#39;operazione equivalente, prima costruiamo il set, e poi facciamo il </span>
+<span class="c">              typechecking*)</span>
+            <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span> <span class="k">in</span>
+            <span class="k">if</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TSet</span><span class="o">(</span><span class="n">t</span><span class="o">),</span> <span class="n">s</span><span class="o">)</span> <span class="k">then</span> <span class="n">s</span>
+            <span class="k">else</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+    <span class="k">else</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Duplicated elements&quot;</span><span class="o">)</span>
 
 
 
 <span class="c">(* Verifica se un insieme contiene un elemento dato *)</span>
-<span class="k">let</span> <span class="n">set_contains</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">=</span> <span class="o">)</span>
+<span class="k">let</span> <span class="n">set_contains</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">=</span> 
+    <span class="k">match</span> <span class="n">s</span> <span class="k">with</span>
+    <span class="o">|</span><span class="nc">Set</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">if</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TSet</span><span class="o">(</span><span class="n">t</span><span class="o">),</span> <span class="n">s</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">typecheck</span><span class="o">(</span><span class="n">upcast</span> <span class="n">t</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span>
+        <span class="k">then</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">list_contains</span> <span class="n">l</span> <span class="n">v</span><span class="o">)</span>
+        <span class="k">else</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+    <span class="o">|_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
 
 <span class="c">(* Inserisce un elemento in un insieme *)</span>
 <span class="k">let</span> <span class="n">set_insert</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">=</span> 
+    <span class="k">match</span> <span class="n">s</span> <span class="k">with</span>
+    <span class="o">|</span><span class="nc">Set</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">if</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TSet</span><span class="o">(</span><span class="n">t</span><span class="o">),</span> <span class="n">s</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">typecheck</span><span class="o">(</span><span class="n">upcast</span> <span class="n">t</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span>
+        <span class="c">(*se v appartiene a s, restituisco s inalterato, altrimenti restituisco s U {v}*)</span>
+        <span class="k">then</span> <span class="k">if</span> <span class="n">list_contains</span> <span class="n">l</span> <span class="n">v</span> 
+                <span class="k">then</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span>
+                <span class="k">else</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">v</span><span class="o">::</span><span class="n">l</span><span class="o">)</span>
+        <span class="k">else</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+    <span class="o">|_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+
 
 <span class="c">(* Rimuove un elemento da un insieme *)</span>
 <span class="k">let</span> <span class="n">set_remove</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">=</span> 
-
+    <span class="k">match</span> <span class="n">s</span> <span class="k">with</span>
+    <span class="o">|</span><span class="nc">Set</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">if</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TSet</span><span class="o">(</span><span class="n">t</span><span class="o">),</span> <span class="n">s</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">typecheck</span><span class="o">(</span><span class="n">upcast</span> <span class="n">t</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span>
+        <span class="k">then</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">list_remove</span> <span class="n">l</span> <span class="n">v</span><span class="o">)</span>
+        <span class="k">else</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+    <span class="o">|_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
 
 
 
 <span class="c">(* Verifica se un insieme è vuoto *)</span>
 <span class="k">let</span> <span class="n">is_empty</span> <span class="o">(</span><span class="n">s</span> <span class="o">:</span> <span class="n">evT</span><span class="o">)</span> <span class="o">=</span> 
+    <span class="c">(*andrebbe, come nelle altre primitive, fatto prima il typechecking</span>
+<span class="c">      ma la funzione è così banale che lo saltiamo. Don&#39;t do this at home.*)</span>
+    <span class="k">match</span> <span class="n">s</span> <span class="k">with</span>
+     <span class="nc">Set</span><span class="o">(_,</span> <span class="bp">[]</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="bp">true</span><span class="o">)</span> <span class="c">(*se è un set vuoto, restituisco true*)</span>
+    <span class="o">|</span><span class="nc">Set</span><span class="o">(_,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="bp">false</span><span class="o">)</span> <span class="c">(*se è un set non vuoto, restituisco false*)</span>
+    <span class="o">|_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span> <span class="c">(*se non è un set, errore*)</span>
 
 <span class="c">(* Verifica se un insieme è sottoinsieme di un altro insieme *)</span>
 <span class="k">let</span> <span class="n">set_is_subset</span> <span class="o">(</span><span class="n">s1</span><span class="o">,</span> <span class="n">s2</span><span class="o">)</span> <span class="o">=</span> 
+    <span class="k">match</span> <span class="n">s1</span><span class="o">,</span> <span class="n">s2</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t1</span><span class="o">,</span> <span class="n">l1</span><span class="o">),</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t2</span><span class="o">,</span> <span class="n">l2</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">if</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TSet</span><span class="o">(</span><span class="n">t1</span><span class="o">),</span> <span class="n">s1</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TSet</span><span class="o">(</span><span class="n">t1</span><span class="o">),</span> <span class="n">s2</span><span class="o">)</span>
+            <span class="k">then</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">is_contained</span> <span class="n">l1</span> <span class="n">l2</span><span class="o">)</span>
+            <span class="k">else</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+    <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
 
 
-
-
+<span class="c">(* Restituisce l&#39;intersezione fra due sottoinsiemi*)</span>
 <span class="k">let</span> <span class="n">set_intersection</span><span class="o">(</span><span class="n">s1</span><span class="o">,</span> <span class="n">s2</span><span class="o">)</span> <span class="o">=</span> 
-
-<span class="k">let</span> <span class="n">set_union</span><span class="o">(</span><span class="n">s1</span><span class="o">,</span> <span class="n">s2</span><span class="o">)</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="k">rec</span> <span class="n">list_intersection</span><span class="o">(</span><span class="n">l1</span><span class="o">,</span><span class="n">l2</span><span class="o">)</span> <span class="o">=</span> <span class="k">match</span> <span class="n">l1</span> <span class="k">with</span>
+        <span class="o">|</span><span class="bp">[]</span> <span class="o">-&gt;</span> <span class="bp">[]</span>
+        <span class="o">|</span><span class="n">h</span><span class="o">::</span><span class="n">tl</span> <span class="o">-&gt;</span> <span class="k">if</span> <span class="n">list_contains</span> <span class="n">l2</span> <span class="n">h</span> <span class="k">then</span> <span class="n">h</span><span class="o">::</span><span class="n">list_intersection</span><span class="o">(</span><span class="n">tl</span><span class="o">,</span><span class="n">l2</span><span class="o">)</span> <span class="k">else</span> <span class="n">list_intersection</span><span class="o">(</span><span class="n">tl</span><span class="o">,</span><span class="n">l2</span><span class="o">)</span>
+    <span class="k">in</span> <span class="k">match</span> <span class="n">s1</span><span class="o">,</span> <span class="n">s2</span> <span class="k">with</span>
+    <span class="o">|</span><span class="nc">Set</span><span class="o">(</span><span class="n">t1</span><span class="o">,</span> <span class="n">l1</span><span class="o">),</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t2</span><span class="o">,</span> <span class="n">l2</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">if</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TSet</span><span class="o">(</span><span class="n">t1</span><span class="o">),</span> <span class="n">s1</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TSet</span><span class="o">(</span><span class="n">t1</span><span class="o">),</span> <span class="n">s2</span><span class="o">)</span>
+        <span class="k">then</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t1</span><span class="o">,</span> <span class="n">list_intersection</span><span class="o">(</span><span class="n">l1</span><span class="o">,</span> <span class="n">l2</span><span class="o">))</span>
+        <span class="k">else</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+    <span class="o">|_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+    
+<span class="c">(* Restituisce l&#39;unione fra due sottoinsiemi*)</span>
+<span class="k">let</span> <span class="n">set_union</span><span class="o">(</span><span class="n">s1</span><span class="o">,</span> <span class="n">s2</span><span class="o">)</span> <span class="o">=</span> 
+    <span class="k">let</span> <span class="k">rec</span> <span class="n">list_union</span><span class="o">(</span><span class="n">l1</span><span class="o">,</span> <span class="n">l2</span><span class="o">)</span> <span class="o">=</span> <span class="k">match</span> <span class="n">l1</span> <span class="k">with</span>
+        <span class="o">|</span><span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">l2</span>
+        <span class="o">|</span><span class="n">h</span><span class="o">::</span><span class="n">tl</span> <span class="o">-&gt;</span> <span class="k">if</span> <span class="n">list_contains</span> <span class="n">l2</span> <span class="n">h</span> <span class="k">then</span> <span class="n">list_union</span><span class="o">(</span><span class="n">tl</span><span class="o">,</span><span class="n">l2</span><span class="o">)</span> <span class="k">else</span> <span class="n">h</span><span class="o">::</span><span class="n">list_union</span><span class="o">(</span><span class="n">tl</span><span class="o">,</span> <span class="n">l2</span><span class="o">)</span>
+    <span class="k">in</span> <span class="k">match</span> <span class="n">s1</span><span class="o">,</span> <span class="n">s2</span> <span class="k">with</span>
+    <span class="o">|</span><span class="nc">Set</span><span class="o">(</span><span class="n">t1</span><span class="o">,</span> <span class="n">l1</span><span class="o">),</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t2</span><span class="o">,</span> <span class="n">l2</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">if</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TSet</span><span class="o">(</span><span class="n">t1</span><span class="o">),</span> <span class="n">s1</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">typecheck</span><span class="o">(</span><span class="nc">TSet</span><span class="o">(</span><span class="n">t1</span><span class="o">),</span> <span class="n">s2</span><span class="o">)</span>
+        <span class="k">then</span> <span class="nc">Set</span><span class="o">(</span><span class="n">t1</span><span class="o">,</span> <span class="n">list_union</span><span class="o">(</span><span class="n">l1</span><span class="o">,</span> <span class="n">l2</span><span class="o">))</span>
+        <span class="k">else</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+    <span class="o">|_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
 </pre></div>
 
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val is_zero : evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_eq : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_plus : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_sub : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_times : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_div : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val less_than : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val greater_than : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val bool_and : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val bool_or : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val bool_not : evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val new_empty : tsub -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val new_singleton : tsub * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val new_of : tsub * evT list -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val set_contains : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val set_insert : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val set_remove : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val is_empty : evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val set_is_subset : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val set_intersection : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val set_union : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
@@ -14366,10 +15115,16 @@ let B = {string: "hi" "world"} in
 <h3 id="Es-6:-Interprete">Es 6: Interprete<a class="anchor-link" href="#Es-6:-Interprete">&#182;</a></h3><p>Completare la funzione eval, facendo pattern matching dei nuovi casi definiti dentro exp, e associandoli alle primitive definite precedentemente.</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Soluzione:">Soluzione:<a class="anchor-link" href="#Soluzione:">&#182;</a></h4><p>La funzione <code>eval</code> è compie una semplice visita post-order dell'albero: per ogni nodo, valuta ricorsivamente i sottoalberi, e poi combina il risultato con una primitiva.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Interprete *)</span>
@@ -14420,7 +15175,42 @@ let B = {string: "hi" "world"} in
                 <span class="k">let</span> <span class="n">aenv</span> <span class="o">=</span> <span class="n">bind</span> <span class="n">rEnv</span> <span class="n">arg</span> <span class="n">aVal</span> <span class="k">in</span> 
                 <span class="n">eval</span> <span class="n">fbody</span> <span class="n">aenv</span>
             <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
-            <span class="o">)</span>
+            <span class="o">)</span>  
+    <span class="o">|</span> <span class="nc">Empty</span><span class="o">(</span><span class="n">t</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">new_empty</span> <span class="n">t</span>
+    <span class="o">|</span> <span class="nc">Singleton</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">e</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">let</span> <span class="n">v</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e</span> <span class="n">s</span> <span class="k">in</span> 
+        <span class="n">new_singleton</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Of</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">e_list</span><span class="o">)</span> <span class="o">-&gt;</span>
+        <span class="k">let</span> <span class="n">v_list</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="n">eval</span> <span class="n">e</span> <span class="n">s</span><span class="o">)</span> <span class="n">e_list</span>
+        <span class="k">in</span> <span class="n">new_of</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">v_list</span><span class="o">)</span>
+    <span class="c">(*operatori*)</span>
+    <span class="o">|</span><span class="nc">IsEmpty</span> <span class="n">e</span> <span class="o">-&gt;</span> 
+        <span class="k">let</span> <span class="n">v</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e</span> <span class="n">s</span> <span class="k">in</span> 
+        <span class="n">is_empty</span> <span class="n">v</span>
+    <span class="o">|</span><span class="nc">Insert</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span>
+        <span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span> <span class="k">in</span> 
+        <span class="n">set_insert</span><span class="o">(</span><span class="n">v1</span><span class="o">,</span> <span class="n">v2</span><span class="o">)</span>
+    <span class="o">|</span><span class="nc">Remove</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span> <span class="k">in</span> 
+        <span class="n">set_remove</span><span class="o">(</span><span class="n">v1</span><span class="o">,</span> <span class="n">v2</span><span class="o">)</span>
+    <span class="o">|</span><span class="nc">Member</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span> <span class="k">in</span> 
+        <span class="n">set_contains</span><span class="o">(</span><span class="n">v1</span><span class="o">,</span> <span class="n">v2</span><span class="o">)</span>
+    <span class="o">|</span><span class="nc">Union</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span> <span class="k">in</span> 
+        <span class="n">set_union</span><span class="o">(</span><span class="n">v1</span><span class="o">,</span> <span class="n">v2</span><span class="o">)</span>
+    <span class="o">|</span><span class="nc">Intersection</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span> <span class="k">in</span> 
+        <span class="n">set_intersection</span><span class="o">(</span><span class="n">v1</span><span class="o">,</span> <span class="n">v2</span><span class="o">)</span>
+    <span class="o">|</span><span class="nc">IsSubset</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span> <span class="k">in</span> 
+        <span class="n">set_is_subset</span><span class="o">(</span><span class="n">v1</span><span class="o">,</span> <span class="n">v2</span><span class="o">)</span>
 </pre></div>
 
      </div>
@@ -14428,15 +15218,41 @@ let B = {string: "hi" "world"} in
 </div>
 </div>
 
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val eval : exp -&gt; evT env -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">e1</span> <span class="o">=</span> <span class="nc">Of</span><span class="o">(</span><span class="nc">TString</span><span class="o">,</span> <span class="o">[</span><span class="nc">EString</span><span class="o">(</span><span class="s2">&quot;Hello&quot;</span><span class="o">);</span> <span class="nc">EString</span><span class="o">(</span><span class="s2">&quot;World&quot;</span><span class="o">);</span> <span class="nc">EString</span><span class="o">(</span><span class="s2">&quot;from Minicaml&quot;</span><span class="o">);</span> <span class="o">]);;</span>
 <span class="k">let</span> <span class="n">e2</span> <span class="o">=</span> <span class="nc">Of</span><span class="o">(</span><span class="nc">TString</span><span class="o">,</span> <span class="o">[</span><span class="nc">EString</span><span class="o">(</span><span class="s2">&quot;Hello&quot;</span><span class="o">);</span> <span class="nc">EString</span><span class="o">(</span><span class="s2">&quot;World&quot;</span><span class="o">);]);;</span>
-<span class="k">let</span> <span class="n">e3</span> <span class="o">=</span> <span class="nc">Let</span><span class="o">(</span><span class="s2">&quot;s&quot;</span><span class="o">,</span> <span class="nc">Intersection</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">),</span> <span class="nc">Contains</span><span class="o">(</span><span class="nc">Den</span><span class="o">(</span><span class="s2">&quot;s&quot;</span><span class="o">),</span> <span class="nc">EString</span><span class="o">(</span><span class="s2">&quot;Hello&quot;</span><span class="o">)));;</span>
+<span class="k">let</span> <span class="n">e3</span> <span class="o">=</span> <span class="nc">Let</span><span class="o">(</span><span class="s2">&quot;s&quot;</span><span class="o">,</span> <span class="nc">Intersection</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">),</span> <span class="nc">Member</span><span class="o">(</span><span class="nc">Den</span><span class="o">(</span><span class="s2">&quot;s&quot;</span><span class="o">),</span> <span class="nc">EString</span><span class="o">(</span><span class="s2">&quot;Hello&quot;</span><span class="o">)));;</span>
+<span class="c">(*let s = Intersection({string: &quot;hello&quot;, &quot;world&quot;, &quot;from Minicaml&quot;},{string: &quot;hello&quot;, &quot;world&quot;}) in</span>
+<span class="c">  Member(s, &quot;hello&quot;)*)</span>
 
 <span class="n">eval</span> <span class="n">e3</span> <span class="n">emptyenv</span><span class="o">;;</span>
 </pre></div>
@@ -14444,6 +15260,82 @@ let B = {string: "hi" "world"} in
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val e1 : exp =
+  Of (TString, [EString &#34;Hello&#34;; EString &#34;World&#34;; EString &#34;from Minicaml&#34;])
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val e2 : exp = Of (TString, [EString &#34;Hello&#34;; EString &#34;World&#34;])
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val e3 : exp =
+  Let (&#34;s&#34;,
+   Intersection
+    (Of (TString,
+      [EString &#34;Hello&#34;; EString &#34;World&#34;; EString &#34;from Minicaml&#34;]),
+    Of (TString, [EString &#34;Hello&#34;; EString &#34;World&#34;])),
+   Member (Den &#34;s&#34;, EString &#34;Hello&#34;))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : evT = Bool true
+</pre>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
