@@ -13976,15 +13976,17 @@ a.anchor-link {
 
 <pre><code>{id=123, name="Gabriele"};;
 
+{id=123, name="Gabriele"}.id;;
+
 let r = {id=123, name="Gabriele"} in
     r.id
 
-let r = {id=123, name="Gabriele"} in
+let r = {id=123+5, name="Gabriele"} in
     r with {surname="Tedeschi"}
 
 let r = {id=123, name="Gabriele"} in
 let r2 = r with {id="456"} in
-    r.id</code></pre>
+    r.id //mi aspetto come risultato 123</code></pre>
 
 </div>
 </div>
@@ -14007,17 +14009,17 @@ let r2 = r with {id="456"} in
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Albero-della-sintassi-astratta">Albero della sintassi astratta<a class="anchor-link" href="#Albero-della-sintassi-astratta">&#182;</a></h3>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Identificatori *)</span>
 <span class="k">type</span> <span class="n">ide</span> <span class="o">=</span> <span class="kt">string</span><span class="o">;;</span>
 
 <span class="c">(* I tipi *)</span>
-<span class="k">type</span> <span class="n">tname</span> <span class="o">=</span>  <span class="nc">TInt</span> <span class="o">|</span> <span class="nc">TBool</span> <span class="o">|</span> <span class="nc">TString</span> <span class="o">|</span> <span class="nc">TClosure</span> <span class="o">|</span> <span class="nc">TRecClosure</span> <span class="o">|</span> <span class="nc">TUnBound</span> 
+<span class="k">type</span> <span class="n">tname</span> <span class="o">=</span>  <span class="nc">TInt</span> <span class="o">|</span> <span class="nc">TBool</span> <span class="o">|</span> <span class="nc">TString</span> <span class="o">|</span> <span class="nc">TClosure</span> <span class="o">|</span> <span class="nc">TRecClosure</span> <span class="o">|</span> <span class="nc">TUnBound</span> <span class="o">|</span> <span class="nc">TRecord</span>
 
 <span class="c">(* Abstract Expressions = espressioni nella sintassi astratta, </span>
 <span class="c">   compongono l&#39;Albero di Sintassi Astratta *)</span>
@@ -14047,11 +14049,120 @@ let r2 = r with {id="456"} in
     <span class="o">|</span> <span class="nc">Letrec</span> <span class="k">of</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">ide</span>  <span class="o">*</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span>
     <span class="o">|</span> <span class="nc">Fun</span> <span class="k">of</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">exp</span>
     <span class="o">|</span> <span class="nc">Apply</span> <span class="k">of</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">exp</span>
+    <span class="c">(* records*)</span>
+    <span class="o">|</span> <span class="nc">BuildRecord</span> <span class="k">of</span> <span class="o">(</span><span class="n">ide</span><span class="o">*</span><span class="n">exp</span><span class="o">)</span> <span class="kt">list</span> <span class="c">(*come in {id=123, name=&quot;Gabriele&quot;}*)</span>
+    <span class="c">(*il primo campo di Project, che ci aspettiamo essere un record, a livello sintattico</span>
+<span class="c">      può essere qualsiasi espressione. Sicuramente espressioni come 15.name o &quot;MiniCaml&quot;.id </span>
+<span class="c">      sono semanticamente sbagliate, ma sono sintatticamente corrette.</span>
+<span class="c">      Se scrivessimo Project of ((ide*exp) list)* ide, potremmo formalizzare espressioni come </span>
+<span class="c">      {id=123, name=&quot;Gabriele&quot;}.id, ma non potremmo formalizzare </span>
+<span class="c">           let r = {id=123, name=&quot;Gabriele&quot;} in</span>
+<span class="c">            r.id</span>
+<span class="c">      Visto che anche l&#39;espressione foo(5).id potrebbe essere semanticamente corretta, a seconda di</span>
+<span class="c">      cosa restituisce foo, è evidente che a livello sintattico non possiamo fare alcuna restrizione</span>
+<span class="c">      sul primo campo di Project, e dobbiamo quindi definirlo come exp*ide.*)</span>
+    <span class="o">|</span> <span class="nc">Project</span> <span class="k">of</span> <span class="n">exp</span><span class="o">*</span><span class="n">ide</span>            <span class="c">(* come in {id=123, name=&quot;Gabriele&quot;}.id *)</span>
+    <span class="c">(*Per il primo campo di With vale tutto quanto detto sopra come per Project. Inoltre, viene da</span>
+<span class="c">      chiedersi se non sia meglio dichiarare With come exp*((ide*exp) list), per poter formalizzare</span>
+<span class="c">      espressioni come:</span>
+<span class="c">          {id=123} with surname=&quot;Tedeschi&quot;, name=&quot;Gabriele&quot;</span>
+<span class="c">      In realtà, quando si progetta un interprete, si cerca di mantenere l&#39;AST il più semplice</span>
+<span class="c">      possibile, nel nostro caso è quindi preferibile lasciare with come exp*ide*exp. Per formalizzare</span>
+<span class="c">      l&#39;espressione di sopra, possiamo esprimerla come due with annidiati, ovvero </span>
+<span class="c">          ({id=123} with surname=&quot;Tedeschi&quot;) with name=&quot;Gabriele&quot;</span>
+<span class="c">      Questo è un esempio di syntactic sugaring, ovvero implementare feature del linguaggio come </span>
+<span class="c">      semplici shortcut di feature più semplici.*)</span>
+    <span class="o">|</span> <span class="nc">With</span> <span class="k">of</span> <span class="n">exp</span><span class="o">*</span><span class="n">ide</span><span class="o">*</span><span class="n">exp</span>           <span class="c">(* come in {id=123, name=&quot;Gabriele&quot;} with surname=&quot;Tedeschi&quot; *)</span>
 </pre></div>
 
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type ide = string
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type tname =
+    TInt
+  | TBool
+  | TString
+  | TClosure
+  | TRecClosure
+  | TUnBound
+  | TRecord
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type exp =
+    EInt of int
+  | CstTrue
+  | CstFalse
+  | EString of string
+  | Den of ide
+  | Sum of exp * exp
+  | Diff of exp * exp
+  | Prod of exp * exp
+  | Div of exp * exp
+  | IsZero of exp
+  | Eq of exp * exp
+  | LessThan of exp * exp
+  | GreaterThan of exp * exp
+  | And of exp * exp
+  | Or of exp * exp
+  | Not of exp
+  | IfThenElse of exp * exp * exp
+  | Let of ide * exp * exp
+  | Letrec of ide * ide * exp * exp
+  | Fun of ide * exp
+  | Apply of exp * exp
+  | BuildRecord of (ide * exp) list
+  | Project of exp * ide
+  | With of exp * ide * exp
+</pre>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
@@ -14065,10 +14176,10 @@ let r2 = r with {id="456"} in
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Ambiente">Ambiente<a class="anchor-link" href="#Ambiente">&#182;</a></h3>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Ambiente polimorfo *)</span>
@@ -14082,7 +14193,10 @@ let r2 = r with {id="456"} in
     <span class="o">|</span> <span class="nc">Closure</span> <span class="k">of</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">evT</span> <span class="n">env</span> 
     <span class="o">|</span> <span class="nc">RecClosure</span> <span class="k">of</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">ide</span> <span class="o">*</span> <span class="n">exp</span> <span class="o">*</span> <span class="n">evT</span> <span class="n">env</span>
     <span class="o">|</span> <span class="nc">UnBound</span>
-
+    <span class="c">(*scegliamo di implementare i record come liste, ma si potrebbe implementarli anche</span>
+<span class="c">      come hashmap, BST e così via.*)</span>
+    <span class="o">|</span> <span class="nc">Record</span> <span class="k">of</span> <span class="o">(</span><span class="n">ide</span><span class="o">*</span><span class="n">evT</span><span class="o">)</span> <span class="kt">list</span> 
+    
 <span class="c">(* Ambiente vuoto *)</span>
 <span class="k">let</span> <span class="n">emptyenv</span> <span class="o">=</span> <span class="k">function</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="nc">UnBound</span>
 
@@ -14099,6 +14213,7 @@ let r2 = r with {id="456"} in
     <span class="o">|</span> <span class="nc">Closure</span><span class="o">(</span><span class="n">i</span><span class="o">,</span><span class="n">e</span><span class="o">,</span><span class="n">en</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">TClosure</span>
     <span class="o">|</span> <span class="nc">RecClosure</span><span class="o">(</span><span class="n">i</span><span class="o">,</span><span class="n">j</span><span class="o">,</span><span class="n">e</span><span class="o">,</span><span class="n">en</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">TRecClosure</span>
     <span class="o">|</span> <span class="nc">UnBound</span> <span class="o">-&gt;</span> <span class="nc">TUnBound</span>
+    <span class="o">|</span> <span class="nc">Record</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="nc">TRecord</span>
 
 <span class="c">(* Type-checking *)</span>
 <span class="k">let</span> <span class="n">typecheck</span> <span class="o">((</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">:</span> <span class="o">(</span><span class="n">tname</span><span class="o">*</span><span class="n">evT</span><span class="o">))</span> <span class="o">=</span> 
@@ -14127,11 +14242,121 @@ let r2 = r with {id="456"} in
                  <span class="o">|</span> <span class="nc">UnBound</span> <span class="o">-&gt;</span> <span class="bp">true</span>
                  <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">false</span>
                  <span class="o">)</span>
+    <span class="o">|</span><span class="nc">TRecord</span> <span class="o">-&gt;</span> <span class="o">(</span> <span class="k">match</span> <span class="n">y</span> <span class="k">with</span>
+                 <span class="o">|</span> <span class="nc">Record</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">true</span>
+                 <span class="o">|_</span> <span class="o">-&gt;</span> <span class="bp">false</span>
+                <span class="o">)</span>
 </pre></div>
 
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type &#39;t env = ide -&gt; &#39;t
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type evT =
+    Int of int
+  | Bool of bool
+  | String of string
+  | Closure of ide * exp * evT env
+  | RecClosure of ide * ide * exp * evT env
+  | UnBound
+  | Record of (ide * evT) list
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val emptyenv : &#39;a -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val bind : evT env -&gt; ide -&gt; evT -&gt; ide -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val getType : evT -&gt; tname = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val typecheck : tname * evT -&gt; bool = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
@@ -14143,13 +14368,13 @@ let r2 = r with {id="456"} in
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Utilities">Utilities<a class="anchor-link" href="#Utilities">&#182;</a></h3><p>Seguono delle utilities su <em>association lists</em>, ovvero liste di coppie chiave-valore.</p>
+<h3 id="Utilities">Utilities<a class="anchor-link" href="#Utilities">&#182;</a></h3><p>Seguono delle utilities su <em>association lists</em>, ovvero liste di coppie chiave-valore. Possono essere utili per implementare le primitive.</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* UTILITIES per le primitive del linguaggio (NON sono primitive!) *)</span>
@@ -14182,15 +14407,84 @@ let r2 = r with {id="456"} in
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val list_contains_label : (&#39;a * &#39;b) list -&gt; &#39;a -&gt; bool = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val check_distinct : (&#39;a * &#39;b) list -&gt; bool = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val update : (&#39;a * &#39;b) list -&gt; &#39;a -&gt; &#39;b -&gt; (&#39;a * &#39;b) list = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val insert_element : (&#39;a * &#39;b) list -&gt; &#39;a * &#39;b -&gt; (&#39;a * &#39;b) list = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Primitive">Primitive<a class="anchor-link" href="#Primitive">&#182;</a></h3>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Errori a runtime *)</span>
@@ -14261,6 +14555,29 @@ let r2 = r with {id="456"} in
     <span class="k">match</span> <span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TBool</span><span class="o">,</span><span class="n">x</span><span class="o">),</span> <span class="n">x</span><span class="o">)</span> <span class="k">with</span>
     <span class="o">|</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">v</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="nc">Bool</span><span class="o">(</span><span class="n">not</span><span class="o">(</span><span class="n">v</span><span class="o">))</span>
     <span class="o">|</span> <span class="o">(_,_)</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+    
+<span class="c">(* Crea un nuovo record partendo da una lista di elementi. *)</span>
+<span class="k">let</span> <span class="n">build_record</span> <span class="o">(</span><span class="n">l</span><span class="o">:</span> <span class="o">(</span><span class="n">ide</span><span class="o">*</span><span class="n">evT</span><span class="o">)</span> <span class="kt">list</span><span class="o">)</span> <span class="o">=</span> 
+    <span class="k">if</span> <span class="n">check_distinct</span> <span class="n">l</span> <span class="k">then</span> <span class="nc">Record</span><span class="o">(</span><span class="n">l</span><span class="o">)</span>   
+    <span class="k">else</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Duplicated values!&quot;</span><span class="o">)</span>
+
+
+<span class="c">(* Restituisce il contenuto di un campo di un record*)</span>
+<span class="k">let</span> <span class="n">get_field</span> <span class="o">((</span><span class="n">r</span><span class="o">,</span> <span class="n">label</span><span class="o">):</span> <span class="n">evT</span><span class="o">*</span><span class="n">ide</span><span class="o">)</span> <span class="o">=</span> 
+    <span class="k">match</span> <span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TRecord</span><span class="o">,</span><span class="n">r</span><span class="o">),</span> <span class="n">r</span><span class="o">)</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="bp">true</span><span class="o">,</span> <span class="nc">Record</span><span class="o">(</span><span class="n">l</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="o">(</span><span class="k">match</span> <span class="nn">List</span><span class="p">.</span><span class="n">assoc_opt</span> <span class="n">label</span> <span class="n">l</span> <span class="k">with</span>
+            <span class="o">|</span><span class="nc">Some</span><span class="o">(</span><span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">v</span>
+            <span class="o">|</span><span class="nc">None</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">RuntimeError</span> <span class="s2">&quot;Non existent label&quot;</span><span class="o">)</span>
+          <span class="o">)</span>
+    <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
+
+
+<span class="k">let</span> <span class="n">insert_field</span> <span class="o">((</span><span class="n">r</span><span class="o">,</span> <span class="n">label</span><span class="o">,</span> <span class="n">v</span><span class="o">):</span> <span class="n">evT</span><span class="o">*</span><span class="n">ide</span><span class="o">*</span><span class="n">evT</span><span class="o">)</span> <span class="o">=</span>
+   <span class="k">match</span> <span class="o">(</span><span class="n">typecheck</span><span class="o">(</span><span class="nc">TRecord</span><span class="o">,</span><span class="n">r</span><span class="o">),</span> <span class="n">r</span><span class="o">)</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="bp">true</span><span class="o">,</span> <span class="nc">Record</span><span class="o">(</span><span class="n">l</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="nc">Record</span><span class="o">(</span><span class="n">insert_element</span> <span class="n">l</span> <span class="o">(</span><span class="n">label</span><span class="o">,</span> <span class="n">v</span><span class="o">))</span>   
+    <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
 </pre></div>
 
      </div>
@@ -14268,15 +14585,249 @@ let r2 = r with {id="456"} in
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>exception RuntimeError of string
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val is_zero : evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_eq : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_plus : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_sub : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_times : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val int_div : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val less_than : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val greater_than : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val bool_and : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val bool_or : evT * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val bool_not : evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val build_record : (ide * evT) list -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val get_field : evT * ide -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val insert_field : evT * ide * evT -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Interprete">Interprete<a class="anchor-link" href="#Interprete">&#182;</a></h3>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="c">(* Interprete *)</span>
@@ -14328,11 +14879,58 @@ let r2 = r with {id="456"} in
                 <span class="n">eval</span> <span class="n">fbody</span> <span class="n">aenv</span>
             <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span> <span class="nc">RuntimeError</span> <span class="s2">&quot;Wrong type&quot;</span><span class="o">)</span>
             <span class="o">)</span>
+    <span class="c">(*La funzione di eval deve, come sempre, valutare ricorsivamente</span>
+<span class="c">      le sottoespressioni di e, per poi restituire la valutazione di </span>
+<span class="c">      e intera, spesso combinando i valori delle sottoespressioni con </span>
+<span class="c">      una primitiva*)</span>
+    <span class="o">|</span> <span class="nc">Project</span><span class="o">(</span><span class="n">e</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e</span> <span class="n">s</span> <span class="k">in</span>
+        <span class="n">get_field</span><span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span>
+    <span class="o">|</span> <span class="nc">With</span><span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">label</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> 
+        <span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e1</span> <span class="n">s</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">eval</span> <span class="n">e2</span> <span class="n">s</span> <span class="k">in</span>
+        <span class="n">insert_field</span><span class="o">(</span><span class="n">v1</span><span class="o">,</span> <span class="n">label</span><span class="o">,</span> <span class="n">v2</span><span class="o">)</span>
+    <span class="c">(* Nel caso di buildRecord, non ci sono solo 1 o 2 sottoalberi, </span>
+<span class="c">      ma una lista non limitata di sottoalberi (per la precisione, </span>
+<span class="c">      una lista non limitata di coppie ide*exp). Dobbiamo valutare</span>
+<span class="c">      singolarmente ogni exp nella lista, e ottenere una lista di</span>
+<span class="c">      coppie ide*evT. Questo è quindi un tipico caso d&#39;uso della </span>
+<span class="c">      funzione List.map, che processa ogni elemento di una lista</span>
+<span class="c">      in maniera indipendente dagli altri, e restituisce la lista</span>
+<span class="c">      dei risultati.*)</span>
+    <span class="o">|</span> <span class="nc">BuildRecord</span> <span class="n">label_exp_list</span> <span class="o">-&gt;</span> 
+        <span class="k">let</span> <span class="n">f</span> <span class="o">(</span><span class="n">label</span><span class="o">,</span> <span class="n">e</span><span class="o">)</span> <span class="o">=</span> <span class="o">(</span><span class="n">label</span><span class="o">,</span> <span class="n">eval</span> <span class="n">e</span> <span class="n">s</span><span class="o">)</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">label_value_list</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">f</span> <span class="n">label_exp_list</span> <span class="k">in</span>
+        <span class="n">build_record</span> <span class="n">label_value_list</span>
 </pre></div>
 
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[15]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val eval : exp -&gt; evT env -&gt; evT = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
@@ -14341,10 +14939,10 @@ let r2 = r with {id="456"} in
 <p>Esempio:</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">e1</span> <span class="o">=</span> <span class="nc">BuildRecord</span><span class="o">([(</span><span class="s2">&quot;id&quot;</span><span class="o">,</span> <span class="nc">Prod</span><span class="o">(</span><span class="nc">EInt</span><span class="o">(</span><span class="mi">123</span><span class="o">),</span> <span class="nc">EInt</span><span class="o">(</span><span class="mi">10</span><span class="o">)));</span> <span class="o">(</span><span class="s2">&quot;name&quot;</span><span class="o">,</span> <span class="nc">EString</span><span class="o">(</span><span class="s2">&quot;Gabriele&quot;</span><span class="o">))]);;</span>
@@ -14362,6 +14960,117 @@ let r2 = r with {id="456"} in
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[16]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val e1 : exp =
+  BuildRecord
+   [(&#34;id&#34;, Prod (EInt 123, EInt 10)); (&#34;name&#34;, EString &#34;Gabriele&#34;)]
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[16]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val e2 : exp = With (Den &#34;r&#34;, &#34;surname&#34;, EString &#34;Tedeschi&#34;)
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[16]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val e3 : exp = With (Den &#34;r2&#34;, &#34;id&#34;, EInt 456)
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[16]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val e4 : exp =
+  Let (&#34;r2&#34;, With (Den &#34;r&#34;, &#34;surname&#34;, EString &#34;Tedeschi&#34;),
+   With (Den &#34;r2&#34;, &#34;id&#34;, EInt 456))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[16]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val e5 : exp =
+  Let (&#34;r&#34;,
+   BuildRecord
+    [(&#34;id&#34;, Prod (EInt 123, EInt 10)); (&#34;name&#34;, EString &#34;Gabriele&#34;)],
+   Let (&#34;r2&#34;, With (Den &#34;r&#34;, &#34;surname&#34;, EString &#34;Tedeschi&#34;),
+    With (Den &#34;r2&#34;, &#34;id&#34;, EInt 456)))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[16]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : evT =
+Record
+ [(&#34;id&#34;, Int 456); (&#34;name&#34;, String &#34;Gabriele&#34;);
+  (&#34;surname&#34;, String &#34;Tedeschi&#34;)]
+</pre>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
