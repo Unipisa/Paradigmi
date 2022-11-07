@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Tutorato A 28 ott</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Tutorato A 28 ott SOL</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -13976,13 +13976,33 @@ a.anchor-link {
 <pre><code>drop 2 [1; 2; 3; 17; 42] = [1; 3; 42]</code></pre>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Soluzione:">Soluzione:<a class="anchor-link" href="#Soluzione:">&#182;</a></h3>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>Usando la ricorsione.</strong> Il problema è come sapere l'indice dell'elemento in questione. Se fossimo in un linguaggio imperativo, potremmo usare un ciclo for (ad esempio<code>for (let i = 1; i &lt;= length; i++)</code>) che aggiorni di volta in volta il contatore <code>i</code>, cosicchè ci dica a ogni iterazione l'indice dell'elemento che stiamo esaminando. Stiamo usando cioè un side effect fra un ciclo e l'altro. Come ottenere lo stesso comportamento in OCaml, che di side effect non ne ha? Al posto dell'iterazione possiamo usare la ricorsione, e al posto di <code>i</code> possiamo usare un argomento aggiuntivo, aggiornandone manualmente il valore fra una chiamata ricorsiva e l'altra. Siccome la consegna ci chiede una funzione <code>drop n l</code>, senza nessun argomento aggiuntivo, dobbiamo definire una funzione ausiliaria <code>aux</code> che svolga esattamente il lavoro di drop, ma con l'argomento aggiuntivo <code>counter</code>. A quel punto <code>drop</code> deve solo occuparsi di chiamare <code>aux</code>, scegliendo un opportuno counter iniziale.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-OCaml"><pre><span></span>
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">drop</span> <span class="n">n</span> <span class="n">l</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="k">rec</span> <span class="n">aux</span> <span class="n">n</span> <span class="n">l</span> <span class="n">counter</span> <span class="o">=</span> 
+        <span class="k">match</span> <span class="n">l</span> <span class="k">with</span> 
+        <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="bp">[]</span>
+        <span class="o">|</span> <span class="n">x</span><span class="o">::</span><span class="n">xs</span> <span class="o">-&gt;</span> <span class="k">if</span> <span class="n">counter</span> <span class="ow">mod</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span> 
+                    <span class="k">then</span> <span class="n">aux</span> <span class="n">n</span> <span class="n">xs</span> <span class="o">(</span><span class="n">counter</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+                    <span class="k">else</span> <span class="n">x</span> <span class="o">::</span> <span class="o">(</span><span class="n">aux</span> <span class="n">n</span> <span class="n">xs</span> <span class="o">(</span><span class="n">counter</span> <span class="o">+</span> <span class="mi">1</span><span class="o">))</span>
+    <span class="k">in</span> <span class="n">aux</span> <span class="n">n</span> <span class="n">l</span> <span class="mi">1</span><span class="o">;;</span>
+    
+<span class="n">drop</span> <span class="mi">2</span> <span class="o">[</span><span class="mi">1</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">17</span><span class="o">;</span> <span class="mi">42</span><span class="o">]</span> <span class="o">;;</span>
 </pre></div>
 
      </div>
@@ -13990,6 +14010,263 @@ a.anchor-link {
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[1]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val drop : int -&gt; &#39;a list -&gt; &#39;a list = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[1]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : int list = [1; 3; 42]
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>Usando <code>fold_left</code>.</strong> Prima ci serviva di tenere traccia dell'indice fra una chiamata ricorsiva e l'altra, e abbiamo aggiunto un argomento alla funzione ricorsiva. Nella fold ci serve di tenere traccia dell'indice fra una chiamata di <code>f</code> e l'altra, e l'unico posto dove possiamo aggiungere il nostro counter è nell'accumulatore. Anzichè contenere solo il risultato parziale, l'accumulatore conterrà una coppia <code>(partial, counter)</code>. In un certo senso, l'accumulatore rappresenta lo "stato" di un ciclo for in un linguaggio imperativo, e la funzione <code>f</code> rappresenta i side effect, cioè come viene cambiato lo stato a ogni ciclo.</p>
+<p>Usiamo <code>fold_left</code>, perchè vogliamo partire dal primo elemento, al quale associamo 1, poi passare al secondo, aggiornando il counter a <code>2</code> e così via. Nella <code>fold_left</code>, la funzione <code>f</code> deve combinare l'accumulatore dei primi tot elementi con l'elemento imemdiatamente successivo. Quindi l'accumulatore conterrà il risultato parziale (la lista) dei primi elementi, e l'elemento successivo deve essere aggiunto in coda all'accumulatore, usando l'operatore <code>@</code>.</p>
+<p>A fine esecuzione, l'accumulatore conterrà 2 informazioni, il risultato totale e il counter. Dobbiamo restituire solo il primo elemento della coppia, e possiamo farlo usando <code>fst</code> oppure usando un <code>let .. in</code>.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[23]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">drop2</span> <span class="n">n</span> <span class="n">l</span> <span class="o">=</span> 
+    <span class="k">let</span> <span class="n">f</span> <span class="n">acc</span> <span class="n">el</span>  <span class="o">=</span> <span class="k">let</span> <span class="n">partial</span><span class="o">,</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">acc</span> <span class="k">in</span>
+                    <span class="k">if</span> <span class="n">counter</span> <span class="ow">mod</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">then</span> <span class="o">(</span><span class="n">partial</span><span class="o">,</span> <span class="n">counter</span> <span class="o">+</span><span class="mi">1</span><span class="o">)</span>
+                    <span class="k">else</span> <span class="o">(</span><span class="n">partial</span> <span class="o">@</span> <span class="o">[</span><span class="n">el</span><span class="o">],</span> <span class="n">counter</span> <span class="o">+</span><span class="mi">1</span><span class="o">)</span>
+    <span class="k">in</span> 
+    <span class="k">let</span> <span class="n">result</span><span class="o">,</span> <span class="o">_</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">fold_left</span> <span class="n">f</span> <span class="o">(</span><span class="bp">[]</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span> <span class="n">l</span>
+    <span class="k">in</span> <span class="n">result</span><span class="o">;;</span>
+    
+<span class="n">drop2</span> <span class="mi">2</span> <span class="o">[</span><span class="mi">1</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">17</span><span class="o">;</span> <span class="mi">42</span><span class="o">]</span> <span class="o">;;</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[23]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val drop2 : int -&gt; &#39;a list -&gt; &#39;a list = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[23]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : int list = [1; 3; 42]
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Il problema della funzione sopra è che esegue in tempo quadratico, perchè l'operatore <code>@</code> esegue in tempo lineare, e viene chiamato <code>length l</code> volte. Questo non è un problema, la funzione di sopra va bene come soluzione all'esercizio, ma se si volesse ottimizzarla, basta usare <code>::</code> al posto di <code>@</code>. Ovviamente, scrivendo <code>el :: partial</code> anzichè <code>partial @ [el]</code>, costruiremo un risultato parziale al contrario, perchè il secondo elemento verà messo in testa al primo, il terzo in testa al secondo e così via. Ma basta una chiamata a <code>List.rev</code> per invertire il risultato, in tempo lineare, prima di restituirlo. Così facendo otteniamo una implementazione lineare, e persino tail recursive (perchè fold_left è implementata tail recursive).</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[25]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">drop3</span> <span class="n">n</span> <span class="n">l</span> <span class="o">=</span> 
+    <span class="k">let</span> <span class="n">f</span> <span class="n">acc</span> <span class="n">el</span>  <span class="o">=</span> <span class="k">let</span> <span class="n">partial</span><span class="o">,</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">acc</span> <span class="k">in</span>
+                    <span class="k">if</span> <span class="n">counter</span> <span class="ow">mod</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">then</span> <span class="o">(</span><span class="n">partial</span><span class="o">,</span> <span class="n">counter</span> <span class="o">+</span><span class="mi">1</span><span class="o">)</span>
+                    <span class="k">else</span> <span class="o">(</span> <span class="n">el</span> <span class="o">::</span> <span class="n">partial</span><span class="o">,</span> <span class="n">counter</span> <span class="o">+</span><span class="mi">1</span><span class="o">)</span>
+    <span class="k">in</span> 
+    <span class="k">let</span> <span class="n">result</span><span class="o">,</span> <span class="o">_</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">fold_left</span> <span class="n">f</span> <span class="o">(</span><span class="bp">[]</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span> <span class="n">l</span>
+    <span class="k">in</span> <span class="nn">List</span><span class="p">.</span><span class="n">rev</span> <span class="n">result</span><span class="o">;;</span>
+<span class="n">drop3</span> <span class="mi">2</span> <span class="o">[</span><span class="mi">1</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">17</span><span class="o">;</span> <span class="mi">42</span><span class="o">]</span> <span class="o">;;</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[25]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val drop3 : int -&gt; &#39;a list -&gt; &#39;a list = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[25]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : int list = [1; 3; 42]
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>Usando <code>fold_right</code>.</strong>  A seconda dei casi, può essere più intuitivo usare fold rigth che fold left, ma sono sempre equivalenti. In questo caso, usare fold left sembra più semplice, perchè il counter parte da <code>1</code> sul primo elemento e poi viene aumentato quando si passa al secondo e così via. Se si volesse usare fold right, che parte dall'ultimo elemento, bisogna capire quale è il suo indice, e poi decrementarlo quando si passa al penultimo e così via. Ovviamente usando fold rigth, che combina l'accumulatore degli ultimi tot elemento con l'elemento imemdiatamente precedente, bisogna sempre usare <code>el :: acc</code>, aggiungendo il penultimo elemento davanti all'ultimo, e poi il terzultimo davanti al penultimo e così via, costruendo la lista in ordine corretto e tempo lineare.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[24]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">drop4</span> <span class="n">n</span> <span class="n">l</span> <span class="o">=</span> 
+    <span class="k">let</span> <span class="n">f</span> <span class="n">el</span> <span class="n">acc</span> <span class="o">=</span> <span class="k">let</span> <span class="n">partial</span><span class="o">,</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">acc</span> <span class="k">in</span>
+                    <span class="k">if</span> <span class="n">counter</span> <span class="ow">mod</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">then</span> <span class="o">(</span><span class="n">partial</span><span class="o">,</span> <span class="n">counter</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span>
+                    <span class="k">else</span> <span class="o">(</span> <span class="n">el</span> <span class="o">::</span> <span class="n">partial</span><span class="o">,</span> <span class="n">counter</span>  <span class="o">-</span> <span class="mi">1</span><span class="o">)</span>
+    <span class="k">in</span> 
+    <span class="k">let</span> <span class="n">result</span><span class="o">,</span> <span class="o">_</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">fold_right</span> <span class="n">f</span> <span class="n">l</span> <span class="o">(</span><span class="bp">[]</span><span class="o">,</span> <span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">l</span><span class="o">)</span>
+    <span class="k">in</span> <span class="n">result</span><span class="o">;;</span>
+<span class="n">drop4</span> <span class="mi">2</span> <span class="o">[</span><span class="mi">1</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">17</span><span class="o">;</span> <span class="mi">42</span><span class="o">]</span> <span class="o">;;</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[24]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val drop4 : int -&gt; &#39;a list -&gt; &#39;a list = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[24]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : int list = [1; 3; 42]
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Takeaway">Takeaway<a class="anchor-link" href="#Takeaway">&#182;</a></h3><ul>
+<li>Lì dove il paradigma imperativo modifica lo stato delle variabili fra un ciclo e l'altro, il paradigma funzionale modifica il valore degli argomenti fra una chiamata ricorsiva e l'altra, oppure modifica l'accumulatore fra una chiamata di <code>f</code> e l'altra in una fold.</li>
+<li>Usando una fold su liste, si possono scrivere spesso 3 soluzioni diverse:<ol>
+<li><code>fold_left</code>, che parte dal primo elemento, usando l'operatore <code>@</code>, costruendo la lista nell'ordine corretto in tempo quadratico</li>
+<li><code>folg_left</code>, che parte dal primo elemento, usando l'operatore <code>::</code>, costruendo la lista nell'ordine inverso in tempo lineare, e poi invertirla con <code>List.rev</code>
+3.<code>fold_right</code>, che parte dall'ultimo elemento, usando l'operatore <code>::</code>, costruendo la lista nell'ordine corretto in tempo lineare</li>
+</ol>
+</li>
+</ul>
+
+</div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
@@ -14001,13 +14278,29 @@ a.anchor-link {
 <p>Potete scegliere voi in che modo codificare queste due informazioni, idee?</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Soluzione:">Soluzione:<a class="anchor-link" href="#Soluzione:">&#182;</a></h3>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>Modo 1: tupla.</strong> Per trattare due tipi di informazioni insieme, l'idea più semplice è manipolare una coppia di valori, nel nostro caso <code>bool * int</code>, una coppia in cui il primo elemento ci dice se la lista è valida, il secondo quanto è la somma della lista.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[27]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-OCaml"><pre><span></span>
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">sum</span> <span class="n">l</span> <span class="o">=</span> 
+    <span class="k">let</span> <span class="n">f</span> <span class="n">el</span> <span class="o">(</span><span class="n">valid</span><span class="o">,</span> <span class="n">tot</span><span class="o">)</span> <span class="o">=</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">valid</span><span class="o">)</span> <span class="c">(*si poteva anche usare un &amp;&amp; fra il booleano valid e il booleano (18 &lt;= el &lt;= 30)*)</span>
+                    <span class="k">then</span> <span class="o">(</span><span class="mi">18</span> <span class="o">&lt;=</span> <span class="n">el</span> <span class="o">&amp;&amp;</span> <span class="n">el</span> <span class="o">&lt;=</span> <span class="mi">30</span><span class="o">,</span> <span class="n">tot</span> <span class="o">+</span> <span class="n">el</span><span class="o">)</span>
+                    <span class="k">else</span> <span class="o">(</span><span class="bp">false</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span>
+    <span class="k">in</span> <span class="nn">List</span><span class="p">.</span><span class="n">fold_right</span> <span class="n">f</span> <span class="n">l</span> <span class="o">(</span><span class="bp">true</span><span class="o">,</span> <span class="mi">0</span><span class="o">);;</span>
 </pre></div>
 
      </div>
@@ -14015,6 +14308,163 @@ a.anchor-link {
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[27]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val sum : int list -&gt; bool * int = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>Modo 2: Tipo somma.</strong> La soluzione predente funziona, ma sembra un po' ridondante. Infatti quando il booleano è false, l'intero non viene mai letto, perchè non è significativo. Ricordiamoci che i tipi sono insiemi di valori, dove $bool = \{false, true\}$ e $int = \{0, 1, 2, \ldots\}$. In un certo senso, i valori interessanti da trattare non sono tutte le coppie <code>(false, 18), (false, 19), (false, 20)... (true, 18), (true, 19), (true, 20)...</code>, ovvero il prodotto cartesiano fra $bool$ e $int$. I valori interessanti sono solo <code>(false, _)</code> e <code>(true, 18), (true, 19), (true, 20)</code>, cioè il nostro valore di ritorno, o è <code>false</code>, o è un intero.</p>
+<p>Qui ci viene in aiuto il sistema di tipi di OCaml, che ci permette di definire un tipo somma, che sia esattamente o <code>false</code>, o un intero. Definiamo un tipo <code>result</code> usando il comando <code>type</code>, e riscrviamo la funzione di sopra come <code>sum: int list -&gt; result</code>.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[32]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-OCaml"><pre><span></span><span class="c">(*modo 2: somma*)</span>
+<span class="k">type</span> <span class="n">result</span> <span class="o">=</span> <span class="nc">Invalid</span> <span class="o">|</span> <span class="nc">Tot</span> <span class="k">of</span> <span class="kt">int</span><span class="o">;;</span>
+
+<span class="k">let</span> <span class="n">sum</span> <span class="n">l</span> <span class="o">=</span> 
+    <span class="k">let</span> <span class="n">f</span> <span class="n">el</span> <span class="n">acc</span> <span class="o">=</span> 
+        <span class="k">match</span> <span class="n">acc</span> <span class="k">with</span>
+        <span class="o">|</span> <span class="nc">Invalid</span> <span class="o">-&gt;</span> <span class="nc">Invalid</span>
+        <span class="o">|</span> <span class="nc">Tot</span><span class="o">(</span><span class="n">n</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">if</span> <span class="o">(</span><span class="mi">18</span> <span class="o">&lt;=</span> <span class="n">el</span> <span class="o">&amp;&amp;</span> <span class="n">el</span> <span class="o">&lt;=</span> <span class="mi">30</span><span class="o">)</span> 
+                    <span class="k">then</span> <span class="nc">Tot</span><span class="o">(</span><span class="n">n</span><span class="o">+</span><span class="n">el</span><span class="o">)</span>
+                    <span class="k">else</span> <span class="nc">Invalid</span>
+    <span class="k">in</span> <span class="nn">List</span><span class="p">.</span><span class="n">fold_right</span> <span class="n">f</span> <span class="n">l</span> <span class="o">(</span><span class="nc">Tot</span><span class="o">(</span><span class="mi">0</span><span class="o">));;</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[32]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type result = Invalid | Tot of int
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[32]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val sum : int list -&gt; result = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>Modo 3: int option.</strong> Riflettendoci attentamente, qualcuno potrebbe notare che il tipo <code>result</code> che abbiamo definito è identico al tipo <code>int option</code>, che è definito come</p>
+<p><code>int option = None | Some of int</code></p>
+<p>Possiamo riscrivere quindi la funzione di sopra come <code>sum: int list -&gt; int option</code>, senza dover definire nessun tipo ad hoc per questo problema.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[29]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-OCaml"><pre><span></span><span class="c">(*modo 3: int option*)</span>  
+<span class="k">let</span> <span class="n">sum</span> <span class="n">l</span> <span class="o">=</span> 
+    <span class="k">let</span> <span class="n">f</span> <span class="n">el</span> <span class="n">acc</span> <span class="o">=</span> 
+        <span class="k">match</span> <span class="n">acc</span> <span class="k">with</span>
+        <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+        <span class="o">|</span> <span class="nc">Some</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="k">if</span> <span class="o">(</span><span class="mi">18</span> <span class="o">&lt;=</span> <span class="n">el</span> <span class="o">&amp;&amp;</span> <span class="n">el</span> <span class="o">&lt;=</span> <span class="mi">30</span><span class="o">)</span> 
+                    <span class="k">then</span> <span class="nc">Some</span><span class="o">(</span><span class="n">n</span><span class="o">+</span><span class="n">el</span><span class="o">)</span>
+                    <span class="k">else</span> <span class="nc">None</span>
+    <span class="k">in</span> <span class="nn">List</span><span class="p">.</span><span class="n">fold_right</span> <span class="n">f</span> <span class="n">l</span> <span class="o">(</span><span class="nc">Some</span><span class="o">(</span><span class="mi">0</span><span class="o">));;</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[29]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val sum : int list -&gt; int option = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Takeaway:">Takeaway:<a class="anchor-link" href="#Takeaway:">&#182;</a></h3><ul>
+<li>Una tupla (o tipo prodotto) <code>'a * 'b</code> contiene informazioni su un elemento di tipo <code>'a</code> <strong>e</strong> un elemento di tipo <code>'b</code>. Un tipo somma <code>'a | 'b</code> contiene informazioni  su un elemento di tipo <code>'a</code> <strong>o</strong> un elemento di tipo <code>'b</code>, e può essere usato quando vogliamo manipolare un valore che è "disomogoeneo", delle volte è di tipo <code>'a</code> delle volte di tipo <code>'b</code></li>
+<li>Possiamo creare, usando <code>type</code>, dei tipi ad hoc per le nostre funzioni, che spesso sono più intuitivi da leggere e da usare. Oppure possiamo sforzarci di usare i tipi che già esistono, come <code>'a option</code>, che spesso hanno molto più supporto nelle librerie.</li>
+</ul>
+
+</div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
@@ -14064,10 +14514,10 @@ Output: Node(5, Node(3, Empty, Empty), Node(7, Node(6, Empty, Empty), Empty))</c
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[31]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-OCaml"><pre><span></span>
+<div class=" highlight hl-OCaml"><pre><span></span><span class="c">(*questo esercizio lo vedremo in classe nel tutorato successivo, il 9 novembre*)</span>
 </pre></div>
 
      </div>
