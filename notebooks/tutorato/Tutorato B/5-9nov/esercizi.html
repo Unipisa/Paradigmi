@@ -14076,41 +14076,31 @@ a.anchor-link {
 <p>Scrivere la funzione <code>eval</code> con questo effetto. Per ora, l'unico errore possibile è una divisione per zero.</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-OCaml"><pre><span></span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Vogliamo estendere il comportamento in caso di errore in modo che riporti alcune informazioni aggiuntive. Definiamo un record per gli errori invece di una semplice stringa: vogliamo anche sapere l'espressione che ha causato l'errore, e il valore calcolato per i suoi parametri.</p>
-
-</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-OCaml"><pre><span></span><span class="k">type</span> <span class="n">error</span> <span class="o">=</span> <span class="o">{</span>
-    <span class="n">msg</span><span class="o">:</span> <span class="kt">string</span><span class="o">;</span>   <span class="c">(* Il messaggio di errore *)</span>
-    <span class="n">expr</span><span class="o">:</span> <span class="n">aexp</span><span class="o">;</span>    <span class="c">(* L&#39;espressione che ha causato l&#39;errore *)</span>
-    <span class="n">args</span><span class="o">:</span> <span class="kt">int</span> <span class="kt">list</span><span class="o">;</span>   <span class="c">(* Valori dei sottoalberi dell&#39;espressione *)</span>
-<span class="o">};;</span>
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">controlla_errori</span> <span class="o">(</span><span class="n">f</span><span class="o">:</span> <span class="kt">int</span> <span class="o">-&gt;</span> <span class="kt">int</span> <span class="o">-&gt;</span> <span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">op1</span><span class="o">:</span> <span class="n">result</span><span class="o">)</span> <span class="o">(</span><span class="n">op2</span><span class="o">:</span> <span class="n">result</span><span class="o">)</span> <span class="o">:</span> <span class="n">result</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">op1</span><span class="o">,</span> <span class="n">op2</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Right</span> <span class="n">n1</span><span class="o">,</span> <span class="nc">Right</span> <span class="n">n2</span> <span class="o">-&gt;</span> <span class="nc">Right</span> <span class="o">(</span><span class="n">f</span> <span class="n">n1</span> <span class="n">n2</span><span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Error</span> <span class="n">s1</span><span class="o">,</span> <span class="nc">Right</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="nc">Error</span> <span class="o">(</span><span class="s2">&quot;nel primo addendo: &quot;</span> <span class="o">^</span> <span class="n">s1</span><span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Right</span> <span class="o">_,</span> <span class="nc">Error</span> <span class="n">s2</span> <span class="o">-&gt;</span> <span class="nc">Error</span> <span class="o">(</span><span class="s2">&quot;nel secondo addendo: &quot;</span> <span class="o">^</span> <span class="n">s2</span><span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Error</span> <span class="n">s1</span><span class="o">,</span> <span class="nc">Error</span> <span class="n">s2</span> <span class="o">-&gt;</span> <span class="nc">Error</span> <span class="o">(</span><span class="s2">&quot;tutto sbagliato: &quot;</span> <span class="o">^</span> <span class="n">s1</span> <span class="o">^</span> <span class="s2">&quot; &quot;</span> <span class="o">^</span> <span class="n">s2</span><span class="o">);;</span>
 
-<span class="k">type</span> <span class="n">result</span> <span class="o">=</span>
-  <span class="o">|</span> <span class="nc">Right</span> <span class="k">of</span> <span class="kt">int</span>
-  <span class="o">|</span> <span class="nc">Error</span> <span class="k">of</span> <span class="n">error</span><span class="o">;;</span>
+<span class="k">let</span> <span class="k">rec</span> <span class="n">eval</span> <span class="o">(</span><span class="n">e</span><span class="o">:</span> <span class="n">aexp</span><span class="o">)</span> <span class="o">:</span> <span class="n">result</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">e</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Num</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="nc">Right</span> <span class="n">n</span>
+    <span class="o">|</span> <span class="nc">Plus</span> <span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">controlla_errori</span> <span class="o">(+)</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e1</span><span class="o">)</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e2</span><span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Neg</span> <span class="n">e1</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="k">match</span> <span class="n">eval</span> <span class="n">e1</span> <span class="k">with</span>
+      <span class="o">|</span> <span class="nc">Right</span> <span class="n">n1</span> <span class="o">-&gt;</span> <span class="nc">Right</span> <span class="o">(-</span><span class="n">n1</span><span class="o">)</span>
+      <span class="o">|</span> <span class="nc">Error</span> <span class="n">s1</span> <span class="o">-&gt;</span> <span class="nc">Error</span> <span class="n">s1</span>
+      <span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Times</span> <span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">controlla_errori</span> <span class="o">(</span><span class="k">fun</span> <span class="n">a</span> <span class="n">b</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="o">)</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e1</span><span class="o">)</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e2</span><span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Div</span> <span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="k">match</span> <span class="n">eval</span> <span class="n">e1</span><span class="o">,</span> <span class="n">eval</span> <span class="n">e2</span> <span class="k">with</span>
+      <span class="o">|</span> <span class="nc">Right</span> <span class="n">n1</span><span class="o">,</span> <span class="nc">Right</span> <span class="mi">0</span> <span class="o">-&gt;</span> <span class="nc">Error</span> <span class="s2">&quot;divisione per zero&quot;</span>
+      <span class="o">|</span> <span class="n">op1</span><span class="o">,</span> <span class="n">op2</span> <span class="o">-&gt;</span> <span class="n">controlla_errori</span> <span class="o">(/)</span> <span class="n">op1</span> <span class="n">op2</span><span class="o">);;</span>
 </pre></div>
 
      </div>
@@ -14132,7 +14122,8 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>type error = { msg : string; expr : aexp; args : int list; }
+<pre>val controlla_errori : (int -&gt; int -&gt; int) -&gt; result -&gt; result -&gt; result =
+  &lt;fun&gt;
 </pre>
 </div>
 
@@ -14142,6 +14133,159 @@ a.anchor-link {
 
     
     <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val eval : aexp -&gt; result = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">test</span> <span class="o">=</span> <span class="nc">Plus</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">10</span><span class="o">,</span> <span class="nc">Div</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">10</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">0</span><span class="o">));;</span>  <span class="c">(* 10 + (10 / 0) *)</span>
+<span class="k">let</span> <span class="n">test2</span> <span class="o">=</span> <span class="nc">Div</span> <span class="o">(</span><span class="nc">Plus</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">10</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">10</span><span class="o">),</span> <span class="nc">Num</span> <span class="mi">0</span><span class="o">);;</span> <span class="c">(* (10 + 10) / 0 *)</span>
+<span class="n">eval</span> <span class="n">test</span><span class="o">;;</span>
+<span class="n">eval</span> <span class="n">test2</span><span class="o">;;</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val test : aexp = Plus (Num 10, Div (Num 10, Num 0))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val test2 : aexp = Div (Plus (Num 10, Num 10), Num 0)
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : result = Error &#34;nel secondo addendo: divisione per zero&#34;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : result = Error &#34;divisione per zero&#34;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Vogliamo estendere il comportamento in caso di errore in modo che riporti alcune informazioni aggiuntive. Definiamo un record per gli errori invece di una semplice stringa: vogliamo anche sapere l'espressione che ha causato l'errore, e il valore calcolato per i suoi parametri.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">type</span> <span class="n">error</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">msg</span><span class="o">:</span> <span class="kt">string</span><span class="o">;</span>      <span class="c">(* Il messaggio di errore *)</span>
+    <span class="n">expr</span><span class="o">:</span> <span class="n">aexp</span><span class="o">;</span>       <span class="c">(* L&#39;espressione che ha causato l&#39;errore *)</span>
+    <span class="n">args</span><span class="o">:</span> <span class="kt">int</span> <span class="kt">list</span><span class="o">;</span>   <span class="c">(* Valori dei sottoalberi dell&#39;espressione *)</span>
+<span class="o">};;</span>
+
+<span class="k">type</span> <span class="n">result</span> <span class="o">=</span>
+  <span class="o">|</span> <span class="nc">Right</span> <span class="k">of</span> <span class="kt">int</span>
+  <span class="o">|</span> <span class="nc">Error</span> <span class="k">of</span> <span class="n">error</span><span class="o">;;</span>  <span class="c">(* non è più string *)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>type error = { msg : string; expr : aexp; args : int list; }
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
 
 
 
@@ -14162,11 +14306,12 @@ a.anchor-link {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Per esempio, se l'espressione di errore è</p>
 <div class="highlight"><pre><span></span><span class="nc">Div</span> <span class="o">((</span><span class="nc">Neg</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">3</span><span class="o">)),</span> <span class="o">(</span><span class="nc">Times</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">10</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">0</span><span class="o">)))</span>
+<span class="c">(* (-3) / (10 * 0) *)</span>
 </pre></div>
 <p>il corrispondente record di errore dev'essere</p>
-<div class="highlight"><pre><span></span><span class="o">{</span> <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Division by zero&quot;</span><span class="o">;</span> <span class="n">expr</span> <span class="o">=</span> <span class="nc">Div</span> <span class="o">((</span><span class="nc">Neg</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">3</span><span class="o">)),</span> <span class="o">(</span><span class="nc">Times</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">10</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">0</span><span class="o">)));</span> <span class="n">args</span> <span class="o">=</span> <span class="o">[</span><span class="mi">3</span><span class="o">;</span> <span class="mi">0</span><span class="o">]</span> <span class="o">}</span>
+<div class="highlight"><pre><span></span><span class="o">{</span> <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Division by zero&quot;</span><span class="o">;</span> <span class="n">expr</span> <span class="o">=</span> <span class="nc">Div</span> <span class="o">((</span><span class="nc">Neg</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">3</span><span class="o">)),</span> <span class="o">(</span><span class="nc">Times</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">10</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">0</span><span class="o">)));</span> <span class="n">args</span> <span class="o">=</span> <span class="o">[-</span><span class="mi">3</span><span class="o">;</span> <span class="mi">0</span><span class="o">]</span> <span class="o">}</span>
 </pre></div>
-<p>dato che gli "argomenti" della divisione sono <code>3</code> e <code>0</code>.</p>
+<p>dato che gli "argomenti" della divisione sono <code>-3</code> e <code>0</code>.</p>
 
 </div>
 </div>
@@ -14175,18 +14320,172 @@ a.anchor-link {
 <p>Aggiornare la funzione <code>eval</code> per calcolare l'errore strutturato</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-OCaml"><pre><span></span>
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">controlla_errori</span> <span class="o">(</span><span class="n">f</span><span class="o">:</span> <span class="kt">int</span> <span class="o">-&gt;</span> <span class="kt">int</span> <span class="o">-&gt;</span> <span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">op1</span><span class="o">:</span> <span class="n">result</span><span class="o">)</span> <span class="o">(</span><span class="n">op2</span><span class="o">:</span> <span class="n">result</span><span class="o">)</span> <span class="o">:</span> <span class="n">result</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">op1</span><span class="o">,</span> <span class="n">op2</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Right</span> <span class="n">n1</span><span class="o">,</span> <span class="nc">Right</span> <span class="n">n2</span> <span class="o">-&gt;</span> <span class="nc">Right</span> <span class="o">(</span><span class="n">f</span> <span class="n">n1</span> <span class="n">n2</span><span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Error</span> <span class="n">err1</span><span class="o">,</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="nc">Error</span> <span class="n">err1</span>
+    <span class="o">|</span> <span class="nc">Right</span> <span class="o">_,</span> <span class="nc">Error</span> <span class="n">err2</span> <span class="o">-&gt;</span> <span class="nc">Error</span> <span class="n">err2</span><span class="o">;;</span>
+
+<span class="k">let</span> <span class="k">rec</span> <span class="n">eval</span> <span class="o">(</span><span class="n">e</span><span class="o">:</span> <span class="n">aexp</span><span class="o">)</span> <span class="o">:</span> <span class="n">result</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">e</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Num</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="nc">Right</span> <span class="n">n</span>
+    <span class="o">|</span> <span class="nc">Plus</span> <span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">controlla_errori</span> <span class="o">(+)</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e1</span><span class="o">)</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e2</span><span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Neg</span> <span class="n">e1</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="k">match</span> <span class="n">eval</span> <span class="n">e1</span> <span class="k">with</span>
+      <span class="o">|</span> <span class="nc">Right</span> <span class="n">n1</span> <span class="o">-&gt;</span> <span class="nc">Right</span> <span class="o">(-</span><span class="n">n1</span><span class="o">)</span>
+      <span class="o">|</span> <span class="nc">Error</span> <span class="n">err1</span> <span class="o">-&gt;</span> <span class="nc">Error</span> <span class="n">err1</span>
+      <span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Times</span> <span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">controlla_errori</span> <span class="o">(</span><span class="k">fun</span> <span class="n">a</span> <span class="n">b</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="o">)</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e1</span><span class="o">)</span> <span class="o">(</span><span class="n">eval</span> <span class="n">e2</span><span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Div</span> <span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="k">match</span> <span class="n">eval</span> <span class="n">e1</span><span class="o">,</span> <span class="n">eval</span> <span class="n">e2</span> <span class="k">with</span>
+      <span class="o">|</span> <span class="nc">Right</span> <span class="n">n1</span><span class="o">,</span> <span class="nc">Right</span> <span class="mi">0</span> <span class="o">-&gt;</span> <span class="nc">Error</span> <span class="o">{</span>
+          <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;divisione per zero&quot;</span><span class="o">;</span>
+          <span class="n">expr</span><span class="o">=</span><span class="nc">Div</span> <span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">);</span>
+          <span class="n">args</span><span class="o">=[</span><span class="n">n1</span><span class="o">;</span> <span class="mi">0</span><span class="o">]</span>
+        <span class="o">}</span>
+      <span class="o">|</span> <span class="n">op1</span><span class="o">,</span> <span class="n">op2</span> <span class="o">-&gt;</span> <span class="n">controlla_errori</span> <span class="o">(/)</span> <span class="n">op1</span> <span class="n">op2</span><span class="o">);;</span>
 </pre></div>
 
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val controlla_errori : (int -&gt; int -&gt; int) -&gt; result -&gt; result -&gt; result =
+  &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val eval : aexp -&gt; result = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">test</span> <span class="o">=</span> <span class="nc">Div</span> <span class="o">((</span><span class="nc">Neg</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">3</span><span class="o">)),</span> <span class="o">(</span><span class="nc">Times</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">10</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">0</span><span class="o">)));;</span> <span class="c">(* (-3) / (10 * 0) *)</span>
+<span class="k">let</span> <span class="n">test2</span> <span class="o">=</span> <span class="nc">Neg</span> <span class="o">(</span><span class="n">test</span><span class="o">);;</span> <span class="c">(* -((-3) / (10 * 0)) *)</span>
+
+<span class="n">eval</span> <span class="n">test</span><span class="o">;;</span>
+<span class="n">eval</span> <span class="n">test2</span><span class="o">;;</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val test : aexp = Div (Neg (Num 3), Times (Num 10, Num 0))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val test2 : aexp = Neg (Div (Neg (Num 3), Times (Num 10, Num 0)))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : result =
+Error
+ {msg = &#34;divisione per zero&#34;;
+  expr = Div (Neg (Num 3), Times (Num 10, Num 0)); args = [-3; 0]}
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : result =
+Error
+ {msg = &#34;divisione per zero&#34;;
+  expr = Div (Neg (Num 3), Times (Num 10, Num 0)); args = [-3; 0]}
+</pre>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
@@ -14196,18 +14495,162 @@ a.anchor-link {
 "Division by zero: applying Div to 3 and 0"</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-OCaml"><pre><span></span>
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">print_aexp</span> <span class="o">(</span><span class="n">e</span><span class="o">:</span> <span class="n">aexp</span><span class="o">)</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">e</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Num</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">string_of_int</span> <span class="n">n</span>
+    <span class="o">|</span> <span class="nc">Plus</span> <span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;(&quot;</span> <span class="o">^</span> <span class="n">print_aexp</span> <span class="n">e1</span> <span class="o">^</span> <span class="s2">&quot; + &quot;</span> <span class="o">^</span> <span class="n">print_aexp</span> <span class="n">e2</span> <span class="o">^</span> <span class="s2">&quot;)&quot;</span>
+    <span class="o">|</span> <span class="nc">Neg</span> <span class="n">e1</span> <span class="o">-&gt;</span> <span class="s2">&quot;-&quot;</span> <span class="o">^</span> <span class="n">print_aexp</span> <span class="n">e1</span> <span class="o">^</span> <span class="s2">&quot;&quot;</span>
+    <span class="o">|</span> <span class="nc">Times</span> <span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;(&quot;</span> <span class="o">^</span> <span class="n">print_aexp</span> <span class="n">e1</span> <span class="o">^</span> <span class="s2">&quot; * &quot;</span> <span class="o">^</span> <span class="n">print_aexp</span> <span class="n">e2</span> <span class="o">^</span> <span class="s2">&quot;)&quot;</span>
+    <span class="o">|</span> <span class="nc">Div</span> <span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;(&quot;</span> <span class="o">^</span> <span class="n">print_aexp</span> <span class="n">e1</span> <span class="o">^</span> <span class="s2">&quot; / &quot;</span> <span class="o">^</span> <span class="n">print_aexp</span> <span class="n">e2</span> <span class="o">^</span> <span class="s2">&quot;)&quot;</span><span class="o">;;</span>
+
+<span class="k">let</span> <span class="n">print_list</span> <span class="o">(</span><span class="n">l</span><span class="o">:</span> <span class="kt">int</span> <span class="kt">list</span><span class="o">)</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">=</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">fold_left</span> <span class="o">(</span><span class="k">fun</span> <span class="n">acc</span> <span class="n">elem</span> <span class="o">-&gt;</span> <span class="n">acc</span> <span class="o">^</span> <span class="n">elem</span> <span class="o">^</span> <span class="s2">&quot;, &quot;</span><span class="o">)</span> <span class="s2">&quot;&quot;</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">string_of_int</span> <span class="n">l</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">print_error</span> <span class="o">(</span><span class="n">err</span><span class="o">:</span> <span class="n">error</span><span class="o">)</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">=</span>
+  <span class="n">err</span><span class="o">.</span><span class="n">msg</span> <span class="o">^</span> <span class="s2">&quot; nell&#39;espressione &quot;</span> <span class="o">^</span> <span class="n">print_aexp</span> <span class="n">err</span><span class="o">.</span><span class="n">expr</span> <span class="o">^</span> <span class="s2">&quot;. Le sottoespressioni valutano a &quot;</span> <span class="o">^</span> <span class="n">print_list</span> <span class="n">err</span><span class="o">.</span><span class="n">args</span><span class="o">;;</span>
 </pre></div>
 
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val print_aexp : aexp -&gt; string = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val print_list : int list -&gt; string = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val print_error : error -&gt; string = &lt;fun&gt;
+</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">test3</span> <span class="o">=</span> <span class="nc">Plus</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">4</span><span class="o">,</span> <span class="n">test</span><span class="o">);;</span>
+
+<span class="n">print_aexp</span> <span class="n">test3</span><span class="o">;;</span>
+
+<span class="c">(* Serve questo match perché (eval test3) è di tipo result, e l&#39;interprete non sa</span>
+<span class="c"> * che in realtà è un Error err</span>
+<span class="c"> *)</span>
+<span class="k">match</span> <span class="n">eval</span> <span class="n">test3</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">Error</span> <span class="n">err</span> <span class="o">-&gt;</span> <span class="n">print_error</span> <span class="n">err</span>
+  <span class="o">|</span> <span class="nc">Right</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="s2">&quot;&quot;</span><span class="o">;;</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>val test3 : aexp = Plus (Num 4, Div (Neg (Num 3), Times (Num 10, Num 0)))
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : string = &#34;(4 + (-3 / (10 * 0)))&#34;
+</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>- : string =
+&#34;divisione per zero nell&#39;espressione (-3 / (10 * 0)). Le sottoespressioni valutano a -3, 0, &#34;
+</pre>
+</div>
+
+</div>
+
+</div>
+
 </div>
 
 </div>
@@ -14219,7 +14662,7 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-OCaml"><pre><span></span><span class="k">let</span> <span class="n">maxint</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;;</span>
@@ -14239,7 +14682,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
 
 
 
@@ -14254,7 +14697,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
 
 
 
