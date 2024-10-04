@@ -8,8 +8,6 @@ L'esecuzione dei notebook in questo repository richiede di installare un certo n
 
 Per semplificare il lavoro, è stato predisposto un *container Docker* in cui tutti questi strumenti sono già installati e pronti per l'esecuzione dei notebook di questo repository.
 
-E' anche disponibile una versione online del container Docker con i notebook pre-installati, messa a disposizione dall'Università di Pisa per gli studenti del corso. Si tratta di una versione sperimentale, ma è possibile utilizzarla seguendo le indicazioni disponibili nella sezione: [Uso di Jupyterhub di Ateneo](#uso-di-jupyterhub-di-ateneo)
-
 ## Installazione
 
 *In caso di problemi vedi: [Troubleshooting](#troubleshooting)*
@@ -81,11 +79,3 @@ Riavviare il computer e lanciare nuovamente Docker Desktop.
 1. Attenzione alla presenza dei **`:`** tra il path locale (a cui si fa riferimento nella guida come `xxxPATHxxx`)e il path forNito dalla guida (`/mnt/paradigmi/ paradigmi/paradigmi`)
 2. Su **macOS** sostituire `xxxPATHxxx` con `~/<path>` non con `User/<path>`
 3. Mancato utilizzo della flag `-v` seguita dal path in alcuni sistemi operativi macOS come Catalina
-
-## Uso di Jupyterhub di Ateneo
-
-Sono disponibili, in testing, 
-<https://jupyterhub.polo2.sid.unipi.it:8000/> e <https://jupyterhubfm.df.unipi.it:8000/>, 
-installazioni di jupyterhub su macchine di Ateneo in cui è possibile trovare questo ambiente preconfigurato. 
-
-Per maggiori informazioni riferirsi alla [relativa guida d'uso](https://github.com/Unipisa/ocaml-jupyterhub-dockerspawner/blob/doc-Paradigmi/HOW_TO_USE.md).
