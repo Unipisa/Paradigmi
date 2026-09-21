@@ -1,0 +1,903 @@
+2025/11/10 18:12:32 client.go:744: read tcp 172.17.0.2:40732->134.98.146.131:30002: use of closed network connection
+2025/11/10 18:12:52 client.go:744: read tcp 172.17.0.2:53980->134.98.146.131:30002: use of closed network connection
+2025/11/10 18:13:24 client.go:744: read tcp 172.17.0.2:33970->134.98.146.131:30002: use of closed network connection
+2025/11/10 19:27:33 client.go:744: read tcp 172.17.0.2:55640->134.98.146.131:30002: i/o timeout
+2025/11/10 19:27:33 client.go:837: Reconnect in 1000 ms...
+2025/11/10 19:27:34 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:34 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:34 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:34 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:34 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:34 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:34 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:34 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:34 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:34 client.go:801: all rpc request failed
+2025/11/10 19:27:34 client.go:766: Retry in 1000 ms...
+2025/11/10 19:27:35 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:35 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:35 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:35 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:35 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:35 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:35 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:35 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:35 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:27:35 client.go:801: all rpc request failed
+2025/11/10 19:27:35 client.go:766: Retry in 2000 ms...
+2025/11/10 19:27:47 client.go:744: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/11/10 19:27:47 client.go:837: Reconnect in 1000 ms...
+2025/11/10 19:27:59 client.go:744: read tcp 172.17.0.2:57786->134.98.146.131:30002: i/o timeout
+2025/11/10 19:27:59 client.go:837: Reconnect in 1000 ms...
+2025/11/10 19:30:50 client.go:744: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/11/10 19:30:50 client.go:837: Reconnect in 1000 ms...
+2025/11/10 19:31:03 client.go:744: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/11/10 19:31:03 client.go:837: Reconnect in 1000 ms...
+2025/11/10 19:31:48 client.go:744: read tcp 172.17.0.2:38792->134.98.146.131:30002: i/o timeout
+2025/11/10 19:31:48 client.go:837: Reconnect in 1000 ms...
+2025/11/10 19:31:50 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:50 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:50 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:50 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:50 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:50 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:50 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:50 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:50 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:50 client.go:801: all rpc request failed
+2025/11/10 19:31:50 client.go:766: Retry in 1000 ms...
+2025/11/10 19:31:51 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:51 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:51 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:51 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:51 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:51 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:51 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:51 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:51 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:51 client.go:801: all rpc request failed
+2025/11/10 19:31:51 client.go:766: Retry in 2000 ms...
+2025/11/10 19:31:53 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:53 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:53 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:53 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:53 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:53 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:53 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:53 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:53 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:53 client.go:801: all rpc request failed
+2025/11/10 19:31:53 client.go:766: Retry in 4000 ms...
+2025/11/10 19:31:57 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:57 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:57 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:57 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:57 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:57 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:57 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:57 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:57 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:31:57 client.go:801: all rpc request failed
+2025/11/10 19:31:57 client.go:766: Retry in 8000 ms...
+2025/11/10 19:32:05 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:32:05 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:32:05 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:32:05 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:32:05 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:32:05 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:32:05 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:32:05 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:32:05 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:32:05 client.go:801: all rpc request failed
+2025/11/10 19:32:05 client.go:766: Retry in 16000 ms...
+2025/11/10 19:36:16 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:36:16 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:36:16 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:36:16 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:36:16 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:36:16 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:36:16 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:36:16 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:36:16 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 19:36:16 client.go:801: all rpc request failed
+2025/11/10 19:36:16 client.go:766: Retry in 32000 ms...
+2025/11/10 19:52:15 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/10 20:00:41 client.go:744: read tcp 172.17.0.2:49106->134.98.146.131:30002: i/o timeout
+2025/11/10 20:00:41 client.go:837: Reconnect in 1000 ms...
+2025/11/10 20:01:17 client.go:744: read tcp 172.17.0.2:48144->134.98.146.131:30002: i/o timeout
+2025/11/10 20:01:17 client.go:837: Reconnect in 1000 ms...
+2025/11/10 20:17:26 client.go:744: read tcp 172.17.0.2:42578->134.98.146.131:30002: i/o timeout
+2025/11/10 20:17:26 client.go:837: Reconnect in 1000 ms...
+2025/11/10 20:48:53 client.go:744: read tcp 172.17.0.2:39848->134.98.146.131:30002: i/o timeout
+2025/11/10 20:48:53 client.go:837: Reconnect in 1000 ms...
+2025/11/10 20:49:37 client.go:744: read tcp 172.17.0.2:45256->134.98.146.131:30002: i/o timeout
+2025/11/10 20:49:37 client.go:837: Reconnect in 1000 ms...
+2025/11/10 21:05:46 client.go:744: read tcp 172.17.0.2:39704->134.98.146.131:30002: i/o timeout
+2025/11/10 21:05:46 client.go:837: Reconnect in 1000 ms...
+2025/11/10 21:21:46 client.go:744: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/11/10 21:21:46 client.go:837: Reconnect in 1000 ms...
+2025/11/10 21:27:10 client.go:744: read tcp 172.17.0.2:41950->134.98.146.131:30002: i/o timeout
+2025/11/10 21:27:10 client.go:837: Reconnect in 1000 ms...
+2025/11/10 21:43:11 client.go:744: read tcp 172.17.0.2:44398->134.98.146.131:30002: i/o timeout
+2025/11/10 21:43:11 client.go:837: Reconnect in 1000 ms...
+2025/11/10 21:59:21 client.go:744: read tcp 172.17.0.2:50410->134.98.146.131:30002: i/o timeout
+2025/11/10 21:59:21 client.go:837: Reconnect in 1000 ms...
+2025/11/10 22:15:31 client.go:744: read tcp 172.17.0.2:39780->134.98.146.131:30002: i/o timeout
+2025/11/10 22:15:31 client.go:837: Reconnect in 1000 ms...
+2025/11/10 22:27:31 client.go:801: INTERNAL ERROR: Wait for reply timeout
+2025/11/10 22:27:31 client.go:766: Retry in 1000 ms...
+2025/11/10 22:27:38 client.go:801: INTERNAL ERROR: Wait for reply timeout
+2025/11/10 22:27:38 client.go:766: Retry in 2000 ms...
+2025/11/10 22:28:08 client.go:744: read tcp 172.17.0.2:55740->134.98.146.131:30002: i/o timeout
+2025/11/10 22:28:08 client.go:837: Reconnect in 1000 ms...
+2025/11/10 22:44:18 client.go:744: read tcp 172.17.0.2:60420->134.98.146.131:30002: i/o timeout
+2025/11/10 22:44:18 client.go:837: Reconnect in 1000 ms...
+2025/11/10 23:00:27 client.go:744: read tcp 172.17.0.2:49910->134.98.146.131:30002: i/o timeout
+2025/11/10 23:00:27 client.go:837: Reconnect in 1000 ms...
+2025/11/10 23:16:29 client.go:744: read tcp 172.17.0.2:40614->134.98.146.131:30002: i/o timeout
+2025/11/10 23:16:29 client.go:837: Reconnect in 1000 ms...
+2025/11/10 23:32:37 client.go:744: read tcp 172.17.0.2:34182->134.98.146.131:30002: i/o timeout
+2025/11/10 23:32:37 client.go:837: Reconnect in 1000 ms...
+2025/11/10 23:48:49 client.go:744: read tcp 172.17.0.2:51222->134.98.146.131:30002: i/o timeout
+2025/11/10 23:48:49 client.go:837: Reconnect in 1000 ms...
+2025/11/11 00:04:51 client.go:744: read tcp 172.17.0.2:52520->134.98.146.131:30002: i/o timeout
+2025/11/11 00:04:51 client.go:837: Reconnect in 1000 ms...
+2025/11/11 00:36:26 client.go:744: read tcp 172.17.0.2:51590->134.98.146.131:30002: i/o timeout
+2025/11/11 00:36:26 client.go:837: Reconnect in 1000 ms...
+2025/11/11 00:37:10 client.go:744: read tcp 172.17.0.2:46924->134.98.146.131:30002: i/o timeout
+2025/11/11 00:37:10 client.go:837: Reconnect in 1000 ms...
+2025/11/11 00:53:11 client.go:744: read tcp 172.17.0.2:59122->134.98.146.131:30002: i/o timeout
+2025/11/11 00:53:11 client.go:837: Reconnect in 1000 ms...
+2025/11/11 00:53:18 client.go:801: INTERNAL ERROR: Wait for reply timeout
+2025/11/11 00:53:18 client.go:766: Retry in 1000 ms...
+2025/11/11 01:09:23 client.go:744: read tcp 172.17.0.2:59390->134.98.146.131:30002: i/o timeout
+2025/11/11 01:09:23 client.go:837: Reconnect in 1000 ms...
+2025/11/11 01:25:37 client.go:744: read tcp 172.17.0.2:57100->134.98.146.131:30002: i/o timeout
+2025/11/11 01:25:37 client.go:837: Reconnect in 1000 ms...
+2025/11/11 01:41:39 client.go:744: read tcp 172.17.0.2:35774->134.98.146.131:30002: i/o timeout
+2025/11/11 01:41:39 client.go:837: Reconnect in 1000 ms...
+2025/11/11 01:57:52 client.go:744: read tcp 172.17.0.2:33550->134.98.146.131:30002: i/o timeout
+2025/11/11 01:57:52 client.go:837: Reconnect in 1000 ms...
+2025/11/11 02:23:05 client.go:744: read tcp 172.17.0.2:43696->134.98.146.131:30002: i/o timeout
+2025/11/11 02:23:05 client.go:837: Reconnect in 1000 ms...
+2025/11/11 02:23:41 client.go:744: read tcp 172.17.0.2:44468->134.98.146.131:30002: i/o timeout
+2025/11/11 02:23:41 client.go:837: Reconnect in 1000 ms...
+2025/11/11 02:39:50 client.go:744: read tcp 172.17.0.2:40118->134.98.146.131:30002: i/o timeout
+2025/11/11 02:39:50 client.go:837: Reconnect in 1000 ms...
+2025/11/11 03:11:17 client.go:744: read tcp 172.17.0.2:55534->134.98.146.131:30002: i/o timeout
+2025/11/11 03:11:17 client.go:837: Reconnect in 1000 ms...
+2025/11/11 03:12:03 client.go:744: read tcp 172.17.0.2:36756->134.98.146.131:30002: i/o timeout
+2025/11/11 03:12:03 client.go:837: Reconnect in 1000 ms...
+2025/11/11 03:28:04 client.go:744: read tcp 172.17.0.2:33162->134.98.146.131:30002: i/o timeout
+2025/11/11 03:28:04 client.go:837: Reconnect in 1000 ms...
+2025/11/11 03:44:13 client.go:744: read tcp 172.17.0.2:33566->134.98.146.131:30002: i/o timeout
+2025/11/11 03:44:13 client.go:837: Reconnect in 1000 ms...
+2025/11/11 04:00:23 client.go:744: read tcp 172.17.0.2:49906->134.98.146.131:30002: i/o timeout
+2025/11/11 04:00:23 client.go:837: Reconnect in 1000 ms...
+2025/11/11 04:24:05 client.go:744: read tcp 172.17.0.2:47084->134.98.146.131:30002: i/o timeout
+2025/11/11 04:24:05 client.go:837: Reconnect in 1000 ms...
+2025/11/11 04:24:41 client.go:744: read tcp 172.17.0.2:58740->134.98.146.131:30002: i/o timeout
+2025/11/11 04:24:41 client.go:837: Reconnect in 1000 ms...
+2025/11/11 04:40:50 client.go:744: read tcp 172.17.0.2:40842->134.98.146.131:30002: i/o timeout
+2025/11/11 04:40:50 client.go:837: Reconnect in 1000 ms...
+2025/11/11 05:12:24 client.go:744: read tcp 172.17.0.2:56692->134.98.146.131:30002: i/o timeout
+2025/11/11 05:12:24 client.go:837: Reconnect in 1000 ms...
+2025/11/11 05:12:59 client.go:744: read tcp 172.17.0.2:51806->134.98.146.131:30002: i/o timeout
+2025/11/11 05:12:59 client.go:837: Reconnect in 1000 ms...
+2025/11/11 05:41:12 client.go:744: read tcp 172.17.0.2:45140->134.98.146.131:30002: i/o timeout
+2025/11/11 05:41:12 client.go:837: Reconnect in 1000 ms...
+2025/11/11 05:41:54 client.go:744: read tcp 172.17.0.2:38326->134.98.146.131:30002: i/o timeout
+2025/11/11 05:41:54 client.go:837: Reconnect in 1000 ms...
+2025/11/11 05:57:55 client.go:744: read tcp 172.17.0.2:41824->134.98.146.131:30002: i/o timeout
+2025/11/11 05:57:55 client.go:837: Reconnect in 1000 ms...
+2025/11/11 06:26:01 client.go:744: read tcp 172.17.0.2:49152->134.98.146.131:30002: i/o timeout
+2025/11/11 06:26:01 client.go:837: Reconnect in 1000 ms...
+2025/11/11 06:26:49 client.go:744: read tcp 172.17.0.2:44482->134.98.146.131:30002: i/o timeout
+2025/11/11 06:26:49 client.go:837: Reconnect in 1000 ms...
+2025/11/11 09:50:13 client.go:744: read tcp 172.17.0.2:58424->134.98.146.131:30002: i/o timeout
+2025/11/11 09:50:13 client.go:837: Reconnect in 1000 ms...
+2025/11/11 09:50:15 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:15 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:15 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:15 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:15 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:15 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:15 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:15 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:15 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:15 client.go:801: all rpc request failed
+2025/11/11 09:50:15 client.go:766: Retry in 1000 ms...
+2025/11/11 09:50:16 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:16 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:16 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:16 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:16 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:16 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:16 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:16 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:16 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:16 client.go:801: all rpc request failed
+2025/11/11 09:50:16 client.go:766: Retry in 2000 ms...
+2025/11/11 09:50:18 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:18 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:18 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:18 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:18 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:18 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:18 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:18 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:18 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:18 client.go:801: all rpc request failed
+2025/11/11 09:50:18 client.go:766: Retry in 4000 ms...
+2025/11/11 09:50:22 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:22 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:22 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:22 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:22 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:22 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:22 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:22 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:22 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:22 client.go:801: all rpc request failed
+2025/11/11 09:50:22 client.go:766: Retry in 8000 ms...
+2025/11/11 09:50:30 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:30 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:30 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:30 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:30 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:30 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:30 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:30 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:30 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:50:30 client.go:801: all rpc request failed
+2025/11/11 09:50:30 client.go:766: Retry in 16000 ms...
+2025/11/11 09:52:47 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:52:47 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:52:47 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:52:47 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:52:47 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:52:47 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:52:47 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:52:47 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:52:47 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:52:47 client.go:801: all rpc request failed
+2025/11/11 09:52:47 client.go:766: Retry in 32000 ms...
+2025/11/11 09:57:11 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:57:11 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:57:11 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:57:11 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:57:11 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:57:11 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:57:11 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:57:11 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:57:11 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 09:57:11 client.go:801: all rpc request failed
+2025/11/11 09:57:11 client.go:766: Retry in 64000 ms...
+2025/11/11 13:20:56 client.go:744: read tcp 172.17.0.2:58216->134.98.146.131:30002: i/o timeout
+2025/11/11 13:20:56 client.go:837: Reconnect in 1000 ms...
+2025/11/11 13:20:57 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:57 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:57 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:57 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:57 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:57 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:57 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:57 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:57 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:57 client.go:801: all rpc request failed
+2025/11/11 13:20:57 client.go:766: Retry in 1000 ms...
+2025/11/11 13:20:58 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:58 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:58 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:58 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:58 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:58 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:58 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:58 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:58 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:20:58 client.go:801: all rpc request failed
+2025/11/11 13:20:58 client.go:766: Retry in 2000 ms...
+2025/11/11 13:21:00 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:21:00 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:21:00 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:21:00 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:21:00 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:21:00 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:21:00 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:21:00 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:21:00 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:21:00 client.go:801: all rpc request failed
+2025/11/11 13:21:00 client.go:766: Retry in 4000 ms...
+2025/11/11 13:23:20 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:20 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:20 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:20 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:20 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:20 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:20 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:20 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:20 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:20 client.go:801: all rpc request failed
+2025/11/11 13:23:20 client.go:766: Retry in 8000 ms...
+2025/11/11 13:23:28 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:28 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:28 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:28 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:28 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:28 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:28 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:28 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:28 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:23:28 client.go:801: all rpc request failed
+2025/11/11 13:23:28 client.go:766: Retry in 16000 ms...
+2025/11/11 13:24:45 rpc.go:215: Post "http://134.98.146.131:30003": EOF
+2025/11/11 13:24:45 client.go:810: read tcp 172.17.0.2:53586->134.98.146.131:30002: i/o timeout
+2025/11/11 13:24:45 client.go:766: Retry in 32000 ms...
+2025/11/11 13:30:43 client.go:744: read tcp 172.17.0.2:46990->134.98.146.131:30002: i/o timeout
+2025/11/11 13:30:43 client.go:837: Reconnect in 1000 ms...
+2025/11/11 13:46:43 client.go:744: read tcp 172.17.0.2:38310->134.98.146.131:30002: i/o timeout
+2025/11/11 13:46:43 client.go:837: Reconnect in 1000 ms...
+2025/11/11 13:46:44 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:44 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:44 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:44 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:44 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:44 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:44 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:44 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:44 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:44 client.go:801: all rpc request failed
+2025/11/11 13:46:44 client.go:766: Retry in 1000 ms...
+2025/11/11 13:46:45 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:45 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:45 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:45 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:45 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:45 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:45 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:45 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:45 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:45 client.go:801: all rpc request failed
+2025/11/11 13:46:45 client.go:766: Retry in 2000 ms...
+2025/11/11 13:46:48 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:48 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:48 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:48 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:48 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:48 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:48 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:48 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:48 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:48 client.go:801: all rpc request failed
+2025/11/11 13:46:48 client.go:766: Retry in 4000 ms...
+2025/11/11 13:46:52 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:52 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:52 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:52 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:52 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:52 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:52 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:52 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:52 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:46:52 client.go:801: all rpc request failed
+2025/11/11 13:46:52 client.go:766: Retry in 8000 ms...
+2025/11/11 13:57:24 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:57:24 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:57:24 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:57:24 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:57:24 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:57:24 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:57:24 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:57:24 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:57:24 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 13:57:24 client.go:801: all rpc request failed
+2025/11/11 13:57:24 client.go:766: Retry in 16000 ms...
+2025/11/11 14:01:36 rpc.go:215: Post "http://134.98.146.131:30003": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2025/11/11 14:01:36 client.go:810: dial tcp 134.98.146.131:30002: i/o timeout
+2025/11/11 14:01:36 client.go:766: Retry in 32000 ms...
+2025/11/11 14:03:33 client.go:744: read tcp 172.17.0.2:54240->134.98.146.131:30002: i/o timeout
+2025/11/11 14:03:33 client.go:837: Reconnect in 1000 ms...
+2025/11/11 14:03:46 client.go:744: read tcp 172.17.0.2:35654->134.98.146.131:30002: i/o timeout
+2025/11/11 14:03:46 client.go:837: Reconnect in 1000 ms...
+2025/11/11 14:03:47 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:47 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:47 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:47 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:47 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:47 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:47 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:47 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:47 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:47 client.go:801: all rpc request failed
+2025/11/11 14:03:47 client.go:766: Retry in 1000 ms...
+2025/11/11 14:03:48 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:48 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:48 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:48 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:48 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:48 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:48 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:48 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:48 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:03:48 client.go:801: all rpc request failed
+2025/11/11 14:03:48 client.go:766: Retry in 2000 ms...
+2025/11/11 14:04:24 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:24 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:24 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:24 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:24 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:24 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:24 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:24 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:24 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:24 client.go:801: all rpc request failed
+2025/11/11 14:04:24 client.go:766: Retry in 4000 ms...
+2025/11/11 14:04:28 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:28 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:28 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:28 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:28 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:28 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:28 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:28 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:28 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 14:04:28 client.go:801: all rpc request failed
+2025/11/11 14:04:28 client.go:766: Retry in 8000 ms...
+2025/11/11 14:04:45 client.go:744: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/11/11 14:04:45 client.go:837: Reconnect in 1000 ms...
+2025/11/11 15:54:11 client.go:744: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/11/11 15:54:11 client.go:837: Reconnect in 1000 ms...
+2025/11/11 15:59:03 client.go:744: read tcp 172.17.0.2:35162->134.98.146.131:30002: i/o timeout
+2025/11/11 15:59:03 client.go:837: Reconnect in 1000 ms...
+2025/11/11 15:59:04 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:04 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:04 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:04 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:04 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:04 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:04 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:04 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:04 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:04 client.go:801: all rpc request failed
+2025/11/11 15:59:04 client.go:766: Retry in 1000 ms...
+2025/11/11 15:59:05 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:05 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:05 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:05 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:05 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:05 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:05 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:05 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:05 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:05 client.go:801: all rpc request failed
+2025/11/11 15:59:05 client.go:766: Retry in 2000 ms...
+2025/11/11 15:59:07 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:07 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:07 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:07 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:07 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:07 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:07 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:07 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:07 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:07 client.go:801: all rpc request failed
+2025/11/11 15:59:07 client.go:766: Retry in 4000 ms...
+2025/11/11 15:59:21 rpc.go:215: Post "http://seed.nkn.org:30003": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2025/11/11 15:59:21 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:21 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:21 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:21 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:21 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:21 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:21 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:21 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 15:59:21 client.go:801: all rpc request failed
+2025/11/11 15:59:21 client.go:766: Retry in 8000 ms...
+2025/11/11 16:03:42 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 16:03:42 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 16:03:42 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 16:03:42 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 16:03:42 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 16:03:42 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 16:03:42 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 16:03:42 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 16:03:42 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 16:03:42 client.go:801: all rpc request failed
+2025/11/11 16:03:42 client.go:766: Retry in 16000 ms...
+2025/11/11 16:06:14 client.go:744: read tcp 172.17.0.2:44762->134.98.146.131:30002: i/o timeout
+2025/11/11 16:06:14 client.go:837: Reconnect in 1000 ms...
+2025/11/11 16:06:26 client.go:744: read tcp 172.17.0.2:36124->134.98.146.131:30002: i/o timeout
+2025/11/11 16:06:26 client.go:837: Reconnect in 1000 ms...
+2025/11/11 16:06:37 client.go:744: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/11/11 16:06:37 client.go:837: Reconnect in 1000 ms...
+2025/11/11 17:41:36 client.go:744: read tcp 172.17.0.2:53494->134.98.146.131:30002: i/o timeout
+2025/11/11 17:41:36 client.go:837: Reconnect in 1000 ms...
+2025/11/11 17:41:37 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:37 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:37 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:37 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:37 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:37 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:37 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:37 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:37 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:37 client.go:801: all rpc request failed
+2025/11/11 17:41:37 client.go:766: Retry in 1000 ms...
+2025/11/11 17:41:38 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:38 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:39 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:39 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:39 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:39 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:39 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:39 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:39 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:39 client.go:801: all rpc request failed
+2025/11/11 17:41:39 client.go:766: Retry in 2000 ms...
+2025/11/11 17:41:41 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:41 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:41 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:41 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:41 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:41 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:41 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:41 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:41 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:41:41 client.go:801: all rpc request failed
+2025/11/11 17:41:41 client.go:766: Retry in 4000 ms...
+2025/11/11 17:43:28 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:28 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:28 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:28 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:28 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:28 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:28 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:28 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:28 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:28 client.go:801: all rpc request failed
+2025/11/11 17:43:28 client.go:766: Retry in 8000 ms...
+2025/11/11 17:43:36 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:36 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:36 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:36 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:36 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:36 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:36 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:36 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:36 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:43:36 client.go:801: all rpc request failed
+2025/11/11 17:43:36 client.go:766: Retry in 16000 ms...
+2025/11/11 17:44:13 client.go:744: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/11/11 17:44:13 client.go:837: Reconnect in 1000 ms...
+2025/11/11 17:44:26 client.go:744: read tcp 172.17.0.2:43562->134.98.146.131:30002: i/o timeout
+2025/11/11 17:44:26 client.go:837: Reconnect in 1000 ms...
+2025/11/11 17:45:50 client.go:744: read tcp 172.17.0.2:38434->134.98.146.131:30002: i/o timeout
+2025/11/11 17:45:50 client.go:837: Reconnect in 1000 ms...
+2025/11/11 17:45:57 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:57 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:57 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:57 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:57 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:57 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:57 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:57 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:57 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:57 client.go:801: all rpc request failed
+2025/11/11 17:45:57 client.go:766: Retry in 1000 ms...
+2025/11/11 17:45:58 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:58 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:58 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:58 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:58 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:58 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:58 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:58 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:58 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:45:58 client.go:801: all rpc request failed
+2025/11/11 17:45:58 client.go:766: Retry in 2000 ms...
+2025/11/11 17:46:00 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:00 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:00 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:00 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:00 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:00 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:00 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:00 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:00 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:00 client.go:801: all rpc request failed
+2025/11/11 17:46:00 client.go:766: Retry in 4000 ms...
+2025/11/11 17:46:04 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:04 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:04 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:04 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:04 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:04 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:04 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:04 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:04 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:04 client.go:801: all rpc request failed
+2025/11/11 17:46:04 client.go:766: Retry in 8000 ms...
+2025/11/11 17:46:12 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:12 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:12 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:12 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:12 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:12 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:12 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:12 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:12 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/11 17:46:12 client.go:801: all rpc request failed
+2025/11/11 17:46:12 client.go:766: Retry in 16000 ms...
+2025/11/11 17:46:48 client.go:744: read tcp 172.17.0.2:39184->134.98.146.131:30002: i/o timeout
+2025/11/11 17:46:48 client.go:837: Reconnect in 1000 ms...
+2025/11/11 18:07:49 client.go:744: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/11/11 18:07:49 client.go:837: Reconnect in 1000 ms...
+2025/11/11 18:08:31 client.go:744: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/11/11 18:08:31 client.go:837: Reconnect in 1000 ms...
+2025/11/11 18:09:35 client.go:744: read tcp 172.17.0.2:35528->134.98.146.131:30002: i/o timeout
+2025/11/11 18:09:35 client.go:837: Reconnect in 1000 ms...
+2025/11/11 18:25:45 client.go:744: read tcp 172.17.0.2:51108->134.98.146.131:30002: i/o timeout
+2025/11/11 18:25:45 client.go:837: Reconnect in 1000 ms...
+2025/11/11 18:41:54 client.go:744: read tcp 172.17.0.2:56600->134.98.146.131:30002: i/o timeout
+2025/11/11 18:41:54 client.go:837: Reconnect in 1000 ms...
+2025/11/11 18:57:57 client.go:744: read tcp 172.17.0.2:41460->134.98.146.131:30002: i/o timeout
+2025/11/11 18:57:57 client.go:837: Reconnect in 1000 ms...
+2025/11/11 19:14:06 client.go:744: read tcp 172.17.0.2:44406->134.98.146.131:30002: i/o timeout
+2025/11/11 19:14:06 client.go:837: Reconnect in 1000 ms...
+2025/11/11 19:30:15 client.go:744: read tcp 172.17.0.2:41166->134.98.146.131:30002: i/o timeout
+2025/11/11 19:30:15 client.go:837: Reconnect in 1000 ms...
+2025/11/11 19:43:16 client.go:744: read tcp 172.17.0.2:36014->134.98.146.131:30002: i/o timeout
+2025/11/11 19:43:16 client.go:837: Reconnect in 1000 ms...
+2025/11/11 19:59:25 client.go:744: read tcp 172.17.0.2:50416->134.98.146.131:30002: i/o timeout
+2025/11/11 19:59:25 client.go:837: Reconnect in 1000 ms...
+2025/11/11 20:31:00 client.go:744: read tcp 172.17.0.2:34518->134.98.146.131:30002: i/o timeout
+2025/11/11 20:31:00 client.go:837: Reconnect in 1000 ms...
+2025/11/11 20:31:38 client.go:744: read tcp 172.17.0.2:33920->134.98.146.131:30002: i/o timeout
+2025/11/11 20:31:38 client.go:837: Reconnect in 1000 ms...
+2025/11/11 20:40:15 client.go:744: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/11/11 20:40:15 client.go:837: Reconnect in 1000 ms...
+2025/11/11 20:59:03 client.go:744: read tcp 172.17.0.2:60462->134.98.146.131:30002: i/o timeout
+2025/11/11 20:59:03 client.go:837: Reconnect in 1000 ms...
+2025/11/11 20:59:45 client.go:744: read tcp 172.17.0.2:45378->134.98.146.131:30002: i/o timeout
+2025/11/11 20:59:45 client.go:837: Reconnect in 1000 ms...
+2025/11/11 21:15:47 client.go:744: read tcp 172.17.0.2:43736->134.98.146.131:30002: i/o timeout
+2025/11/11 21:15:47 client.go:837: Reconnect in 1000 ms...
+2025/11/11 21:32:04 client.go:744: read tcp 172.17.0.2:40878->134.98.146.131:30002: i/o timeout
+2025/11/11 21:32:04 client.go:837: Reconnect in 1000 ms...
+2025/11/11 21:45:18 client.go:744: read tcp 172.17.0.2:45026->134.98.146.131:30002: i/o timeout
+2025/11/11 21:45:18 client.go:837: Reconnect in 1000 ms...
+2025/11/11 22:01:19 client.go:744: read tcp 172.17.0.2:36984->134.98.146.131:30002: i/o timeout
+2025/11/11 22:01:19 client.go:837: Reconnect in 1000 ms...
+2025/11/11 22:17:29 client.go:744: read tcp 172.17.0.2:47506->134.98.146.131:30002: i/o timeout
+2025/11/11 22:17:29 client.go:837: Reconnect in 1000 ms...
+2025/11/11 22:49:03 client.go:744: read tcp 172.17.0.2:38960->134.98.146.131:30002: i/o timeout
+2025/11/11 22:49:03 client.go:837: Reconnect in 1000 ms...
+2025/11/11 22:50:11 client.go:744: read tcp 172.17.0.2:47250->134.98.146.131:30002: i/o timeout
+2025/11/11 22:50:11 client.go:837: Reconnect in 1000 ms...
+2025/11/12 00:33:30 client.go:744: read tcp 172.17.0.2:56984->134.98.146.131:30002: i/o timeout
+2025/11/12 00:33:30 client.go:837: Reconnect in 1000 ms...
+2025/11/12 00:34:07 client.go:744: read tcp 172.17.0.2:48652->134.98.146.131:30002: i/o timeout
+2025/11/12 00:34:07 client.go:837: Reconnect in 1000 ms...
+2025/11/12 00:50:16 client.go:744: read tcp 172.17.0.2:36280->134.98.146.131:30002: i/o timeout
+2025/11/12 00:50:16 client.go:837: Reconnect in 1000 ms...
+2025/11/12 01:06:25 client.go:744: read tcp 172.17.0.2:56168->134.98.146.131:30002: i/o timeout
+2025/11/12 01:06:25 client.go:837: Reconnect in 1000 ms...
+2025/11/12 01:22:35 client.go:744: read tcp 172.17.0.2:44988->134.98.146.131:30002: i/o timeout
+2025/11/12 01:22:35 client.go:837: Reconnect in 1000 ms...
+2025/11/12 01:38:44 client.go:744: read tcp 172.17.0.2:45338->134.98.146.131:30002: i/o timeout
+2025/11/12 01:38:44 client.go:837: Reconnect in 1000 ms...
+2025/11/12 01:54:46 client.go:744: read tcp 172.17.0.2:55668->134.98.146.131:30002: i/o timeout
+2025/11/12 01:54:46 client.go:837: Reconnect in 1000 ms...
+2025/11/12 02:26:24 client.go:744: read tcp 172.17.0.2:36494->134.98.146.131:30002: i/o timeout
+2025/11/12 02:26:24 client.go:837: Reconnect in 1000 ms...
+2025/11/12 02:26:59 client.go:744: read tcp 172.17.0.2:49444->134.98.146.131:30002: i/o timeout
+2025/11/12 02:26:59 client.go:837: Reconnect in 1000 ms...
+2025/11/12 02:43:09 client.go:744: read tcp 172.17.0.2:36672->134.98.146.131:30002: i/o timeout
+2025/11/12 02:43:09 client.go:837: Reconnect in 1000 ms...
+2025/11/12 02:59:12 client.go:744: read tcp 172.17.0.2:53050->134.98.146.131:30002: i/o timeout
+2025/11/12 02:59:12 client.go:837: Reconnect in 1000 ms...
+2025/11/12 03:15:20 client.go:744: read tcp 172.17.0.2:33688->134.98.146.131:30002: i/o timeout
+2025/11/12 03:15:20 client.go:837: Reconnect in 1000 ms...
+2025/11/12 03:31:29 client.go:744: read tcp 172.17.0.2:53356->134.98.146.131:30002: i/o timeout
+2025/11/12 03:31:29 client.go:837: Reconnect in 1000 ms...
+2025/11/12 03:47:34 client.go:744: read tcp 172.17.0.2:40070->134.98.146.131:30002: i/o timeout
+2025/11/12 03:47:34 client.go:837: Reconnect in 1000 ms...
+2025/11/12 04:03:44 client.go:744: read tcp 172.17.0.2:37144->134.98.146.131:30002: i/o timeout
+2025/11/12 04:03:44 client.go:837: Reconnect in 1000 ms...
+2025/11/12 04:19:46 client.go:744: read tcp 172.17.0.2:58920->134.98.146.131:30002: i/o timeout
+2025/11/12 04:19:46 client.go:837: Reconnect in 1000 ms...
+2025/11/12 04:36:05 client.go:744: read tcp 172.17.0.2:36202->134.98.146.131:30002: i/o timeout
+2025/11/12 04:36:05 client.go:837: Reconnect in 1000 ms...
+2025/11/12 04:52:05 client.go:744: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/11/12 04:52:05 client.go:837: Reconnect in 1000 ms...
+2025/11/12 05:08:13 client.go:744: read tcp 172.17.0.2:32972->134.98.146.131:30002: i/o timeout
+2025/11/12 05:08:13 client.go:837: Reconnect in 1000 ms...
+2025/11/12 05:08:52 client.go:744: read tcp 172.17.0.2:52212->134.98.146.131:30002: i/o timeout
+2025/11/12 05:08:52 client.go:837: Reconnect in 1000 ms...
+2025/11/12 05:25:02 client.go:744: read tcp 172.17.0.2:39670->134.98.146.131:30002: i/o timeout
+2025/11/12 05:25:02 client.go:837: Reconnect in 1000 ms...
+2025/11/12 08:52:01 client.go:753: WRONG NODE TO CONNECT
+2025/11/12 08:52:01 client.go:837: Reconnect in 1000 ms...
+2025/11/12 08:52:03 client.go:744: read tcp 172.17.0.2:46738->134.98.146.131:30002: use of closed network connection
+2025/11/12 08:52:03 client.go:837: Reconnect in 1000 ms...
+2025/11/12 08:52:05 client.go:744: read tcp 172.17.0.2:51428->161.118.172.235:30002: use of closed network connection
+2025/11/12 08:59:05 client.go:744: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/11/12 08:59:05 client.go:837: Reconnect in 1000 ms...
+2025/11/12 09:16:15 client.go:753: WRONG NODE TO CONNECT
+2025/11/12 09:16:15 client.go:837: Reconnect in 1000 ms...
+2025/11/12 09:16:16 client.go:744: read tcp 172.17.0.2:57746->134.98.146.131:30002: use of closed network connection
+2025/11/12 09:55:23 client.go:744: read tcp 172.17.0.2:46310->161.118.172.235:30002: i/o timeout
+2025/11/12 09:55:23 client.go:837: Reconnect in 1000 ms...
+2025/11/12 10:11:00 client.go:744: read tcp 172.17.0.2:53854->161.118.172.235:30002: i/o timeout
+2025/11/12 10:11:00 client.go:837: Reconnect in 1000 ms...
+2025/11/12 10:11:01 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:01 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:01 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:01 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:01 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:01 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:01 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:01 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:01 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:01 client.go:801: all rpc request failed
+2025/11/12 10:11:01 client.go:766: Retry in 1000 ms...
+2025/11/12 10:11:02 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:02 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:02 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:02 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:02 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:02 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:02 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:02 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:02 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:02 client.go:801: all rpc request failed
+2025/11/12 10:11:02 client.go:766: Retry in 2000 ms...
+2025/11/12 10:11:04 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:04 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:04 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:04 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:04 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:04 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:04 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:04 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:04 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:04 client.go:801: all rpc request failed
+2025/11/12 10:11:04 client.go:766: Retry in 4000 ms...
+2025/11/12 10:11:08 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:08 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:08 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:08 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:08 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:08 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:08 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:08 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:08 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:11:08 client.go:801: all rpc request failed
+2025/11/12 10:11:08 client.go:766: Retry in 8000 ms...
+2025/11/12 10:20:03 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:03 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:03 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:03 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:03 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:03 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:03 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:03 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:03 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:03 client.go:801: all rpc request failed
+2025/11/12 10:20:03 client.go:766: Retry in 16000 ms...
+2025/11/12 10:20:19 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:19 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:19 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:19 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:19 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:19 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:19 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:19 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:19 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 10:20:19 client.go:801: all rpc request failed
+2025/11/12 10:20:19 client.go:766: Retry in 32000 ms...
+2025/11/12 11:48:04 client.go:744: read tcp 172.17.0.2:51454->161.118.172.235:30002: i/o timeout
+2025/11/12 11:48:04 client.go:837: Reconnect in 1000 ms...
+2025/11/12 11:48:05 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:48:05 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:48:05 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:48:05 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:48:05 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:48:05 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:48:05 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:48:05 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:48:05 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:48:05 client.go:801: all rpc request failed
+2025/11/12 11:48:05 client.go:766: Retry in 1000 ms...
+2025/11/12 11:53:42 client.go:744: websocket: close 1006 (abnormal closure): unexpected EOF
+2025/11/12 11:53:42 client.go:837: Reconnect in 1000 ms...
+2025/11/12 11:53:55 client.go:744: read tcp 172.17.0.2:40580->161.118.172.235:30002: i/o timeout
+2025/11/12 11:53:55 client.go:837: Reconnect in 1000 ms...
+2025/11/12 11:53:56 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:56 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:56 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:56 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:56 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:56 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:56 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:56 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:56 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:56 client.go:801: all rpc request failed
+2025/11/12 11:53:56 client.go:766: Retry in 1000 ms...
+2025/11/12 11:53:57 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:57 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:57 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:57 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:57 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:57 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:57 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:57 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:57 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:57 client.go:801: all rpc request failed
+2025/11/12 11:53:57 client.go:766: Retry in 2000 ms...
+2025/11/12 11:53:59 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:59 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:59 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:59 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:59 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:59 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:59 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:59 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:59 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:53:59 client.go:801: all rpc request failed
+2025/11/12 11:53:59 client.go:766: Retry in 4000 ms...
+2025/11/12 11:54:03 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:54:03 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:54:03 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:54:03 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:54:03 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:54:03 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:54:03 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:54:03 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:54:03 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:54:03 client.go:801: all rpc request failed
+2025/11/12 11:54:03 client.go:766: Retry in 8000 ms...
+2025/11/12 11:55:34 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:34 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:34 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:34 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:34 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:34 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:34 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:34 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:34 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:34 client.go:801: all rpc request failed
+2025/11/12 11:55:34 client.go:766: Retry in 16000 ms...
+2025/11/12 11:55:50 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:50 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:50 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:50 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:50 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:50 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:50 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:50 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:50 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 11:55:50 client.go:801: all rpc request failed
+2025/11/12 11:55:50 client.go:766: Retry in 32000 ms...
+2025/11/12 12:02:12 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:02:12 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:02:12 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:02:12 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:02:12 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:02:12 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:02:12 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:02:12 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:02:12 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:02:12 client.go:801: all rpc request failed
+2025/11/12 12:02:12 client.go:766: Retry in 64000 ms...
+2025/11/12 12:03:16 rpc.go:215: Post "http://seed.nkn.org:30003": dial tcp: lookup seed.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:03:16 rpc.go:215: Post "http://mainnet-seed-0001.nkn.org:30003": dial tcp: lookup mainnet-seed-0001.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:03:16 rpc.go:215: Post "http://mainnet-seed-0002.nkn.org:30003": dial tcp: lookup mainnet-seed-0002.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:03:16 rpc.go:215: Post "http://mainnet-seed-0003.nkn.org:30003": dial tcp: lookup mainnet-seed-0003.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:03:16 rpc.go:215: Post "http://mainnet-seed-0004.nkn.org:30003": dial tcp: lookup mainnet-seed-0004.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:03:16 rpc.go:215: Post "http://mainnet-seed-0005.nkn.org:30003": dial tcp: lookup mainnet-seed-0005.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:03:16 rpc.go:215: Post "http://mainnet-seed-0006.nkn.org:30003": dial tcp: lookup mainnet-seed-0006.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:03:16 rpc.go:215: Post "http://mainnet-seed-0007.nkn.org:30003": dial tcp: lookup mainnet-seed-0007.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:03:16 rpc.go:215: Post "http://mainnet-seed-0008.nkn.org:30003": dial tcp: lookup mainnet-seed-0008.nkn.org on 192.168.65.7:53: no such host
+2025/11/12 12:03:16 client.go:801: all rpc request failed
+2025/11/12 12:03:16 client.go:766: Retry in 64000 ms...
